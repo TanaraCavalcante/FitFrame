@@ -32,8 +32,7 @@ modificare la struttura di tutti.
 resources/views/
   base/
     theme.json                 { "name": "base", "extends": null, "asset-path": "base" }
-    gym/
-      index.blade.php          ← view reale, unica, condivisa
+    home.blade.php             ← landing page, view reale, unica, condivisa
     sections/
       header.blade.php
       hero.blade.php

@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use App\Models\Domain;
+use Closure;
+use Igaster\LaravelTheme\Facades\Theme;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class ResolveGym
+{
+    /**
+     * Risolve la palestra (Gym) dal dominio della richiesta e attiva il tema corrispondente.
+     *
+     * @param  Closure(Request): (Response)  $next
+     */
+    public function handle(Request $request, Closure $next): Response
+    {
+        // Cerca il dominio della richiesta corrente nella tabella `domains`, con il Gym già caricato (eager load).
+        $domain = Domain::with('gym')->where('domain', $request->getHost())->first();
+
+        if ($domain) {
+            // Dominio trovato: attiva il tema (igaster/laravel-theme) con lo slug della palestra.
+            Theme::set($domain->gym->slug);
+
+            // Condivide il Gym con tutte le view, cosi ogni pagina puo accedervi senza passarlo esplicitamente.
+            view()->share('gym', $domain->gym);
+        }
+
+        // Dominio non trovato: nessun errore, resta il tema di default (config/themes.php).
+        return $next($request);
+    }
+}

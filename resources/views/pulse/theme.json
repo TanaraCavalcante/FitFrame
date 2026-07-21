@@ -1,0 +1,5 @@
+{
+    "name": "pulse",
+    "extends": "base",
+    "asset-path": "pulse"
+}

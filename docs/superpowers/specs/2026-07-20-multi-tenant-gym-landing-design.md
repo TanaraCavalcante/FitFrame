@@ -89,11 +89,18 @@ Nota: `Class` è parola riservata in PHP — per questo la tabella/model è
 
 ## D) View (Blade)
 
+Struttura definitiva in [6. Temi](../../6-temas.md) — `base` è il tema
+"genitore" (nessuna palestra reale), `pulse`/`zenflow`/`iron-house` sono
+fratelli, `extends: base`, senza view proprie (ereditate al 100% da
+`base` tramite `igaster/laravel-theme`):
+
 ```
 resources/views/
-  layouts/app.blade.php          — <head>, link del CSS del tema, @yield
-  gym/
-    index.blade.php              — assembla header + hero + sezioni ordinate + footer
+  components/master.blade.php    — layout, <head>, CSS del tema, $slot
+  base/
+    theme.json                   { "name": "base", "extends": null, "asset-path": "base" }
+    gym/
+      index.blade.php            — assembla header + hero + sezioni ordinate + footer
     sections/
       header.blade.php           (fisso)
       hero.blade.php              (fisso)
@@ -104,21 +111,27 @@ resources/views/
       testimonials.blade.php      (ordinabile)
       contact-cta.blade.php       (ordinabile)
       footer.blade.php           (fisso)
+  pulse/theme.json                { "name": "pulse", "extends": "base", "asset-path": "pulse" }
+  zenflow/theme.json              { "name": "zenflow", "extends": "base", "asset-path": "zenflow" }
+  iron-house/theme.json           { "name": "iron-house", "extends": "base", "asset-path": "iron-house" }
 ```
+
+Nota: `sections/` è sorella di `gym/`, non annidata dentro — per questo
+gli include sotto usano `sections.header`, non `gym.sections.header`.
 
 `GymController@index` risolve `$gym` (già disponibile tramite
 middleware), recupera l'ordine da `gym_sections` e lo passa a
 `gym.index`, che:
 
 ```blade
-@include('gym.sections.header')
-@include('gym.sections.hero')
+@include('sections.header')
+@include('sections.hero')
 
 @foreach ($sections as $section)
-    @include("gym.sections.{$section}")
+    @include("sections.{$section}")
 @endforeach
 
-@include('gym.sections.footer')
+@include('sections.footer')
 ```
 
 Ogni partial recupera il proprio dato (tramite repository/service,
