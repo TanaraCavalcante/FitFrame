@@ -21,7 +21,7 @@ class GymSectionFactory extends Factory
         return [
             'gym_id' => Gym::factory(),
             'section' => fake()->randomElement([
-                'classes', 'plans', 'gallery', 'team', 'testimonials', 'contact_cta',
+                'classes', 'plans', 'gallery', 'team', 'testimonials', 'contact-cta',
             ]),
             'order' => fake()->numberBetween(0, 5),
         ];

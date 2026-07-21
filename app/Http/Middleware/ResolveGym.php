@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Domain;
+use App\Models\Gym;
 use Closure;
 use Igaster\LaravelTheme\Facades\Theme;
 use Illuminate\Http\Request;
@@ -26,6 +27,9 @@ class ResolveGym
 
             // Condivide il Gym con tutte le view, cosi ogni pagina puo accedervi senza passarlo esplicitamente.
             view()->share('gym', $domain->gym);
+
+            // Registra il Gym nel container: i controller possono riceverlo via type-hint (Gym $gym).
+            app()->instance(Gym::class, $domain->gym);
         }
 
         // Dominio non trovato: nessun errore, resta il tema di default (config/themes.php).
