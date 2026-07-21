@@ -99,39 +99,40 @@ resources/views/
   components/master.blade.php    — layout, <head>, CSS del tema, $slot
   base/
     theme.json                   { "name": "base", "extends": null, "asset-path": "base" }
-    gym/
-      index.blade.php            — assembla header + hero + sezioni ordinate + footer
-    sections/
-      header.blade.php           (fisso)
-      hero.blade.php              (fisso)
+    home.blade.php                — assembla elements + sezioni ordinate
+    elements/                     — parti fisse del layout (nessun ordine)
+      header.blade.php
+      hero.blade.php
+      footer.blade.php
+    sections/                     — blocchi di contenuto ordinabili
       classes.blade.php           (corsi — ordinabile)
       plans.blade.php             (ordinabile)
       gallery.blade.php           (ordinabile)
       team.blade.php              (ordinabile)
       testimonials.blade.php      (ordinabile)
       contact-cta.blade.php       (ordinabile)
-      footer.blade.php           (fisso)
   pulse/theme.json                { "name": "pulse", "extends": "base", "asset-path": "pulse" }
   zenflow/theme.json              { "name": "zenflow", "extends": "base", "asset-path": "zenflow" }
   iron-house/theme.json           { "name": "iron-house", "extends": "base", "asset-path": "iron-house" }
 ```
 
-Nota: `sections/` è sorella di `gym/`, non annidata dentro — per questo
-gli include sotto usano `sections.header`, non `gym.sections.header`.
+Nota: `elements/` e `sections/` sono sorelle di `home.blade.php`, non
+annidate in una cartella `gym/` — per questo gli include sotto usano
+`elements.header`/`elements.hero`, non `gym.sections.header`.
 
 `GymController@index` risolve `$gym` (già disponibile tramite
 middleware), recupera l'ordine da `gym_sections` e lo passa a
-`gym.index`, che:
+`home`, che:
 
 ```blade
-@include('sections.header')
-@include('sections.hero')
+@include('elements.header')
+@include('elements.hero')
 
 @foreach ($sections as $section)
     @include("sections.{$section}")
 @endforeach
 
-@include('sections.footer')
+@include('elements.footer')
 ```
 
 Ogni partial recupera il proprio dato (tramite repository/service,

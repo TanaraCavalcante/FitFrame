@@ -33,16 +33,17 @@ resources/views/
   base/
     theme.json                 { "name": "base", "extends": null, "asset-path": "base" }
     home.blade.php             ← landing page, view reale, unica, condivisa
-    sections/
+    elements/                  ← parti fisse del layout (nessun ordine, sempre presenti)
       header.blade.php
       hero.blade.php
-      classes.blade.php
-      plans.blade.php
-      gallery.blade.php
-      team.blade.php
-      testimonials.blade.php
-      contact-cta.blade.php
       footer.blade.php
+    sections/                 ← blocchi di contenuto ordinabili
+      classes.blade.php        (ordinabile)
+      plans.blade.php          (ordinabile)
+      gallery.blade.php        (ordinabile)
+      team.blade.php           (ordinabile)
+      testimonials.blade.php   (ordinabile)
+      contact-cta.blade.php    (ordinabile)
 
   pulse/
     theme.json                 { "name": "pulse", "extends": "base", "asset-path": "pulse" }
@@ -56,6 +57,18 @@ resources/views/
     theme.json                 { "name": "iron-house", "extends": "base", "asset-path": "iron-house" }
     (cartella view vuota)
 ```
+
+## `elements/` vs `sections/`
+
+`elements/` contiene le parti **fisse** della pagina — header, hero e
+footer: sempre presenti, sempre nella stessa posizione, nessun
+concetto di ordine. Anche se `hero` mostra contenuto legato al `gym`
+(non solo struttura), la sua posizione non cambia mai, per questo vive
+qui insieme a header/footer.
+
+`sections/` contiene solo le 6 sezioni **riordinabili** tramite
+`gym_sections` (vedi sezione H): `classes`, `plans`, `gallery`,
+`team`, `testimonials`, `contact-cta`.
 
 ```
 public/
