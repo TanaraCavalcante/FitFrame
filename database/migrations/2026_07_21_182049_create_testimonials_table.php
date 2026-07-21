@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('testimonials')) {
+            return;
+        }
+
         Schema::create('testimonials', function (Blueprint $table) {
             $table->id();
             $table->foreignId('gym_id')->constrained()->cascadeOnDelete();
@@ -18,6 +22,8 @@ return new class extends Migration
             $table->text('text');
             $table->unsignedInteger('order');
             $table->timestamps();
+
+            $table->index(['gym_id', 'order']);
         });
     }
 

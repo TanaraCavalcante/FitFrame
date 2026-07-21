@@ -15,6 +15,10 @@ class Plan extends Model
 
     protected $fillable = ['gym_id', 'name', 'price', 'highlighted', 'order'];
 
+    protected $attributes = [
+        'highlighted' => false,
+    ];
+
     /**
      * @return array<string, string>
      */

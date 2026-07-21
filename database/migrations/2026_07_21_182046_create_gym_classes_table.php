@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('gym_classes')) {
+            return;
+        }
+
         Schema::create('gym_classes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('gym_id')->constrained()->cascadeOnDelete();
@@ -19,6 +23,8 @@ return new class extends Migration
             $table->string('icon');
             $table->unsignedInteger('order');
             $table->timestamps();
+
+            $table->index(['gym_id', 'order']);
         });
     }
 
