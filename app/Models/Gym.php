@@ -54,4 +54,13 @@ class Gym extends Model
     {
         return $this->hasMany(PersonalTrainer::class);
     }
+
+    /**
+     * Recupera un testo libero da `contents` per questa palestra (es. hero_headline).
+     * Se la chiave non esiste per la palestra, ritorna il default del tema base.
+     */
+    public function content(string $key, string $default = ''): string
+    {
+        return $this->contents->firstWhere('key', $key)?->value ?? $default;
+    }
 }

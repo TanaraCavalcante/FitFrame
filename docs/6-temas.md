@@ -72,8 +72,12 @@ qui insieme a header/footer.
 
 ```
 public/
+  base/
+    css/variables.css    ← palette/tipografia di fallback (solo colori/font)
+    css/general.css      ← CSS strutturale condiviso (navbar, hero, container, ecc.)
+    css/components.css   ← CSS dei componenti condivisi (bottoni, ecc.)
   pulse/
-    css/variables.css
+    css/variables.css    ← solo colori e tipografia di Pulse
     img/logo.png
     img/galeria1.jpg ... galeriaN.jpg
     team/{file}.jpg
@@ -89,8 +93,11 @@ public/
     team/{file}.jpg
 ```
 
-`base` non ha bisogno di una cartella in `public/` — non viene mai
-servito a un dominio reale, esiste solo come fallback di view.
+`base` ha una cartella in `public/`, a differenza di quanto descritto
+in precedenza — non viene mai servita a un dominio reale, ma contiene
+il CSS strutturale/condiviso (`general.css`, `components.css`) caricato
+per **tutti** i temi (vedi sezione successiva), oltre alla palette di
+fallback (`variables.css`).
 
 ## `config/themes.php`
 
@@ -107,52 +114,51 @@ return [
 ];
 ```
 
-## `variables.css` — stesso nome di variabile, valore diverso per tema
+## `variables.css` — solo colori e tipografia, stesso nome per tema
 
-Il pattern: ogni variabile (`--bs-primary`, `--bs-font-sans-serif`,
-ecc.) ha **lo stesso nome** nei 3 file. Blade/CSS chiama sempre la
-variabile per nome (o una classe Bootstrap come `.btn-primary`, che
-usa già la variabile sotto) — mai un valore fisso. Il browser carica
-solo il file del tema attivo (risolto da
-`theme_url('css/variables.css')` dopo `Theme::set($gym->slug)`),
-quindi non c'è cascata/ereditarietà CSS tra i 3 — ogni file è completo
-e indipendente.
-
-Esempio — `public/pulse/css/variables.css`:
+Ogni tema (compreso `base`, come fallback) ha un proprio
+`css/variables.css` con **solo** i token di colore e tipografia,
+sempre con lo stesso nome di variabile, valore diverso:
 
 ```css
-[data-bs-theme=light] {
-    --bs-primary: #FF3D57;
-    --bs-primary-rgb: 255, 61, 87;
-    --bs-font-sans-serif: 'Poppins', sans-serif;
-    --bs-body-font-weight: 600;
+:root {
+    --color-background: #0F0F0F;
+    --color-background-rgb: 15, 15, 15;
+    --color-surface: #1C1C1C;
+    --color-foreground: #F5F5F5;
+    --color-muted-foreground: #9A9A9A;
+    --color-primary: #FF4438;
+    --color-accent: #FFD23F;
+
+    --font-heading: 'Oswald', sans-serif;
+    --font-body: 'Inter', sans-serif;
 }
 ```
 
-Esempio — `public/zenflow/css/variables.css`:
+`master.blade.php` carica **due** file di variabili, in quest'ordine —
+`base/css/variables.css` (fallback) poi `theme_url('css/variables.css')`
+(tema attivo, risolto dopo `Theme::set($gym->slug)`) — cosi qualunque
+token non ridefinito da un tema resta comunque valido.
 
-```css
-[data-bs-theme=light] {
-    --bs-primary: #5B8C6E;
-    --bs-primary-rgb: 91, 140, 110;
-    --bs-font-sans-serif: 'Nunito', sans-serif;
-    --bs-body-font-weight: 400;
-}
-```
+## `general.css` e `components.css` — struttura condivisa, non per tema
 
-Esempio — `public/iron-house/css/variables.css`:
+Tutto ciò che **non** è colore/tipografia (spacing, container, navbar,
+hero, bottoni) vive in due file che esistono **solo** in `base/` e
+vengono caricati per tutti i temi, sempre gli stessi:
 
-```css
-[data-bs-theme=light] {
-    --bs-primary: #1A1A1A;
-    --bs-primary-rgb: 26, 26, 26;
-    --bs-font-sans-serif: 'Oswald', sans-serif;
-    --bs-body-font-weight: 700;
-}
-```
+- `base/css/general.css` — layout/struttura (`.container`, `.navbar`,
+  `.hero`, `.section-label`, ecc.), usa Bootstrap dove possibile e CSS
+  puro solo per ciò che Bootstrap non copre senza build step (blur,
+  underline animato, gradiente).
+- `base/css/components.css` — componenti riusabili (bottoni
+  `.btn-fit-primary`/`.btn-fit-outline`, in CSS normale — non tramite
+  le variabili interne `--bs-btn-*` di Bootstrap, per restare leggibili).
 
-I valori sopra sono solo di esempio — colore, font e peso reali di
-ogni tema saranno ancora definiti.
+Entrambi leggono i token colore/tipografia via `var(--color-*)` /
+`var(--font-*)` — nessun valore fisso, nessuna duplicazione per tema.
+Un tema che vuole davvero un componente diverso (non solo colore/font)
+resta libero di sovrascrivere queste classi nel proprio
+`variables.css`, ma è l'eccezione, non la regola.
 
 ## Riferimento
 

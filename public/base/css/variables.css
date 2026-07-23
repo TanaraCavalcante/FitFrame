@@ -1,0 +1,17 @@
+/*
+ * Tema "base": palette e tipografia di fallback, usate quando nessun tema
+ * specifico sovrascrive queste variabili (vedi resources/views/{slug}/theme.json).
+ * Solo colori e tipografia — il CSS strutturale/condiviso vive in general.css.
+ */
+:root {
+    --color-background: #FFFFFF;
+    --color-background-rgb: 255, 255, 255;
+    --color-surface: #F4F4F5;
+    --color-foreground: #1A1A1A;
+    --color-muted-foreground: #6B6B6B;
+    --color-primary: #2563EB;
+    --color-accent: #F59E0B;
+
+    --font-heading: system-ui, sans-serif;
+    --font-body: system-ui, sans-serif;
+}

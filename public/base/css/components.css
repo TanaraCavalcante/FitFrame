@@ -1,0 +1,30 @@
+/*
+ * Componenti (bottoni, ecc.): esiste SOLO nel tema base, caricato per
+ * TUTTI i temi (vedi resources/views/components/master.blade.php).
+ * Usa la classe `.btn` di Bootstrap per il formato (padding, border-radius,
+ * transizione) — qui definiamo solo il colore, in CSS normale, usando i
+ * token del tema attivo (vedi css/variables.css).
+ */
+
+.btn-fit-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-foreground);
+    padding: 0.5rem 1rem;
+    text-transform: uppercase;
+}
+
+.btn-fit-outline {
+    background-color: transparent;
+    border-color: var(--color-foreground);
+    color: var(--color-foreground);
+}
+
+.btn-fit-primary:hover,
+.btn-fit-primary:focus,
+.btn-fit-outline:hover,
+.btn-fit-outline:focus {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-background);
+}

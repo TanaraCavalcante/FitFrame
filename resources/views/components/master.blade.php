@@ -14,8 +14,13 @@
     {{-- CSS globale del progetto --}}
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-    {{-- Variabili del tema attivo (colori, font) — sovrascrive Bootstrap, per questo va per ultimo --}}
+    {{-- Palette/tipografia di fallback (base), poi quelle del tema attivo le sovrascrivono --}}
+    <link rel="stylesheet" href="{{ asset('base/css/variables.css') }}">
     <link rel="stylesheet" href="{{ theme_url('css/variables.css') }}">
+
+    {{-- CSS strutturale e componenti condivisi, esistono solo nel tema base, uguali per tutti i temi --}}
+    <link rel="stylesheet" href="{{ asset('base/css/general.css') }}">
+    <link rel="stylesheet" href="{{ asset('base/css/components.css') }}">
 
     {{ $css ?? '' }}
 </head>

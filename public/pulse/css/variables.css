@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Inter:wght@400;500&display=swap');
+
+/*
+ * Tema "pulse" — CrossFit/HIIT. Solo colori e tipografia: il resto
+ * (spacing, componenti, layout) è standard per tutti i temi, vedi
+ * public/base/css/general.css.
+ */
+:root {
+    --color-background: #0F0F0F;
+    --color-background-rgb: 15, 15, 15;
+    --color-surface: #1C1C1C;
+    --color-foreground: #F5F5F5;
+    --color-muted-foreground: #9A9A9A;
+    --color-primary: #FF4438;
+    --color-accent: #FFD23F;
+
+    --font-heading: 'Oswald', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}

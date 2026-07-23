@@ -19,7 +19,7 @@ class ResolveGym
     public function handle(Request $request, Closure $next): Response
     {
         // Cerca il dominio della richiesta corrente nella tabella `domains`, con il Gym già caricato (eager load).
-        $domain = Domain::with('gym')->where('domain', $request->getHost())->first();
+        $domain = Domain::with('gym.contents')->where('domain', $request->getHost())->first();
 
         if ($domain) {
             // Dominio trovato: attiva il tema (igaster/laravel-theme) con lo slug della palestra.
@@ -32,7 +32,13 @@ class ResolveGym
             app()->instance(Gym::class, $domain->gym);
         }
 
-        // Dominio non trovato: nessun errore, resta il tema di default (config/themes.php).
+        // Dominio non trovato: nessun errore, resta il tema di default (config/themes.php),
+        // ma un Gym vuoto va comunque condiviso: le view (header, hero, ecc.) si aspettano
+        // sempre $gym disponibile, anche se questa richiesta non appartiene a nessuna palestra.
+        if (! $domain) {
+            view()->share('gym', new Gym);
+        }
+
         return $next($request);
     }
 }
