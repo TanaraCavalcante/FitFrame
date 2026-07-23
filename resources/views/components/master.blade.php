@@ -11,12 +11,18 @@
     {{-- Font Awesome 6 via CDN, per le icone --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+    {{-- AOS (Animate On Scroll) via CDN, per le animazioni all'ingresso in viewport --}}
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
     {{-- CSS globale del progetto --}}
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     {{-- Palette/tipografia di fallback (base), poi quelle del tema attivo le sovrascrivono --}}
     <link rel="stylesheet" href="{{ asset('base/css/variables.css') }}">
     <link rel="stylesheet" href="{{ theme_url('css/variables.css') }}">
+
+    {{-- Classi utility di colore/tipografia, una per token — esiste solo nel tema base --}}
+    <link rel="stylesheet" href="{{ asset('base/css/generics.css') }}">
 
     {{-- CSS strutturale e componenti condivisi, esistono solo nel tema base, uguali per tutti i temi --}}
     <link rel="stylesheet" href="{{ asset('base/css/general.css') }}">
@@ -29,6 +35,9 @@
 
     {{-- Bootstrap JS (dropdown, modal, ecc.) — prima del JS del progetto, che puo dipenderne --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    {{-- AOS JS, inizializzato in js/app.js --}}
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script src="{{ asset('js/app.js') }}"></script>
 

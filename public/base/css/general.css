@@ -37,8 +37,7 @@ body {
 }
 
 /* *--- NAVBAR --- */
-h1,
-.navbar-brand {
+h1 {
     font-family: var(--font-heading);
     text-transform: uppercase;
     font-weight: 700;
@@ -61,11 +60,6 @@ h1,
     backdrop-filter: blur(8px);
 }
 
-.navbar-brand,
-.navbar .nav-link {
-    color: var(--color-foreground) !important;
-}
-
 .navbar .nav-link {
     position: relative;
 }
@@ -84,7 +78,7 @@ h1,
 }
 
 .navbar .nav-link:hover {
-    color: var(--color-accent) !important;
+    color: var(--color-accent);
 }
 
 .navbar .nav-link:hover::after {
@@ -93,10 +87,36 @@ h1,
 
 /* *---HERO ---*/
 .hero {
+    position: relative;
     padding-top: 80px;
-    background: radial-gradient(circle at 30% 20%, var(--color-surface) 0%, var(--color-background) 60%);
+    background-color: var(--color-background);
+    background-image:
+        linear-gradient(rgba(var(--color-background-rgb), 0.4), rgba(var(--color-background-rgb), 0.85)),
+        var(--hero-image, none);
+    background-size: cover;
+    background-position: center;
 }
 
 .hero .lead {
     color: var(--color-muted-foreground);
+}
+
+/* Seta "scroll down" animada na base do hero */
+.hero__scroll {
+    position: absolute;
+    left: 50%;
+    bottom: 1.5rem;
+    transform: translateX(-50%);
+    color: var(--color-foreground);
+    font-size: 1.25rem;
+    animation: hero-scroll-bounce 1.6s ease-in-out infinite;
+}
+
+@keyframes hero-scroll-bounce {
+    0%, 100% {
+        transform: translate(-50%, 0);
+    }
+    50% {
+        transform: translate(-50%, 8px);
+    }
 }

@@ -1,0 +1,60 @@
+/*
+ * Classi utility de cor e tipografia — uma classe pra cada token de
+ * css/variables.css. Existe só em base, carregado pra todos os temas.
+ * No Blade chama a classe direto (ex: class="text-fit-accent"), sem
+ * precisar escrever CSS nem style="" pra usar um token. Quando o nome
+ * bateria com uma classe do Bootstrap (ex: .text-primary), usa "fit"
+ * no meio (.text-fit-primary) pra não colidir.
+ */
+
+.text-background {
+    color: var(--color-background);
+}
+
+.text-surface {
+    color: var(--color-surface);
+}
+
+.text-foreground {
+    color: var(--color-foreground);
+}
+
+.text-muted-foreground {
+    color: var(--color-muted-foreground);
+}
+
+.text-fit-primary {
+    color: var(--color-primary);
+}
+
+.text-fit-accent {
+    color: var(--color-accent);
+}
+
+.bg-background {
+    background-color: var(--color-background);
+}
+
+.bg-surface {
+    background-color: var(--color-surface);
+}
+
+.bg-foreground {
+    background-color: var(--color-foreground);
+}
+
+.bg-fit-primary {
+    background-color: var(--color-primary);
+}
+
+.bg-fit-accent {
+    background-color: var(--color-accent);
+}
+
+.font-heading {
+    font-family: var(--font-heading);
+}
+
+.font-body {
+    font-family: var(--font-body);
+}
