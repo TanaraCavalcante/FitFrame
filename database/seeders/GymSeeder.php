@@ -33,6 +33,7 @@ class GymSeeder extends Seeder
                 'domain' => 'pulse.test',
                 'contact' => [
                     'address' => 'Via Roma, Torino',
+                    'email' => 'info@pulse.gym',
                     'phone' => '+39 011 123 4567',
                     'whatsapp' => '+39 333 123 4567',
                     'instagram' => '@pulse.gym',

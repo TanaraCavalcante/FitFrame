@@ -12,7 +12,7 @@ class Contact extends Model
     /** @use HasFactory<ContactFactory> */
     use HasFactory;
 
-    protected $fillable = ['gym_id', 'address', 'phone', 'whatsapp', 'instagram', 'hours'];
+    protected $fillable = ['gym_id', 'address', 'email', 'phone', 'whatsapp', 'instagram', 'hours'];
 
     public function gym(): BelongsTo
     {
@@ -33,5 +33,13 @@ class Contact extends Model
     public function whatsappUrl(): string
     {
         return 'https://wa.me/'.preg_replace('/\D/', '', $this->whatsapp);
+    }
+
+    /**
+     * URL "mailto:" con oggetto precompilato, per il CTA finale (identifica che il lead viene da lì).
+     */
+    public function mailtoUrl(string $subject): string
+    {
+        return 'mailto:'.$this->email.'?subject='.rawurlencode($subject);
     }
 }
