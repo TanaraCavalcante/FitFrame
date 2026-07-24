@@ -3,9 +3,11 @@
     @include('elements.header')
     @include('elements.hero')
 
-    {{-- Sezioni centrali ordinabili per palestra, ordine da `gym_sections` --}}
-    @foreach ($sections as $section)
-        @include("sections.{$section}")
+    {{-- Sezioni centrali ordinabili per palestra, ordine da `gym_sections`.
+         $position segue l'ordine reale mostrato a questa palestra, non un
+         numero fisso per sezione (vedi il label "— 01 / X" in ogni sezione). --}}
+    @foreach ($sections as $index => $section)
+        @include("sections.{$section}", ['position' => $index + 1])
     @endforeach
 
     {{-- Footer fisso, sempre in fondo --}}

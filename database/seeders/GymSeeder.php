@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Contact;
 use App\Models\Domain;
 use App\Models\Gym;
+use App\Models\GymClass;
 use App\Models\GymSection;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -31,6 +32,13 @@ class GymSeeder extends Seeder
                     'whatsapp' => '+39 333 123 4567',
                     'instagram' => '@pulse.gym',
                     'hours' => 'Lun-Ven 06:00-22:00, Sab 08:00-14:00',
+                ],
+                // Contenuto reale (Pulse serve da base per gli altri temi, vedi docs/7-todo.md).
+                'classes' => [
+                    ['name' => 'HIIT', 'icon' => 'fa-solid fa-bolt', 'description' => 'Allenamento a intervalli ad alta intensità per bruciare al massimo in poco tempo.'],
+                    ['name' => 'Functional Training', 'icon' => 'fa-solid fa-person-running', 'description' => 'Movimenti funzionali che allenano forza, mobilità e coordinazione insieme.'],
+                    ['name' => 'Powerlifting', 'icon' => 'fa-solid fa-dumbbell', 'description' => 'Tecnica e forza pura nei tre grandi sollevamenti: squat, panca, stacco.'],
+                    ['name' => 'Mobilità & Recupero', 'icon' => 'fa-solid fa-heart-pulse', 'description' => 'Lavoro di mobilità articolare per prevenire infortuni e migliorare le performance.'],
                 ],
             ],
             [
@@ -83,6 +91,16 @@ class GymSeeder extends Seeder
                 GymSection::create([
                     'gym_id' => $gym->id,
                     'section' => $section,
+                    'order' => $order,
+                ]);
+            }
+
+            foreach ($data['classes'] ?? [] as $order => $class) {
+                GymClass::create([
+                    'gym_id' => $gym->id,
+                    'name' => $class['name'],
+                    'description' => $class['description'],
+                    'icon' => $class['icon'],
                     'order' => $order,
                 ]);
             }
