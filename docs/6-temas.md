@@ -79,18 +79,18 @@ public/
   pulse/
     css/variables.css    ← solo colori e tipografia di Pulse
     img/logo.png
-    img/galeria1.jpg ... galeriaN.jpg
-    team/{file}.jpg
+    img/galery1.jpg ... galeryN.jpg
+    img/team/{file}.jpg
   zenflow/
     css/variables.css
     img/logo.png
-    img/galeria1.jpg ... galeriaN.jpg
-    team/{file}.jpg
+    img/galery1.jpg ... galeryN.jpg
+    img/team/{file}.jpg
   iron-house/
     css/variables.css
     img/logo.png
-    img/galeria1.jpg ... galeriaN.jpg
-    team/{file}.jpg
+    img/galery1.jpg ... galeryN.jpg
+    img/team/{file}.jpg
 ```
 
 `base` ha una cartella in `public/`, a differenza di quanto descritto

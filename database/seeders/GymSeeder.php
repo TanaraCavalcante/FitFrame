@@ -7,10 +7,12 @@ use App\Models\Domain;
 use App\Models\Gym;
 use App\Models\GymClass;
 use App\Models\GymSection;
+use App\Models\PersonalTrainer;
 use App\Models\Plan;
 use App\Models\PlanFeature;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class GymSeeder extends Seeder
 {
@@ -75,6 +77,12 @@ class GymSeeder extends Seeder
                             'Accesso prioritario agli eventi Pulse',
                         ],
                     ],
+                ],
+                'team' => [
+                    ['name' => 'Marco Ferrari', 'specialty' => 'Head Coach, Powerlifting'],
+                    ['name' => 'Giulia Bianchi', 'specialty' => 'Coach Functional Training'],
+                    ['name' => 'Luca Romano', 'specialty' => 'Coach HIIT & Conditioning'],
+                    ['name' => 'Sara Conti', 'specialty' => 'Coach Mobilità & Recupero'],
                 ],
             ],
             [
@@ -157,6 +165,16 @@ class GymSeeder extends Seeder
                         'order' => $featureOrder,
                     ]);
                 }
+            }
+
+            foreach ($data['team'] ?? [] as $order => $trainer) {
+                PersonalTrainer::create([
+                    'gym_id' => $gym->id,
+                    'name' => $trainer['name'],
+                    'specialty' => $trainer['specialty'],
+                    'photo_path' => "{$data['slug']}/img/team/".Str::slug($trainer['name']).'.jpg',
+                    'order' => $order,
+                ]);
             }
         }
     }
