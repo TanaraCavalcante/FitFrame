@@ -22,6 +22,7 @@ class TestimonialFactory extends Factory
             'gym_id' => Gym::factory(),
             'author_name' => fake()->name(),
             'text' => fake()->paragraph(),
+            'member_since' => null,
             'order' => fake()->numberBetween(0, 5),
         ];
     }

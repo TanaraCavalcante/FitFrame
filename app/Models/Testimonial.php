@@ -12,7 +12,7 @@ class Testimonial extends Model
     /** @use HasFactory<TestimonialFactory> */
     use HasFactory;
 
-    protected $fillable = ['gym_id', 'author_name', 'text', 'order'];
+    protected $fillable = ['gym_id', 'author_name', 'text', 'member_since', 'order'];
 
     public function gym(): BelongsTo
     {

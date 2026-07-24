@@ -10,6 +10,7 @@ use App\Models\GymSection;
 use App\Models\PersonalTrainer;
 use App\Models\Plan;
 use App\Models\PlanFeature;
+use App\Models\Testimonial;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -83,6 +84,11 @@ class GymSeeder extends Seeder
                     ['name' => 'Giulia Bianchi', 'specialty' => 'Coach Functional Training'],
                     ['name' => 'Luca Romano', 'specialty' => 'Coach HIIT & Conditioning'],
                     ['name' => 'Sara Conti', 'specialty' => 'Coach Mobilità & Recupero'],
+                ],
+                'testimonials' => [
+                    ['author_name' => 'Alessandro Greco', 'member_since' => 'Allievo da 8 mesi', 'text' => 'Sono entrato senza mai aver messo piede in palestra, oggi non salto un allenamento. I coach seguono davvero ogni progresso.'],
+                    ['author_name' => 'Francesca Moretti', 'member_since' => 'Allieva da 1 anno', 'text' => 'Il piano Pro vale ogni euro. Ho perso 12 kg e trovato una community che mi spinge ogni giorno.'],
+                    ['author_name' => 'Davide Rinaldi', 'member_since' => 'Allievo da 4 mesi', 'text' => 'Powerlifting con Marco è cambiato tutto. Tecnica curata nei minimi dettagli, risultati concreti fin dal primo mese.'],
                 ],
             ],
             [
@@ -173,6 +179,16 @@ class GymSeeder extends Seeder
                     'name' => $trainer['name'],
                     'specialty' => $trainer['specialty'],
                     'photo_path' => "{$data['slug']}/img/team/".Str::slug($trainer['name']).'.jpg',
+                    'order' => $order,
+                ]);
+            }
+
+            foreach ($data['testimonials'] ?? [] as $order => $testimonial) {
+                Testimonial::create([
+                    'gym_id' => $gym->id,
+                    'author_name' => $testimonial['author_name'],
+                    'text' => $testimonial['text'],
+                    'member_since' => $testimonial['member_since'],
                     'order' => $order,
                 ]);
             }
