@@ -17,16 +17,22 @@
     {{-- CSS globale del progetto --}}
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
+    {{--
+        Cache-busting con filemtime(): senza build step/versioning, il browser
+        cacheggia questi CSS in modo aggressivo — un ?v= che cambia ad ogni
+        modifica del file forza il ricaricamento, senza bisogno di hard-refresh.
+    --}}
+
     {{-- Palette/tipografia di fallback (base), poi quelle del tema attivo le sovrascrivono --}}
-    <link rel="stylesheet" href="{{ asset('base/css/variables.css') }}">
+    <link rel="stylesheet" href="{{ asset('base/css/variables.css') }}?v={{ filemtime(public_path('base/css/variables.css')) }}">
     <link rel="stylesheet" href="{{ theme_url('css/variables.css') }}">
 
     {{-- Classi utility di colore/tipografia, una per token — esiste solo nel tema base --}}
-    <link rel="stylesheet" href="{{ asset('base/css/generics.css') }}">
+    <link rel="stylesheet" href="{{ asset('base/css/generics.css') }}?v={{ filemtime(public_path('base/css/generics.css')) }}">
 
     {{-- CSS strutturale e componenti condivisi, esistono solo nel tema base, uguali per tutti i temi --}}
-    <link rel="stylesheet" href="{{ asset('base/css/general.css') }}">
-    <link rel="stylesheet" href="{{ asset('base/css/components.css') }}">
+    <link rel="stylesheet" href="{{ asset('base/css/general.css') }}?v={{ filemtime(public_path('base/css/general.css')) }}">
+    <link rel="stylesheet" href="{{ asset('base/css/components.css') }}?v={{ filemtime(public_path('base/css/components.css')) }}">
 
     {{ $css ?? '' }}
 </head>
@@ -39,7 +45,7 @@
     {{-- AOS JS, inizializzato in js/app.js --}}
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}?v={{ filemtime(public_path('js/app.js')) }}"></script>
 
     {{ $script ?? '' }}
 </body>

@@ -25,4 +25,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         requestAnimationFrame(tick);
     });
+
+    // Galleria: la modal apre sempre sulla foto cliccata, non sempre sulla prima.
+    const galleryModal = document.getElementById('galleryModal');
+
+    if (galleryModal) {
+        galleryModal.addEventListener('show.bs.modal', (event) => {
+            const index = parseInt(event.relatedTarget?.dataset.index ?? '0', 10);
+            const carouselEl = galleryModal.querySelector('.carousel');
+
+            bootstrap.Carousel.getOrCreateInstance(carouselEl).to(index);
+        });
+    }
 });
