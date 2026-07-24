@@ -7,6 +7,8 @@ use App\Models\Domain;
 use App\Models\Gym;
 use App\Models\GymClass;
 use App\Models\GymSection;
+use App\Models\Plan;
+use App\Models\PlanFeature;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -39,6 +41,40 @@ class GymSeeder extends Seeder
                     ['name' => 'Functional Training', 'icon' => 'fa-solid fa-person-running', 'description' => 'Movimenti funzionali che allenano forza, mobilità e coordinazione insieme.'],
                     ['name' => 'Powerlifting', 'icon' => 'fa-solid fa-dumbbell', 'description' => 'Tecnica e forza pura nei tre grandi sollevamenti: squat, panca, stacco.'],
                     ['name' => 'Mobilità & Recupero', 'icon' => 'fa-solid fa-heart-pulse', 'description' => 'Lavoro di mobilità articolare per prevenire infortuni e migliorare le performance.'],
+                ],
+                'plans' => [
+                    [
+                        'name' => 'Base',
+                        'price' => 29.90,
+                        'highlighted' => false,
+                        'features' => [
+                            'Accesso libero in sala pesi',
+                            '1 lezione di gruppo a settimana',
+                            'Scheda di allenamento base',
+                        ],
+                    ],
+                    [
+                        'name' => 'Pro',
+                        'price' => 49.90,
+                        'highlighted' => true,
+                        'features' => [
+                            'Accesso illimitato a tutte le lezioni',
+                            'Scheda di allenamento personalizzata',
+                            '1 sessione con personal trainer al mese',
+                            'Accesso all\'app di monitoraggio',
+                        ],
+                    ],
+                    [
+                        'name' => 'Elite',
+                        'price' => 79.90,
+                        'highlighted' => false,
+                        'features' => [
+                            'Tutto quello incluso nel piano Pro',
+                            'Sessioni con personal trainer illimitate',
+                            'Piano nutrizionale personalizzato',
+                            'Accesso prioritario agli eventi Pulse',
+                        ],
+                    ],
                 ],
             ],
             [
@@ -103,6 +139,24 @@ class GymSeeder extends Seeder
                     'icon' => $class['icon'],
                     'order' => $order,
                 ]);
+            }
+
+            foreach ($data['plans'] ?? [] as $order => $planData) {
+                $plan = Plan::create([
+                    'gym_id' => $gym->id,
+                    'name' => $planData['name'],
+                    'price' => $planData['price'],
+                    'highlighted' => $planData['highlighted'],
+                    'order' => $order,
+                ]);
+
+                foreach ($planData['features'] as $featureOrder => $description) {
+                    PlanFeature::create([
+                        'plan_id' => $plan->id,
+                        'description' => $description,
+                        'order' => $featureOrder,
+                    ]);
+                }
             }
         }
     }

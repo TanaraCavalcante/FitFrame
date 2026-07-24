@@ -31,6 +31,8 @@
     color: var(--color-accent);
 }
 
+/* ? Background colors */
+
 .bg-background {
     background-color: var(--color-background);
 }

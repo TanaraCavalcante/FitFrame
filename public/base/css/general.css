@@ -10,9 +10,10 @@
     --bs-border-radius: 4px;
     --bs-border-radius-sm: 4px;
     --bs-border-radius-lg: 4px;
+    --bs-border-color: var(--color-muted-foreground);
 }
 
-/* Container: cap fisso 1200px em vez do stepping padrão do Bootstrap (1140/1320px) */
+/* *Container: cap fisso 1200px em vez do stepping padrão do Bootstrap (1140/1320px) */
 .container {
     max-width: 1200px;
     padding-inline: 1rem;

@@ -29,7 +29,7 @@
     color: var(--color-background);
 }
 
-/* Card riusabile (corsi, team, ecc.): fundo surface, bordo inferior que "cresce" no hover */
+/* *Card riusabile (corsi, team, ecc.): fundo surface, bordo inferior que "cresce" no hover */
 .card-fit {
     position: relative;
     background-color: var(--color-surface);
@@ -51,4 +51,22 @@
 
 .card-fit:hover::after {
     transform: scaleX(1);
+}
+
+/* *Card de piano: fundo/cor via .bg-surface, .bg-fit-primary etc no HTML — aqui só o que Bootstrap não cobre */
+.plan-card {
+    position: relative;
+    transition: transform 0.2s ease;
+}
+
+.plan-card:hover {
+    transform: scale(1.05);
+    z-index: 1;
+}
+
+.plan-card__badge {
+    position: absolute;
+    top: -0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
 }
