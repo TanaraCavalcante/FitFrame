@@ -51,10 +51,20 @@
     background-color: var(--color-accent);
 }
 
+/* ? Tipografia: font-family de heading e body, pra usar direto no Blade sem
+ ?   precisar escrever CSS nem style="".
+ ? */
+
 .font-heading {
     font-family: var(--font-heading);
 }
 
+
 .font-body {
     font-family: var(--font-body);
+}
+
+/* ? Hover amarelo (accent) reutilizável, ex: navbar, links do footer */
+.hover-accent:hover {
+    color: var(--color-accent);
 }

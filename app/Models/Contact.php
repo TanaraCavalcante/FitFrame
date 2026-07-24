@@ -18,4 +18,20 @@ class Contact extends Model
     {
         return $this->belongsTo(Gym::class);
     }
+
+    /**
+     * URL diretto per il profilo Instagram, a partire dall'handle salvato (es. "@pulse.gym").
+     */
+    public function instagramUrl(): string
+    {
+        return 'https://instagram.com/'.ltrim($this->instagram, '@');
+    }
+
+    /**
+     * URL diretto per aprire una chat WhatsApp, a partire dal numero salvato.
+     */
+    public function whatsappUrl(): string
+    {
+        return 'https://wa.me/'.preg_replace('/\D/', '', $this->whatsapp);
+    }
 }

@@ -19,7 +19,7 @@ class ResolveGym
     public function handle(Request $request, Closure $next): Response
     {
         // Cerca il dominio della richiesta corrente nella tabella `domains`, con il Gym già caricato (eager load).
-        $domain = Domain::with('gym.contents')->where('domain', $request->getHost())->first();
+        $domain = Domain::with(['gym.contents', 'gym.contact'])->where('domain', $request->getHost())->first();
 
         if ($domain) {
             // Dominio trovato: attiva il tema (igaster/laravel-theme) con lo slug della palestra.
