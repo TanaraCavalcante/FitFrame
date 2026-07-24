@@ -1,5 +1,5 @@
 <section
-    class="hero d-flex align-items-center vh-100"
+    class="hero d-flex align-items-center"
     id="hero"
     style="--hero-image: url('{{ theme_url('img/hero.jpg') }}')"
 >
@@ -18,8 +18,4 @@
             <span class="d-block small text-muted-foreground">{{ $gym->content('hero_stat_label', 'atleti attivi') }}</span>
         </div>
     </div>
-
-    <a href="#classes" class="hero__scroll" aria-label="Scorri per vedere i corsi">
-        <i class="fa-solid fa-chevron-down"></i>
-    </a>
 </section>
