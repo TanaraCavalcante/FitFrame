@@ -1,3 +1,12 @@
+## [2026-07-25] - Riorganizzazione CSS backend e tipografia
+
+### Aggiunto
+- Tipografia dedicata al pannello admin: font Inter (Google Fonts) con `tabular-nums` per allineare i numeri in tabelle/report, in `public/css/backend/tipografia.css`.
+
+### Modificato
+- `public/css/backend.css` diviso in `backend/variables.css` (design token), `backend/tipografia.css`, `backend/generals.css` (stili componenti) — `backend.css` resta l'unico file caricato dal layout, ora solo un aggregatore `@import`.
+- Rimosso `public/css/app.css` (vuoto, inutilizzato) e il relativo `<link>` in `master.blade.php`.
+
 ## [2026-07-25] - Pannello admin backend completo
 
 ### Aggiunto
