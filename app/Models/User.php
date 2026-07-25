@@ -59,6 +59,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Verifica se l'utente è un super_admin (usato per i controlli lato view).
+     */
+    public function isSuperAdmin(): bool
+    {
+        return $this->role === UserRole::SuperAdmin;
+    }
+
+    /**
      * Solo un super_admin può impersonare un altro utente.
      */
     public function canImpersonate(): bool
