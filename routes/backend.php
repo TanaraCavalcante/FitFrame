@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\AuthenticatedSessionController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\GymAdminController;
 use App\Http\Controllers\Backend\GymController;
 use App\Http\Controllers\Backend\NewPasswordController;
 use App\Http\Controllers\Backend\PasswordResetLinkController;
@@ -24,5 +25,9 @@ Route::prefix('admin')->name('backend.')->group(function () {
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
         Route::resource('strutture', GymController::class)->except('show')->parameters(['strutture' => 'gym']);
+
+        Route::resource('utenti', GymAdminController::class)->except('show')->parameters(['utenti' => 'user']);
+
+        Route::impersonate();
     });
 });
