@@ -11,10 +11,10 @@ Route::prefix('admin')->name('backend.')->group(function () {
         Route::post('login', [AuthenticatedSessionController::class, 'store'])->middleware('throttle:login');
 
         Route::get('password/forgot', [PasswordResetLinkController::class, 'create'])->name('password.request');
-        Route::post('password/forgot', [PasswordResetLinkController::class, 'store'])->name('password.email');
+        Route::post('password/forgot', [PasswordResetLinkController::class, 'store'])->name('password.email')->middleware('throttle:password-reset');
 
         Route::get('password/reset/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
-        Route::post('password/reset', [NewPasswordController::class, 'store'])->name('password.update');
+        Route::post('password/reset', [NewPasswordController::class, 'store'])->name('password.update')->middleware('throttle:password-reset');
     });
 
     Route::middleware('auth')->group(function () {
