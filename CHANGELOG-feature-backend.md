@@ -1,3 +1,8 @@
+## [2026-07-25] - Navbar allineata all'aside
+
+### Modificato
+- Navbar del pannello admin senza bordo, sfondo/colore uguali all'aside in entrambi i temi (stessa variabile `--backend-aside-bg`).
+
 ## [2026-07-25] - Rifinitura avatar/popover utente e pulizia CSS backend
 
 ### Aggiunto

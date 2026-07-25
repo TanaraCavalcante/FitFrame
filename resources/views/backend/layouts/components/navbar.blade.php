@@ -1,4 +1,4 @@
-  <nav class="navbar bg-body border-bottom px-3">
+  <nav class="navbar bg-aside text-aside px-3">
       <ol class="breadcrumb mb-0">
           @hasSection('breadcrumb')
               @yield('breadcrumb')
