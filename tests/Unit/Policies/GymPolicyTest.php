@@ -53,4 +53,12 @@ class GymPolicyTest extends TestCase
         $this->assertTrue($this->policy->manage($gymAdmin, $ownGym));
         $this->assertFalse($this->policy->manage($gymAdmin, $otherGym));
     }
+
+    public function test_a_gym_admin_with_no_gym_id_cannot_manage_anything(): void
+    {
+        $gymAdmin = User::factory()->create(['gym_id' => null]);
+        $gym = new Gym;
+
+        $this->assertFalse($this->policy->manage($gymAdmin, $gym));
+    }
 }

@@ -34,6 +34,7 @@ class GymPolicy
      */
     public function manage(User $user, Gym $gym): bool
     {
-        return $user->role === UserRole::SuperAdmin || $user->gym_id === $gym->id;
+        return $user->role === UserRole::SuperAdmin
+            || ($user->gym_id !== null && $user->gym_id === $gym->id);
     }
 }
