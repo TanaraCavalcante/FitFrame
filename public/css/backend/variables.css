@@ -8,6 +8,7 @@
   --backend-surface-bg: #ffffff;        /* cards, tabelas, painéis */
   --backend-aside-bg: #ffffff;          /* aside branco = mais clean que cinza */
   --backend-aside-border: #e5e8ec;
+  --backend-popover-bg: #f8f9fa;         /* popover/dropdown flutuante — leve contraste sobre aside/surface brancos */
 
   /* Texto */
   --backend-aside-color: #3b4453;       /* texto do menu (não preto puro) */
@@ -20,6 +21,7 @@
   /* Cor de ação — ÚNICA identidade */
   --backend-accent: #1d6fd4;            /* azul de ação */
   --backend-accent-contrast: #ffffff;   /* texto/ícone sobre o azul */
+  --backend-accent-shadow: rgba(29, 111, 212, .35); /* mesmo accent, com transparência pro glow no hover */
   --backend-aside-active-bg: #e8f1fc;   /* fundo do item de menu ATIVO */
   --backend-aside-active-color: #1d6fd4;/* texto/ícone do item ativo */
   --backend-aside-button-hover-color: #1d6fd4;
@@ -31,6 +33,7 @@
   --backend-surface-bg: #1e242c;        /* cards e painéis, 1 nível acima */
   --backend-aside-bg: #1e242c;
   --backend-aside-border: #2c333d;
+  --backend-popover-bg: #262d37;         /* popover/dropdown flutuante — um pouco mais claro que aside/surface no escuro */
 
   /* Texto */
   --backend-aside-color: #d6dbe3;
@@ -43,6 +46,7 @@
   /* Mesma cor de ação, versão mais clara pra contraste no escuro */
   --backend-accent: #4d94f0;
   --backend-accent-contrast: #0f1319;
+  --backend-accent-shadow: rgba(77, 148, 240, .35); /* mesmo accent, com transparência pro glow no hover */
   --backend-aside-active-bg: #1a2b40;   /* azul bem escuro/dessaturado */
   --backend-aside-active-color: #7ab4f7;
   --backend-aside-button-hover-color: #7ab4f7;

@@ -67,6 +67,19 @@ class User extends Authenticatable
     }
 
     /**
+     * Iniziali per l'avatar (prima lettera del primo e dell'ultimo nome, es. "W Tech Admin" → "WA").
+     */
+    public function initials(): string
+    {
+        $parts = explode(' ', trim($this->name));
+
+        $first = mb_substr($parts[0], 0, 1);
+        $last = count($parts) > 1 ? mb_substr($parts[array_key_last($parts)], 0, 1) : '';
+
+        return mb_strtoupper($first.$last);
+    }
+
+    /**
      * Solo un super_admin può impersonare un altro utente.
      */
     public function canImpersonate(): bool

@@ -27,10 +27,10 @@
 </head>
 <body>
 
- <div class="d-flex backend-layout">
+ <div class="d-flex backend-layout bg-page">
     {{--?  Sidebar collassata se l'utente ha scelto di collassarla --}}
     @include('backend.layouts.components.aside')
-        <div class="backend-main-shell flex-grow-1 d-flex flex-column">
+        <div class="backend-main-shell bg-page flex-grow-1 d-flex flex-column">
         {{--?  Navbar --}}
           @include('backend.layouts.components.navbar')
 
