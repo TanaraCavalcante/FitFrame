@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Database\Factories\GymFactory;
+use Igaster\LaravelTheme\Facades\Theme;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -56,11 +57,34 @@ class Gym extends Model
     }
 
     /**
+     * Utenti gym_admin assegnati a questa struttura.
+     */
+    public function admins(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
+
+    /**
      * Recupera un testo libero da `contents` per questa palestra (es. hero_headline).
      * Se la chiave non esiste per la palestra, ritorna il default del tema base.
      */
     public function content(string $key, string $default = ''): string
     {
         return $this->contents->firstWhere('key', $key)?->value ?? $default;
+    }
+
+    /**
+     * Nomi dei temi installati (cartelle con theme.json), esclusa `base`
+     * che non ha asset propri e non è mai assegnabile a una Gym reale.
+     *
+     * @return array<int, string>
+     */
+    public static function availableThemes(): array
+    {
+        return collect(Theme::all())
+            ->pluck('name')
+            ->reject(fn (string $name) => $name === 'base')
+            ->values()
+            ->all();
     }
 }
