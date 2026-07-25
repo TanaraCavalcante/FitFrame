@@ -1,55 +1,165 @@
 :root {
-    --backend-sidebar-width: 260px;
-    --backend-sidebar-collapsed-width: 72px;
+    /* Dimensões */
+  --backend-sidebar-width: 260px;
+  --backend-sidebar-collapsed-width: 72px;
+
+    /* Superfícies */
+  --backend-page-bg: #f4f6f8;          /* fundo geral levemente cinza (não branco puro) */
+  --backend-surface-bg: #ffffff;        /* cards, tabelas, painéis */
+  --backend-aside-bg: #ffffff;          /* aside branco = mais clean que cinza */
+  --backend-aside-border: #e5e8ec;
+
+  /* Texto */
+  --backend-aside-color: #3b4453;       /* texto do menu (não preto puro) */
+  --backend-aside-color-muted: #8a94a6; /* ícones inativos, labels secundários */
+
+  /* Interações do aside */
+  --backend-aside-hover-bg: #eef1f5;
+  --backend-aside-button-border: #cbd2db;
+
+  /* Cor de ação — ÚNICA identidade */
+  --backend-accent: #1d6fd4;            /* azul de ação */
+  --backend-accent-contrast: #ffffff;   /* texto/ícone sobre o azul */
+  --backend-aside-active-bg: #e8f1fc;   /* fundo do item de menu ATIVO */
+  --backend-aside-active-color: #1d6fd4;/* texto/ícone do item ativo */
+  --backend-aside-button-hover-color: #1d6fd4;
+}
+
+[data-bs-theme="dark"] {
+    /* Superfícies */
+  --backend-page-bg: #171b21;           /* fundo geral (cinza-azulado escuro) */
+  --backend-surface-bg: #1e242c;        /* cards e painéis, 1 nível acima */
+  --backend-aside-bg: #1e242c;
+  --backend-aside-border: #2c333d;
+
+  /* Texto */
+  --backend-aside-color: #d6dbe3;
+  --backend-aside-color-muted: #7d8797;
+
+  /* Interações do aside */
+  --backend-aside-hover-bg: #2a313b;
+  --backend-aside-button-border: #3a424e;
+
+  /* Mesma cor de ação, versão mais clara pra contraste no escuro */
+  --backend-accent: #4d94f0;
+  --backend-accent-contrast: #0f1319;
+  --backend-aside-active-bg: #1a2b40;   /* azul bem escuro/dessaturado */
+  --backend-aside-active-color: #7ab4f7;
+  --backend-aside-button-hover-color: #7ab4f7;
 }
 
 .backend-layout {
+    background-color: var(--backend-page-bg);
     position: relative;
+    min-height: 100vh;
+    transition: background-color .15s ease;
+}
+
+.backend-main-shell {
+    background-color: var(--backend-page-bg);
+    min-width: 0;
+    transition: background-color .15s ease;
 }
 
 .backend-aside-slot {
+    background-color: var(--backend-aside-bg);
+    border-right: 1px solid var(--backend-aside-border);
     width: var(--backend-sidebar-width);
     flex-shrink: 0;
     position: relative;
-    transition: width .15s ease;
+    transition:
+        background-color .15s ease,
+        border-color .15s ease,
+        width .22s ease;
 }
 
 html.sidebar-collapsed .backend-aside-slot {
     width: var(--backend-sidebar-collapsed-width);
 }
 
+html.sidebar-collapsed.sidebar-hovering .backend-aside-slot {
+    width: var(--backend-sidebar-width);
+}
+
 .backend-aside {
-    position: absolute;
+    background-color: var(--backend-aside-bg);
+    color: var(--backend-aside-color);
+    position: sticky;
     top: 0;
-    left: 0;
-    bottom: 0;
     width: 100%;
     min-height: 100vh;
     z-index: 1020;
     overflow: hidden;
+    transition:
+        background-color .15s ease,
+        border-color .15s ease,
+        color .15s ease,
+        transform .22s ease;
 }
 
-/* Da collassato, l'hover/focus espande sopra il contenuto senza spostarlo:
-   .backend-aside-slot mantiene sempre la stessa larghezza nel flex layout,
-   solo .backend-aside (assoluto al suo interno) si espande visivamente oltre
-   il confine dello slot. */
-html.sidebar-collapsed .backend-aside:hover,
-html.sidebar-collapsed .backend-aside:focus-within {
-    width: var(--backend-sidebar-width);
-    overflow: visible;
-    box-shadow: 4px 0 16px rgba(0, 0, 0, .35);
+.backend-nav-link {
+    color: var(--backend-aside-color);
+    border-radius: .375rem;
+}
+
+.backend-nav-link:hover,
+.backend-nav-link:focus {
+    background: var(--backend-aside-hover-bg);
+    color: var(--backend-aside-color);
+}
+
+.backend-icon-button,
+.backend-outline-button {
+    border-color: var(--backend-aside-button-border);
+    color: var(--backend-aside-color);
+}
+
+/* !Quando passa o mouse, somente o ícone muda de cor */
+.backend-icon-button:hover,
+.backend-icon-button:focus {
+    color: var(--backend-aside-button-hover-color);
+}
+
+.backend-outline-button:hover,
+.backend-outline-button:focus {
+    background-color: var(--backend-aside-button-hover-color);
+    color: var(--backend-aside-bg);
+}
+
+.backend-nav-label,
+.backend-brand-text,
+.backend-menu-heading {
+    display: inline-block;
+    max-width: 180px;
+    opacity: 1;
+    overflow: hidden;
+    transform: translateX(0);
+    transition:
+        max-width .22s ease,
+        opacity .16s ease,
+        transform .22s ease,
+        visibility .16s ease;
+    vertical-align: middle;
+    visibility: visible;
+    white-space: nowrap;
 }
 
 html.sidebar-collapsed .backend-aside .backend-nav-label,
 html.sidebar-collapsed .backend-aside .backend-brand-text,
 html.sidebar-collapsed .backend-aside .backend-menu-heading {
-    display: none;
+    max-width: 0;
+    opacity: 0;
+    transform: translateX(-8px);
+    visibility: hidden;
 }
 
-html.sidebar-collapsed .backend-aside:hover .backend-nav-label,
-html.sidebar-collapsed .backend-aside:hover .backend-brand-text,
-html.sidebar-collapsed .backend-aside:hover .backend-menu-heading {
-    display: inline;
+html.sidebar-collapsed.sidebar-hovering .backend-aside .backend-nav-label,
+html.sidebar-collapsed.sidebar-hovering .backend-aside .backend-brand-text,
+html.sidebar-collapsed.sidebar-hovering .backend-aside .backend-menu-heading {
+    max-width: 180px;
+    opacity: 1;
+    transform: translateX(0);
+    visibility: visible;
 }
 
 #sidebar-toggle .fa-chevron-right {
@@ -63,3 +173,6 @@ html.sidebar-collapsed #sidebar-toggle .fa-chevron-left {
 html.sidebar-collapsed #sidebar-toggle .fa-chevron-right {
     display: inline;
 }
+
+
+
