@@ -1,0 +1,129 @@
+.backend-layout {
+    background-color: var(--backend-page-bg);
+    position: relative;
+    min-height: 100vh;
+    transition: background-color .15s ease;
+}
+
+.backend-main-shell {
+    background-color: var(--backend-page-bg);
+    min-width: 0;
+    transition: background-color .15s ease;
+}
+
+.backend-aside-slot {
+    background-color: var(--backend-aside-bg);
+    border-right: 1px solid var(--backend-aside-border);
+    width: var(--backend-sidebar-width);
+    flex-shrink: 0;
+    position: relative;
+    transition:
+        background-color .15s ease,
+        border-color .15s ease,
+        width .22s ease;
+}
+
+html.sidebar-collapsed .backend-aside-slot {
+    width: var(--backend-sidebar-collapsed-width);
+}
+
+html.sidebar-collapsed.sidebar-hovering .backend-aside-slot {
+    width: var(--backend-sidebar-width);
+}
+
+.backend-aside {
+    background-color: var(--backend-aside-bg);
+    color: var(--backend-aside-color);
+    position: sticky;
+    top: 0;
+    width: 100%;
+    min-height: 100vh;
+    z-index: 1020;
+    overflow: hidden;
+    transition:
+        background-color .15s ease,
+        border-color .15s ease,
+        color .15s ease,
+        transform .22s ease;
+}
+
+.backend-nav-link {
+    color: var(--backend-aside-color);
+    border-radius: .375rem;
+}
+
+.backend-nav-link:hover,
+.backend-nav-link:focus,
+.backend-nav-link.active {
+    background: var(--backend-aside-hover-bg);
+    color: var(--backend-aside-button-hover-color);
+}
+
+.backend-icon-button,
+.backend-outline-button {
+    border-color: var(--backend-aside-button-border);
+    color: var(--backend-aside-color);
+}
+
+/* !Quando passa o mouse, somente o ícone muda de cor */
+.backend-icon-button:hover,
+.backend-icon-button:focus {
+    color: var(--backend-aside-button-hover-color);
+}
+
+.backend-outline-button:hover,
+.backend-outline-button:focus {
+    background-color: var(--backend-aside-button-hover-color);
+    color: var(--backend-aside-bg);
+}
+
+.backend-nav-label,
+.backend-brand-text,
+.backend-menu-heading {
+    display: inline-block;
+    max-width: 180px;
+    opacity: 1;
+    overflow: hidden;
+    transform: translateX(0);
+    transition:
+        max-width .22s ease,
+        opacity .16s ease,
+        transform .22s ease,
+        visibility .16s ease;
+    vertical-align: middle;
+    visibility: visible;
+    white-space: nowrap;
+}
+
+html.sidebar-collapsed .backend-aside .backend-nav-label,
+html.sidebar-collapsed .backend-aside .backend-brand-text,
+html.sidebar-collapsed .backend-aside .backend-menu-heading {
+    max-width: 0;
+    opacity: 0;
+    transform: translateX(-8px);
+    visibility: hidden;
+}
+
+html.sidebar-collapsed.sidebar-hovering .backend-aside .backend-nav-label,
+html.sidebar-collapsed.sidebar-hovering .backend-aside .backend-brand-text,
+html.sidebar-collapsed.sidebar-hovering .backend-aside .backend-menu-heading {
+    max-width: 180px;
+    opacity: 1;
+    transform: translateX(0);
+    visibility: visible;
+}
+
+#sidebar-toggle .fa-chevron-right {
+    display: none;
+}
+
+html.sidebar-collapsed #sidebar-toggle .fa-chevron-left {
+    display: none;
+}
+
+html.sidebar-collapsed #sidebar-toggle .fa-chevron-right {
+    display: inline;
+}
+
+
+

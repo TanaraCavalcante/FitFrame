@@ -14,9 +14,6 @@
     {{-- AOS (Animate On Scroll) via CDN, per le animazioni all'ingresso in viewport --}}
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 
-    {{-- CSS globale del progetto --}}
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
     {{--
         Cache-busting con filemtime(): senza build step/versioning, il browser
         cacheggia questi CSS in modo aggressivo — un ?v= che cambia ad ogni
