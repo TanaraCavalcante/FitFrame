@@ -96,6 +96,34 @@ Voci visibili in base al `role`:
 | Strutture (CRUD Gym + Domain) | ✅ | ❌ |
 | Contenuti (da progettare dopo) | ✅ (su qualunque struttura scelta) | ✅ (solo la propria) |
 
+### E.1) Comportamento del layout (sidebar collassabile + dark mode)
+
+Riferimento visivo fornito dall'utente (screenshot di un altro pannello
+W Tech): aside scuro con logo in alto, voci con icona+etichetta,
+chevron per collassare/espandere; da collassato resta solo la colonna
+di icone.
+
+- **Collassabile**: bottone chevron nell'header dell'aside. Aperto di
+  default all'ingresso. Un click lo collassa a sola colonna di icone
+  (etichette, intestazione "MENU" e testo del footer nascosti).
+- **Hover-preview quando collassato**: passare il mouse sull'aside
+  collassato lo espande temporaneamente (overlay sopra il contenuto,
+  senza spingerlo) mostrando di nuovo le etichette — puro CSS
+  (`:hover`), **non** cambia lo stato persistito e si richiude
+  all'uscita del mouse. Solo il click sul chevron cambia lo stato
+  persistito.
+- **Persistenza**: stato collassato/espanso e tema chiaro/scuro
+  sopravvivono alla navigazione tra pagine — l'app è Blade multi-pagina
+  (nessuna SPA), quindi persistono via `localStorage`, applicati con
+  uno script inline in `<head>` (prima del paint, per evitare un flash
+  dello stato sbagliato).
+- **Dark mode**: flag/switch nella navbar in cima al contenuto
+  principale (non nell'aside, che resta sempre scuro come colore di
+  brand). Sfrutta il supporto nativo di Bootstrap 5.3
+  (`data-bs-theme="dark"` su `<html>`), default `light`.
+- **Ambito**: solo il pannello admin backend. Il sito pubblico delle
+  palestre (temi pulse/iron-house/zenflow) non è toccato.
+
 ## F) Flussi CRUD
 
 **Creazione Struttura (Gym):**

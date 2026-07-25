@@ -103,9 +103,10 @@ html.sidebar-collapsed.sidebar-hovering .backend-aside-slot {
 }
 
 .backend-nav-link:hover,
-.backend-nav-link:focus {
+.backend-nav-link:focus,
+.backend-nav-link.active {
     background: var(--backend-aside-hover-bg);
-    color: var(--backend-aside-color);
+    color: var(--backend-aside-button-hover-color);
 }
 
 .backend-icon-button,

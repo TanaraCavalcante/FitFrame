@@ -14,27 +14,27 @@ class AuthenticationTest extends TestCase
 
     public function test_login_screen_can_be_rendered(): void
     {
-        $this->get('/admin/login')->assertOk();
+        $this->get('http://gestione.fitframe.test/login')->assertOk();
     }
 
     public function test_users_can_authenticate_with_correct_credentials(): void
     {
         $user = User::factory()->superAdmin()->create();
 
-        $response = $this->post('/admin/login', [
+        $response = $this->post('http://gestione.fitframe.test/login', [
             'email' => $user->email,
             'password' => 'password',
         ]);
 
         $this->assertAuthenticatedAs($user);
-        $response->assertRedirect('/admin');
+        $response->assertRedirect('http://gestione.fitframe.test/dashboard');
     }
 
     public function test_users_cannot_authenticate_with_wrong_password(): void
     {
         $user = User::factory()->superAdmin()->create();
 
-        $this->post('/admin/login', [
+        $this->post('http://gestione.fitframe.test/login', [
             'email' => $user->email,
             'password' => 'wrong-password',
         ]);
@@ -44,17 +44,17 @@ class AuthenticationTest extends TestCase
 
     public function test_guests_are_redirected_to_login(): void
     {
-        $this->get('/admin')->assertRedirect('/admin/login');
+        $this->get('http://gestione.fitframe.test/')->assertRedirect('http://gestione.fitframe.test/login');
     }
 
     public function test_users_can_logout(): void
     {
         $user = User::factory()->superAdmin()->create();
 
-        $response = $this->actingAs($user)->post('/admin/logout');
+        $response = $this->actingAs($user)->post('http://gestione.fitframe.test/logout');
 
         $this->assertGuest();
-        $response->assertRedirect('/admin/login');
+        $response->assertRedirect('http://gestione.fitframe.test/login');
     }
 
     public function test_login_route_uses_a_five_per_minute_rate_limiter(): void
@@ -63,7 +63,7 @@ class AuthenticationTest extends TestCase
 
         $this->assertNotNull($limiter, 'Nessun limiter "login" registrato — vedi AppServiceProvider::boot().');
 
-        $limit = $limiter(Request::create('/admin/login', 'POST'));
+        $limit = $limiter(Request::create('http://gestione.fitframe.test/login', 'POST'));
 
         $this->assertSame(5, $limit->maxAttempts);
     }

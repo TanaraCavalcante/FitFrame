@@ -11,41 +11,50 @@ class DashboardTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
-    public function test_super_admin_sees_platform_menu(): void
+    public function test_super_admin_sees_the_shared_dashboard(): void
     {
         $superAdmin = User::factory()->superAdmin()->create();
 
-        $response = $this->actingAs($superAdmin)->get('/admin');
+        $response = $this->actingAs($superAdmin)->get('http://gestione.fitframe.test/dashboard');
 
         $response->assertOk();
-        $response->assertSee('Strutture');
-        $response->assertSee('Utenti');
-        $response->assertSee('Super Admin');
+        $response->assertSee('Dashboard');
+        $response->assertDontSee('Strutture');
+        $response->assertDontSee('Utenti');
     }
 
-    public function test_gym_admin_does_not_see_platform_menu(): void
+    public function test_gym_admin_sees_the_shared_dashboard(): void
     {
         $gym = Gym::factory()->create();
         $gymAdmin = User::factory()->for($gym)->create();
 
-        $response = $this->actingAs($gymAdmin)->get('/admin');
+        $response = $this->actingAs($gymAdmin)->get('http://gestione.fitframe.test/dashboard');
 
         $response->assertOk();
+        $response->assertSee('Dashboard');
         $response->assertDontSee('Strutture');
         $response->assertDontSee('Utenti');
-        $response->assertDontSee('Super Admin');
     }
 
     public function test_layout_ships_the_sidebar_toggle_and_theme_switch(): void
     {
         $superAdmin = User::factory()->superAdmin()->create();
 
-        $response = $this->actingAs($superAdmin)->get('/admin');
+        $response = $this->actingAs($superAdmin)->get('http://gestione.fitframe.test/dashboard');
 
         $response->assertOk();
         $response->assertSee('id="sidebar-toggle"', false);
         $response->assertSee('id="theme-toggle"', false);
         $response->assertSee('backend.css', false);
         $response->assertSee('backend.js', false);
+    }
+
+    public function test_backend_root_redirects_authenticated_users_to_dashboard_path(): void
+    {
+        $superAdmin = User::factory()->superAdmin()->create();
+
+        $this->actingAs($superAdmin)
+            ->get('http://gestione.fitframe.test/')
+            ->assertRedirect('http://gestione.fitframe.test/dashboard');
     }
 }
