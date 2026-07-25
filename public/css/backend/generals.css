@@ -1,3 +1,5 @@
+/* *Main */
+
 .backend-layout {
     background-color: var(--backend-page-bg);
     position: relative;
@@ -10,6 +12,8 @@
     min-width: 0;
     transition: background-color .15s ease;
 }
+
+/* *Sidebar */
 
 .backend-aside-slot {
     background-color: var(--backend-aside-bg);
@@ -52,9 +56,14 @@ html.sidebar-collapsed.sidebar-hovering .backend-aside-slot {
     border-radius: .375rem;
 }
 
-.backend-nav-link:hover,
-.backend-nav-link:focus,
+/* Pagina corrente: solo colore accent, senza sfondo. */
 .backend-nav-link.active {
+    color: var(--backend-accent);
+}
+
+/* Hover/focus: sfondo + colore — vale anche sulla voce attiva. */
+.backend-nav-link:hover,
+.backend-nav-link:focus {
     background: var(--backend-aside-hover-bg);
     color: var(--backend-aside-button-hover-color);
 }
@@ -65,11 +74,6 @@ html.sidebar-collapsed.sidebar-hovering .backend-aside-slot {
     color: var(--backend-aside-color);
 }
 
-/* !Quando passa o mouse, somente o ícone muda de cor */
-.backend-icon-button:hover,
-.backend-icon-button:focus {
-    color: var(--backend-aside-button-hover-color);
-}
 
 .backend-outline-button:hover,
 .backend-outline-button:focus {
@@ -123,6 +127,23 @@ html.sidebar-collapsed #sidebar-toggle .fa-chevron-left {
 
 html.sidebar-collapsed #sidebar-toggle .fa-chevron-right {
     display: inline;
+}
+
+.backend-logo {
+    height: 75px;
+    width: auto;
+}
+
+.backend-logo-dark {
+    display: none;
+}
+
+[data-bs-theme="dark"] .backend-logo-light {
+    display: none;
+}
+
+[data-bs-theme="dark"] .backend-logo-dark {
+    display: inline-block;
 }
 
 

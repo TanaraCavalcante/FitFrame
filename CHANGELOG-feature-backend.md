@@ -1,3 +1,13 @@
+## [2026-07-25] - Logo, breadcrumb e stato attivo del menu
+
+### Aggiunto
+- Logo del pannello admin (chiaro/scuro, swap automatico via tema) in `public/backend/img/`.
+- Breadcrumb nella navbar (`@yield('breadcrumb')` con fallback icona home) al posto del titolo statico.
+- `public/css/backend/generics.css` con utility `.hover-accent` (colore accent del tema al hover/focus), sezioni commentate in `generals.css` (Main/Sidebar).
+
+### Modificato
+- Voce di menu della pagina corrente resta colorata con l'accent (senza sfondo) invece di sparire — sfondo compare solo su hover/focus, anche sulla voce attiva.
+
 ## [2026-07-25] - Riorganizzazione CSS backend e tipografia
 
 ### Aggiunto

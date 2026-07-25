@@ -1,0 +1,11 @@
+/* Utility riutilizzabili — una per comportamento, come in public/base/css/generics.css */
+
+.hover-accent {
+    color: var(--backend-aside-color-muted);
+    transition: color .15s ease;
+}
+
+.hover-accent:hover,
+.hover-accent:focus {
+    color: var(--backend-accent);
+}

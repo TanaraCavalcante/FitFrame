@@ -1,7 +1,10 @@
 <div class="backend-aside-slot">
     <aside class="backend-aside p-3">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h5 class="backend-brand-text mb-0">Gestione FitFrame</h5>
+            <div class="backend-brand-text mb-0">
+                <img src="{{ asset('backend/img/logo.png') }}" alt="Gestione FitFrame" class="backend-logo backend-logo-light">
+                <img src="{{ asset('backend/img/logo-dark.png') }}" alt="Gestione FitFrame" class="backend-logo backend-logo-dark">
+            </div>
             <a href="#" id="sidebar-toggle" class="backend-icon-button text-decoration-none hover-accent"
                 aria-label="Comprimi o espandi il menu">
                 <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
@@ -10,7 +13,7 @@
         </div>
 
         <nav class="nav flex-column gap-1">
-            <a class="nav-link backend-nav-link" href="{{ route('backend.dashboard') }}">
+            <a class="nav-link backend-nav-link hover-accent @if(request()->routeIs('backend.dashboard')) active @endif" href="{{ route('backend.dashboard') }}">
                 <i class="fa-solid fa-house me-3" aria-hidden="true"></i>
                 <span class="backend-nav-label ">Dashboard</span>
             </a>
