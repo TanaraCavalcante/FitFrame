@@ -27,51 +27,53 @@
 </head>
 <body>
     <div class="d-flex backend-layout">
-        <aside class="backend-aside bg-dark text-white p-3">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h5 class="backend-brand-text mb-0">Gestione FitFrame</h5>
-                <button type="button" id="sidebar-toggle" class="btn btn-sm btn-outline-light border-0">
-                    <i class="fa-solid fa-chevron-left"></i>
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
-            </div>
+        <div class="backend-aside-slot">
+            <aside class="backend-aside bg-dark text-white p-3">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="backend-brand-text mb-0">Gestione FitFrame</h5>
+                    <button type="button" id="sidebar-toggle" class="btn btn-sm btn-outline-light border-0" aria-label="Comprimi o espandi il menu">
+                        <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+                        <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                    </button>
+                </div>
 
-            <nav class="nav flex-column gap-1">
-                @if (auth()->user()->role === \App\Enums\UserRole::SuperAdmin)
-                    <a class="nav-link text-white" href="{{ route('backend.super-admin.index') }}">
-                        <i class="fa-solid fa-user-shield fa-fw"></i>
-                        <span class="backend-nav-label">Super Admin</span>
-                    </a>
-                    <a class="nav-link text-white" href="{{ route('backend.utenti.index') }}">
-                        <i class="fa-solid fa-users fa-fw"></i>
-                        <span class="backend-nav-label">Utenti</span>
-                    </a>
-                    <a class="nav-link text-white" href="{{ route('backend.strutture.index') }}">
-                        <i class="fa-solid fa-building fa-fw"></i>
-                        <span class="backend-nav-label">Strutture</span>
-                    </a>
-                @endif
-            </nav>
+                <nav class="nav flex-column gap-1">
+                    @if (auth()->user()->isSuperAdmin())
+                        <a class="nav-link text-white" href="{{ route('backend.super-admin.index') }}">
+                            <i class="fa-solid fa-user-shield fa-fw" aria-hidden="true"></i>
+                            <span class="backend-nav-label">Super Admin</span>
+                        </a>
+                        <a class="nav-link text-white" href="{{ route('backend.utenti.index') }}">
+                            <i class="fa-solid fa-users fa-fw" aria-hidden="true"></i>
+                            <span class="backend-nav-label">Utenti</span>
+                        </a>
+                        <a class="nav-link text-white" href="{{ route('backend.strutture.index') }}">
+                            <i class="fa-solid fa-building fa-fw" aria-hidden="true"></i>
+                            <span class="backend-nav-label">Strutture</span>
+                        </a>
+                    @endif
+                </nav>
 
-            <form method="POST" action="{{ route('backend.logout') }}" class="mt-4">
-                @csrf
-                <button type="submit" class="btn btn-outline-light btn-sm w-100">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    <span class="backend-nav-label">Esci</span>
-                </button>
-            </form>
-        </aside>
+                <form method="POST" action="{{ route('backend.logout') }}" class="mt-4">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-light btn-sm w-100">
+                        <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+                        <span class="backend-nav-label">Esci</span>
+                    </button>
+                </form>
+            </aside>
+        </div>
 
         <div class="flex-grow-1 d-flex flex-column">
             <nav class="navbar bg-body border-bottom px-3">
                 <span class="navbar-text">@yield('title', 'Dashboard')</span>
 
                 <div class="d-flex align-items-center gap-2 ms-auto">
-                    <i class="fa-solid fa-sun"></i>
+                    <i class="fa-solid fa-sun" aria-hidden="true"></i>
                     <div class="form-check form-switch mb-0">
-                        <input class="form-check-input" type="checkbox" role="switch" id="theme-toggle">
+                        <input class="form-check-input" type="checkbox" role="switch" id="theme-toggle" aria-label="Attiva tema scuro">
                     </div>
-                    <i class="fa-solid fa-moon"></i>
+                    <i class="fa-solid fa-moon" aria-hidden="true"></i>
                 </div>
             </nav>
 
