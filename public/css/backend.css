@@ -1,0 +1,58 @@
+:root {
+    --backend-sidebar-width: 260px;
+    --backend-sidebar-collapsed-width: 72px;
+}
+
+.backend-layout {
+    position: relative;
+}
+
+.backend-aside {
+    width: var(--backend-sidebar-width);
+    flex-shrink: 0;
+    min-height: 100vh;
+    transition: width .15s ease;
+    position: relative;
+    z-index: 1020;
+    overflow: hidden;
+}
+
+html.sidebar-collapsed .backend-aside {
+    width: var(--backend-sidebar-collapsed-width);
+}
+
+/* Da collassato, l'hover espande sopra il contenuto senza spostarlo:
+   position passa ad absolute solo qui, non nello stato base. */
+html.sidebar-collapsed .backend-aside:hover {
+    width: var(--backend-sidebar-width);
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow: visible;
+    box-shadow: 4px 0 16px rgba(0, 0, 0, .35);
+}
+
+html.sidebar-collapsed .backend-aside .backend-nav-label,
+html.sidebar-collapsed .backend-aside .backend-brand-text,
+html.sidebar-collapsed .backend-aside .backend-menu-heading {
+    display: none;
+}
+
+html.sidebar-collapsed .backend-aside:hover .backend-nav-label,
+html.sidebar-collapsed .backend-aside:hover .backend-brand-text,
+html.sidebar-collapsed .backend-aside:hover .backend-menu-heading {
+    display: inline;
+}
+
+#sidebar-toggle .fa-chevron-right {
+    display: none;
+}
+
+html.sidebar-collapsed #sidebar-toggle .fa-chevron-left {
+    display: none;
+}
+
+html.sidebar-collapsed #sidebar-toggle .fa-chevron-right {
+    display: inline;
+}

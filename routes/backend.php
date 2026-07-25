@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\AuthenticatedSessionController;
+use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\NewPasswordController;
 use App\Http\Controllers\Backend\PasswordResetLinkController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,7 @@ Route::prefix('admin')->name('backend.')->group(function () {
     });
 
     Route::middleware('auth')->group(function () {
+        Route::get('/', DashboardController::class)->name('dashboard');
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     });
 });
