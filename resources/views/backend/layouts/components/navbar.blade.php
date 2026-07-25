@@ -1,5 +1,15 @@
   <nav class="navbar bg-body border-bottom px-3">
-      <span class="navbar-text">@yield('title', 'Dashboard')</span>
+      <ol class="breadcrumb mb-0">
+          @hasSection('breadcrumb')
+              @yield('breadcrumb')
+          @else
+              <li class="breadcrumb-item">
+                  <a href="{{ route('backend.dashboard') }}" class="text-decoration-none hover-accent">
+                      <i class="fa-solid fa-house" aria-hidden="true"></i>
+                  </a>
+              </li>
+          @endif
+      </ol>
 
       <div class="d-flex align-items-center gap-2 ms-auto">
           <i class="fa-solid fa-sun" aria-hidden="true"></i>
