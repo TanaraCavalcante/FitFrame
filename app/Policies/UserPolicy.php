@@ -38,4 +38,19 @@ class UserPolicy
             && $target->role === UserRole::GymAdmin
             && $user->id !== $target->id;
     }
+
+    /**
+     * Usata da SuperAdminController: gestione di un altro super_admin.
+     */
+    public function updateSuperAdmin(User $user, User $target): bool
+    {
+        return $user->role === UserRole::SuperAdmin && $target->role === UserRole::SuperAdmin;
+    }
+
+    public function deleteSuperAdmin(User $user, User $target): bool
+    {
+        return $user->role === UserRole::SuperAdmin
+            && $target->role === UserRole::SuperAdmin
+            && $user->id !== $target->id;
+    }
 }

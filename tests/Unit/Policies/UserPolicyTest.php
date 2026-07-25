@@ -57,4 +57,38 @@ class UserPolicyTest extends TestCase
         $this->assertFalse($this->policy->update($gymAdmin, $anotherGymAdmin));
         $this->assertFalse($this->policy->delete($gymAdmin, $anotherGymAdmin));
     }
+
+    public function test_super_admin_can_manage_another_super_admin_via_dedicated_ability(): void
+    {
+        $superAdmin = User::factory()->superAdmin()->create();
+        $otherSuperAdmin = User::factory()->superAdmin()->create();
+
+        $this->assertTrue($this->policy->updateSuperAdmin($superAdmin, $otherSuperAdmin));
+        $this->assertTrue($this->policy->deleteSuperAdmin($superAdmin, $otherSuperAdmin));
+    }
+
+    public function test_super_admin_cannot_delete_themselves_via_dedicated_ability(): void
+    {
+        $superAdmin = User::factory()->superAdmin()->create();
+
+        $this->assertFalse($this->policy->deleteSuperAdmin($superAdmin, $superAdmin));
+    }
+
+    public function test_dedicated_super_admin_abilities_reject_a_gym_admin_target(): void
+    {
+        $superAdmin = User::factory()->superAdmin()->create();
+        $gymAdmin = User::factory()->create();
+
+        $this->assertFalse($this->policy->updateSuperAdmin($superAdmin, $gymAdmin));
+        $this->assertFalse($this->policy->deleteSuperAdmin($superAdmin, $gymAdmin));
+    }
+
+    public function test_gym_admin_cannot_use_dedicated_super_admin_abilities(): void
+    {
+        $gymAdmin = User::factory()->create();
+        $superAdmin = User::factory()->superAdmin()->create();
+
+        $this->assertFalse($this->policy->updateSuperAdmin($gymAdmin, $superAdmin));
+        $this->assertFalse($this->policy->deleteSuperAdmin($gymAdmin, $superAdmin));
+    }
 }

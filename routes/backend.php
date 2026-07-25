@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\GymAdminController;
 use App\Http\Controllers\Backend\GymController;
 use App\Http\Controllers\Backend\NewPasswordController;
 use App\Http\Controllers\Backend\PasswordResetLinkController;
+use App\Http\Controllers\Backend\SuperAdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::domain('gestione.fitframe.test')->name('backend.')->group(function () {
@@ -28,6 +29,8 @@ Route::domain('gestione.fitframe.test')->name('backend.')->group(function () {
         Route::resource('strutture', GymController::class)->except('show')->parameters(['strutture' => 'gym']);
 
         Route::resource('utenti', GymAdminController::class)->except('show')->parameters(['utenti' => 'user']);
+
+        Route::resource('super-admin', SuperAdminController::class)->except('show')->parameters(['super-admin' => 'user']);
 
         Route::impersonate();
     });
