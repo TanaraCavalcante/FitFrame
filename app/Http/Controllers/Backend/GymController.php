@@ -27,6 +27,7 @@ class GymController extends Controller
 
         return view('backend.strutture.create', [
             'themes' => Gym::availableThemes(),
+            'gym' => null,
         ]);
     }
 
