@@ -5,8 +5,10 @@ namespace Tests\Feature\Backend;
 use App\Models\User;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\RateLimiter;
 use Tests\TestCase;
 
 class PasswordResetTest extends TestCase
@@ -64,5 +66,16 @@ class PasswordResetTest extends TestCase
 
             return true;
         });
+    }
+
+    public function test_password_reset_routes_use_a_five_per_minute_rate_limiter(): void
+    {
+        $limiter = RateLimiter::limiter('password-reset');
+
+        $this->assertNotNull($limiter, 'Nessun limiter "password-reset" registrato — vedi AppServiceProvider::boot().');
+
+        $limit = $limiter(Request::create('/admin/password/forgot', 'POST'));
+
+        $this->assertSame(5, $limit->maxAttempts);
     }
 }
