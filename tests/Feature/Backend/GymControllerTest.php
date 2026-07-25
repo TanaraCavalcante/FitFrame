@@ -20,6 +20,21 @@ class GymControllerTest extends TestCase
         $this->actingAs($gymAdmin)->get('/admin/strutture')->assertForbidden();
     }
 
+    public function test_create_form_can_be_rendered(): void
+    {
+        $superAdmin = User::factory()->superAdmin()->create();
+
+        $this->actingAs($superAdmin)->get('/admin/strutture/create')->assertOk();
+    }
+
+    public function test_edit_form_can_be_rendered(): void
+    {
+        $superAdmin = User::factory()->superAdmin()->create();
+        $gym = Gym::factory()->create();
+
+        $this->actingAs($superAdmin)->get("/admin/strutture/{$gym->id}/edit")->assertOk();
+    }
+
     public function test_super_admin_can_create_a_gym_with_its_domain(): void
     {
         $superAdmin = User::factory()->superAdmin()->create();
