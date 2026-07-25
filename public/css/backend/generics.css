@@ -9,3 +9,50 @@
 .hover-accent:focus {
     color: var(--backend-accent);
 }
+
+/* * Backgrounds*/
+
+.bg-page {
+    background-color: var(--backend-page-bg);
+}
+
+.bg-aside {
+    background-color: var(--backend-aside-bg);
+}
+
+.bg-surface {
+    background-color: var(--backend-surface-bg);
+}
+
+/* * Colori testo */
+
+.text-aside {
+    color: var(--backend-aside-color);
+}
+
+.border-aside {
+    border-color: var(--backend-aside-border);
+}
+
+.bg-aside-subtle {
+    background-color: var(--backend-aside-hover-bg);
+}
+
+.bg-popover {
+    background-color: var(--backend-popover-bg);
+}
+
+/* * BUTTONS - Usa insieme a "btn btn-sm" (Bootstrap) — questa classe fornisce solo il colore. */
+.btn-back-primary {
+    background-color: var(--backend-accent);
+    border-color: var(--backend-accent);
+    color: var(--backend-accent-contrast);
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.btn-back-primary:hover,
+.btn-back-primary:focus {
+    background-color: transparent;
+    border-color: var(--backend-accent);
+    color: var(--backend-accent);
+}

@@ -1,3 +1,16 @@
+## [2026-07-25] - Rifinitura avatar/popover utente e pulizia CSS backend
+
+### Aggiunto
+- `User::initials()` (iniziali per l'avatar, es. "W Tech Admin" → "WA") con test unitari dedicati.
+- `.btn-back-primary`, `.bg-popover`, `.bg-aside-subtle` in `generics.css` — utility riutilizzabili basate sulle variabili tema, applicate a bottone logout e popover utente.
+- `--backend-popover-bg` e `--backend-accent-shadow` in `variables.css` (chiaro/scuro) per lo sfondo del popover e l'ombra in accent.
+
+### Modificato
+- Popover utente nell'aside (avatar, nome, email/nome struttura) convertito da CSS puro a utility Bootstrap + variabili tema; menu spostato in fondo all'aside.
+- Nell'aside, il gym_admin vede il nome della struttura al posto dell'email (l'email resta visibile solo nel popover).
+- Rimossi stili CSS puri ormai ridondanti (`.backend-outline-button`, `.backend-icon-button`, bordi/colori statici assorbiti dalle utility) e il bordo destro dell'aside (rimosso in entrambi i temi).
+- `AdminsSeeder`: nome del super_admin aggiornato a "Tanara Cavalcante".
+
 ## [2026-07-25] - Logo, breadcrumb e stato attivo del menu
 
 ### Aggiunto

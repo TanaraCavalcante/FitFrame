@@ -16,7 +16,7 @@ class AdminsSeeder extends Seeder
     public function run(): void
     {
         User::factory()->create([
-            'name' => 'Super Admin',
+            'name' => 'Tanara Cavalcante',
             'email' => 'admin@fitframe.it',
             'password' => bcrypt('12345678'),
             'role' => UserRole::SuperAdmin,
