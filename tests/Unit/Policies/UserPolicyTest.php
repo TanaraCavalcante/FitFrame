@@ -20,15 +20,24 @@ class UserPolicyTest extends TestCase
         $this->policy = new UserPolicy;
     }
 
-    public function test_super_admin_can_manage_users(): void
+    public function test_super_admin_can_manage_gym_admin_users(): void
+    {
+        $superAdmin = User::factory()->superAdmin()->create();
+        $gymAdmin = User::factory()->create();
+
+        $this->assertTrue($this->policy->viewAny($superAdmin));
+        $this->assertTrue($this->policy->create($superAdmin));
+        $this->assertTrue($this->policy->update($superAdmin, $gymAdmin));
+        $this->assertTrue($this->policy->delete($superAdmin, $gymAdmin));
+    }
+
+    public function test_super_admin_cannot_update_or_delete_another_super_admin_via_this_policy(): void
     {
         $superAdmin = User::factory()->superAdmin()->create();
         $otherSuperAdmin = User::factory()->superAdmin()->create();
 
-        $this->assertTrue($this->policy->viewAny($superAdmin));
-        $this->assertTrue($this->policy->create($superAdmin));
-        $this->assertTrue($this->policy->update($superAdmin, $otherSuperAdmin));
-        $this->assertTrue($this->policy->delete($superAdmin, $otherSuperAdmin));
+        $this->assertFalse($this->policy->update($superAdmin, $otherSuperAdmin));
+        $this->assertFalse($this->policy->delete($superAdmin, $otherSuperAdmin));
     }
 
     public function test_super_admin_cannot_delete_themselves(): void
