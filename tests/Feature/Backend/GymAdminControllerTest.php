@@ -74,12 +74,23 @@ class GymAdminControllerTest extends TestCase
         $this->assertSame($originalHash, $gymAdmin->fresh()->password);
     }
 
-    public function test_the_super_admin_route_returns_404_for_a_gym_admin_id(): void
+    public function test_utenti_routes_404_for_a_super_admin_id(): void
     {
         $superAdmin = User::factory()->superAdmin()->create();
-        $gym = Gym::factory()->create();
-        $gymAdmin = User::factory()->for($gym)->create();
+        $otherSuperAdmin = User::factory()->superAdmin()->create();
 
-        $this->actingAs($superAdmin)->get("/admin/super-admin/{$gymAdmin->id}/edit")->assertNotFound();
+        $this->actingAs($superAdmin)->get("/admin/utenti/{$otherSuperAdmin->id}/edit")->assertNotFound();
+
+        // PUT goes through UpdateGymAdminRequest::authorize() first, which now correctly
+        // rejects a non-GymAdmin target via the tightened UserPolicy::update() — that's a
+        // 403 (AuthorizationException), not a 404, since it's blocked before the
+        // controller's own abort_unless(404) line ever runs. GET/DELETE have no
+        // FormRequest in front of them, so their abort_unless is what fires, giving 404.
+        // Either way the action is blocked — this just documents which layer catches it.
+        $this->actingAs($superAdmin)->put("/admin/utenti/{$otherSuperAdmin->id}", [
+            'name' => 'X', 'email' => $otherSuperAdmin->email, 'gym_id' => Gym::factory()->create()->id,
+        ])->assertForbidden();
+
+        $this->actingAs($superAdmin)->delete("/admin/utenti/{$otherSuperAdmin->id}")->assertNotFound();
     }
 }
