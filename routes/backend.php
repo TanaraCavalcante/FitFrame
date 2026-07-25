@@ -9,7 +9,7 @@ use App\Http\Controllers\Backend\PasswordResetLinkController;
 use App\Http\Controllers\Backend\SuperAdminController;
 use Illuminate\Support\Facades\Route;
 
-Route::domain('gestione.fitframe.test')->name('backend.')->group(function () {
+Route::domain(config('app.admin_domain'))->name('backend.')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
         Route::post('login', [AuthenticatedSessionController::class, 'store'])->middleware('throttle:login');

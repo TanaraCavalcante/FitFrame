@@ -17,7 +17,7 @@ class PasswordResetTest extends TestCase
 
     public function test_forgot_password_screen_can_be_rendered(): void
     {
-        $this->get('/admin/password/forgot')->assertOk();
+        $this->get('http://gestione.fitframe.test/password/forgot')->assertOk();
     }
 
     public function test_reset_link_can_be_requested(): void
@@ -26,7 +26,7 @@ class PasswordResetTest extends TestCase
 
         $user = User::factory()->superAdmin()->create();
 
-        $this->post('/admin/password/forgot', ['email' => $user->email]);
+        $this->post('http://gestione.fitframe.test/password/forgot', ['email' => $user->email]);
 
         Notification::assertSentTo($user, ResetPasswordNotification::class);
     }
@@ -36,10 +36,10 @@ class PasswordResetTest extends TestCase
         Notification::fake();
 
         $user = User::factory()->superAdmin()->create();
-        $this->post('/admin/password/forgot', ['email' => $user->email]);
+        $this->post('http://gestione.fitframe.test/password/forgot', ['email' => $user->email]);
 
         Notification::assertSentTo($user, ResetPasswordNotification::class, function (ResetPasswordNotification $notification) {
-            $this->get('/admin/password/reset/'.$notification->token)->assertOk();
+            $this->get('http://gestione.fitframe.test/password/reset/'.$notification->token)->assertOk();
 
             return true;
         });
@@ -50,17 +50,17 @@ class PasswordResetTest extends TestCase
         Notification::fake();
 
         $user = User::factory()->superAdmin()->create();
-        $this->post('/admin/password/forgot', ['email' => $user->email]);
+        $this->post('http://gestione.fitframe.test/password/forgot', ['email' => $user->email]);
 
         Notification::assertSentTo($user, ResetPasswordNotification::class, function (ResetPasswordNotification $notification) use ($user) {
-            $response = $this->post('/admin/password/reset', [
+            $response = $this->post('http://gestione.fitframe.test/password/reset', [
                 'token' => $notification->token,
                 'email' => $user->email,
                 'password' => 'new-password',
                 'password_confirmation' => 'new-password',
             ]);
 
-            $response->assertRedirect('/admin/login');
+            $response->assertRedirect('http://gestione.fitframe.test/login');
 
             $this->assertTrue(Auth::attempt(['email' => $user->email, 'password' => 'new-password']));
 

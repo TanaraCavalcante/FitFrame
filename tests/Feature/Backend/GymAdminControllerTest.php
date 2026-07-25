@@ -17,7 +17,7 @@ class GymAdminControllerTest extends TestCase
         $gym = Gym::factory()->create();
         $gymAdmin = User::factory()->for($gym)->create();
 
-        $this->actingAs($gymAdmin)->get('/admin/utenti')->assertForbidden();
+        $this->actingAs($gymAdmin)->get('http://gestione.fitframe.test/utenti')->assertForbidden();
     }
 
     public function test_super_admin_can_create_a_gym_admin(): void
@@ -25,14 +25,14 @@ class GymAdminControllerTest extends TestCase
         $superAdmin = User::factory()->superAdmin()->create();
         $gym = Gym::factory()->create();
 
-        $response = $this->actingAs($superAdmin)->post('/admin/utenti', [
+        $response = $this->actingAs($superAdmin)->post('http://gestione.fitframe.test/utenti', [
             'name' => 'Mario Rossi',
             'email' => 'mario@example.test',
             'password' => 'password123',
             'gym_id' => $gym->id,
         ]);
 
-        $response->assertRedirect('/admin/utenti');
+        $response->assertRedirect('http://gestione.fitframe.test/utenti');
         $this->assertDatabaseHas('users', [
             'email' => 'mario@example.test',
             'role' => UserRole::GymAdmin,
@@ -46,14 +46,14 @@ class GymAdminControllerTest extends TestCase
         $gym = Gym::factory()->create();
         User::factory()->for($gym)->create();
 
-        $response = $this->actingAs($superAdmin)->post('/admin/utenti', [
+        $response = $this->actingAs($superAdmin)->post('http://gestione.fitframe.test/utenti', [
             'name' => 'Secondo Admin',
             'email' => 'secondo@example.test',
             'password' => 'password123',
             'gym_id' => $gym->id,
         ]);
 
-        $response->assertRedirect('/admin/utenti');
+        $response->assertRedirect('http://gestione.fitframe.test/utenti');
         $this->assertSame(2, $gym->admins()->count());
     }
 
@@ -64,13 +64,13 @@ class GymAdminControllerTest extends TestCase
         $gymAdmin = User::factory()->for($gym)->create();
         $originalHash = $gymAdmin->password;
 
-        $response = $this->actingAs($superAdmin)->put("/admin/utenti/{$gymAdmin->id}", [
+        $response = $this->actingAs($superAdmin)->put("http://gestione.fitframe.test/utenti/{$gymAdmin->id}", [
             'name' => 'Nome Cambiato',
             'email' => $gymAdmin->email,
             'gym_id' => $gym->id,
         ]);
 
-        $response->assertRedirect('/admin/utenti');
+        $response->assertRedirect('http://gestione.fitframe.test/utenti');
         $this->assertSame($originalHash, $gymAdmin->fresh()->password);
     }
 
@@ -79,7 +79,7 @@ class GymAdminControllerTest extends TestCase
         $superAdmin = User::factory()->superAdmin()->create();
         $otherSuperAdmin = User::factory()->superAdmin()->create();
 
-        $this->actingAs($superAdmin)->get("/admin/utenti/{$otherSuperAdmin->id}/edit")->assertNotFound();
+        $this->actingAs($superAdmin)->get("http://gestione.fitframe.test/utenti/{$otherSuperAdmin->id}/edit")->assertNotFound();
 
         // PUT goes through UpdateGymAdminRequest::authorize() first, which now correctly
         // rejects a non-GymAdmin target via the tightened UserPolicy::update() — that's a
@@ -87,10 +87,10 @@ class GymAdminControllerTest extends TestCase
         // controller's own abort_unless(404) line ever runs. GET/DELETE have no
         // FormRequest in front of them, so their abort_unless is what fires, giving 404.
         // Either way the action is blocked — this just documents which layer catches it.
-        $this->actingAs($superAdmin)->put("/admin/utenti/{$otherSuperAdmin->id}", [
+        $this->actingAs($superAdmin)->put("http://gestione.fitframe.test/utenti/{$otherSuperAdmin->id}", [
             'name' => 'X', 'email' => $otherSuperAdmin->email, 'gym_id' => Gym::factory()->create()->id,
         ])->assertForbidden();
 
-        $this->actingAs($superAdmin)->delete("/admin/utenti/{$otherSuperAdmin->id}")->assertNotFound();
+        $this->actingAs($superAdmin)->delete("http://gestione.fitframe.test/utenti/{$otherSuperAdmin->id}")->assertNotFound();
     }
 }

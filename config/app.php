@@ -123,4 +123,16 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Dominio del pannello admin (Gestione)
+    |--------------------------------------------------------------------------
+    |
+    | Le rotte in routes/backend.php sono vincolate a questo dominio tramite
+    | Route::domain(). Configurabile per ambiente senza toccare il codice.
+    |
+    */
+
+    'admin_domain' => env('ADMIN_DOMAIN', 'gestione.fitframe.test'),
+
 ];

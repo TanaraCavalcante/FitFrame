@@ -66,6 +66,10 @@
 - Create: `resources/views/backend/utenti/{index,create,edit,_form}.blade.php`
 - Create: `resources/views/backend/super-admin/{index,create,edit,_form}.blade.php`
 
+**Assets**
+- Create: `public/css/backend.css`
+- Create: `public/js/backend.js`
+
 **Factories**
 - Modify: `database/factories/UserFactory.php`
 
@@ -1386,30 +1390,34 @@ class NewPasswordController extends Controller
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 </head>
 <body class="bg-light">
-    <div class="container" style="max-width: 400px; margin-top: 100px;">
-        <h3 class="mb-4">Password dimenticata</h3>
+    <div class="d-flex align-items-center justify-content-center vh-100">
+        <div class="card p-4" style="max-width: 400px; width: 100%;">
+            <h3 class="mb-4">Password dimenticata</h3>
 
-        @if (session('status'))
-            <div class="alert alert-success">{{ session('status') }}</div>
-        @endif
+            @if (session('status'))
+                <div class="alert alert-success">{{ session('status') }}</div>
+            @endif
 
-        <form method="POST" action="{{ route('backend.password.email') }}">
-            @csrf
+            <form method="POST" action="{{ route('backend.password.email') }}">
+                @csrf
 
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" required autofocus>
-                @error('email')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" required autofocus autocomplete="username">
+                    @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-            <button type="submit" class="btn btn-primary w-100">Invia link di reset</button>
-        </form>
+                <button type="submit" class="btn btn-primary w-100">Invia link di reset</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>
 ```
+
+Nota: usa le utility flex di Bootstrap (`d-flex`/`vh-100`) per centrare invece di `margin-top` fisso — stesso pattern corretto già applicato alla view di login (Task 5), coerente con la convenzione del progetto (utility Bootstrap invece di CSS/inline custom).
 
 - [ ] **Step 8: Create the reset-password view**
 
@@ -1423,37 +1431,39 @@ class NewPasswordController extends Controller
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 </head>
 <body class="bg-light">
-    <div class="container" style="max-width: 400px; margin-top: 100px;">
-        <h3 class="mb-4">Reimposta Password</h3>
+    <div class="d-flex align-items-center justify-content-center vh-100">
+        <div class="card p-4" style="max-width: 400px; width: 100%;">
+            <h3 class="mb-4">Reimposta Password</h3>
 
-        <form method="POST" action="{{ route('backend.password.update') }}">
-            @csrf
+            <form method="POST" action="{{ route('backend.password.update') }}">
+                @csrf
 
-            <input type="hidden" name="token" value="{{ $token }}">
+                <input type="hidden" name="token" value="{{ $token }}">
 
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" name="email" value="{{ old('email', $email) }}" class="form-control @error('email') is-invalid @enderror" required autofocus>
-                @error('email')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" value="{{ old('email', $email) }}" class="form-control @error('email') is-invalid @enderror" required autofocus autocomplete="username">
+                    @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-            <div class="mb-3">
-                <label class="form-label">Nuova password</label>
-                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" required>
-                @error('password')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
+                <div class="mb-3">
+                    <label class="form-label">Nuova password</label>
+                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" required autocomplete="new-password">
+                    @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-            <div class="mb-3">
-                <label class="form-label">Conferma password</label>
-                <input type="password" name="password_confirmation" class="form-control" required>
-            </div>
+                <div class="mb-3">
+                    <label class="form-label">Conferma password</label>
+                    <input type="password" name="password_confirmation" class="form-control" required autocomplete="new-password">
+                </div>
 
-            <button type="submit" class="btn btn-primary w-100">Reimposta Password</button>
-        </form>
+                <button type="submit" class="btn btn-primary w-100">Reimposta Password</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>
@@ -1491,14 +1501,27 @@ git commit -m "feat: password reset by email using core Laravel notifications"
 
 ---
 
-### Task 7: Backend layout, aside menu, dashboard
+### Task 7: Backend layout — collapsible aside, dark mode, dashboard
 
 **Files:**
 - Create: `app/Http/Controllers/Backend/DashboardController.php`
 - Create: `resources/views/backend/layouts/app.blade.php`
 - Create: `resources/views/backend/dashboard.blade.php`
+- Create: `public/css/backend.css`
+- Create: `public/js/backend.js`
 - Modify: `routes/backend.php`
 - Test: `tests/Feature/Backend/DashboardTest.php`
+
+Behavior being built (see spec §E.1): the aside starts expanded, a
+chevron button collapses it to icon-only, collapsed+hovering shows a
+floating full-width preview (CSS `:hover` only — never touches the
+persisted state), and a light/dark switch lives in a top navbar above
+the main content. Both the collapsed flag and the theme choice persist
+across page loads via `localStorage` (this is a multi-page Blade app,
+not an SPA, so there's no client-side router to hold that state
+in-memory between requests). The aside itself always stays dark navy —
+only the main content responds to the light/dark switch, via
+Bootstrap 5.3's native `data-bs-theme` attribute.
 
 - [ ] **Step 1: Write the failing tests**
 
@@ -1540,6 +1563,19 @@ class DashboardTest extends TestCase
         $response->assertDontSee('Utenti');
         $response->assertDontSee('Super Admin');
     }
+
+    public function test_layout_ships_the_sidebar_toggle_and_theme_switch(): void
+    {
+        $superAdmin = User::factory()->superAdmin()->create();
+
+        $response = $this->actingAs($superAdmin)->get('/admin');
+
+        $response->assertOk();
+        $response->assertSee('id="sidebar-toggle"', false);
+        $response->assertSee('id="theme-toggle"', false);
+        $response->assertSee('backend.css', false);
+        $response->assertSee('backend.js', false);
+    }
 }
 ```
 
@@ -1567,7 +1603,92 @@ class DashboardController extends Controller
 }
 ```
 
-- [ ] **Step 4: Create the backend layout**
+- [ ] **Step 4: Create `public/css/backend.css`**
+
+```css
+:root {
+    --backend-sidebar-width: 260px;
+    --backend-sidebar-collapsed-width: 72px;
+}
+
+.backend-layout {
+    position: relative;
+}
+
+.backend-aside {
+    width: var(--backend-sidebar-width);
+    flex-shrink: 0;
+    min-height: 100vh;
+    transition: width .15s ease;
+    position: relative;
+    z-index: 1020;
+    overflow: hidden;
+}
+
+html.sidebar-collapsed .backend-aside {
+    width: var(--backend-sidebar-collapsed-width);
+}
+
+/* Da collassato, l'hover espande sopra il contenuto senza spostarlo:
+   position passa ad absolute solo qui, non nello stato base. */
+html.sidebar-collapsed .backend-aside:hover {
+    width: var(--backend-sidebar-width);
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow: visible;
+    box-shadow: 4px 0 16px rgba(0, 0, 0, .35);
+}
+
+html.sidebar-collapsed .backend-aside .backend-nav-label,
+html.sidebar-collapsed .backend-aside .backend-brand-text,
+html.sidebar-collapsed .backend-aside .backend-menu-heading {
+    display: none;
+}
+
+html.sidebar-collapsed .backend-aside:hover .backend-nav-label,
+html.sidebar-collapsed .backend-aside:hover .backend-brand-text,
+html.sidebar-collapsed .backend-aside:hover .backend-menu-heading {
+    display: inline;
+}
+
+#sidebar-toggle .fa-chevron-right {
+    display: none;
+}
+
+html.sidebar-collapsed #sidebar-toggle .fa-chevron-left {
+    display: none;
+}
+
+html.sidebar-collapsed #sidebar-toggle .fa-chevron-right {
+    display: inline;
+}
+```
+
+- [ ] **Step 5: Create `public/js/backend.js`**
+
+```js
+document.addEventListener('DOMContentLoaded', function () {
+    var sidebarToggle = document.getElementById('sidebar-toggle');
+    var themeToggle = document.getElementById('theme-toggle');
+
+    sidebarToggle.addEventListener('click', function () {
+        var collapsed = document.documentElement.classList.toggle('sidebar-collapsed');
+        localStorage.setItem('fitframe_admin_sidebar_collapsed', collapsed ? '1' : '0');
+    });
+
+    themeToggle.checked = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+
+    themeToggle.addEventListener('change', function () {
+        var theme = this.checked ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-bs-theme', theme);
+        localStorage.setItem('fitframe_admin_theme', theme);
+    });
+});
+```
+
+- [ ] **Step 6: Create the backend layout**
 
 ```blade
 <!DOCTYPE html>
@@ -1576,49 +1697,107 @@ class DashboardController extends Controller
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Gestione FitFrame')</title>
+
+    {{--
+        Applica tema e stato della sidebar PRIMA del paint, leggendo
+        localStorage — evita un flash dello stato sbagliato (chiaro poi
+        scuro, espanso poi collassato) al caricamento della pagina.
+    --}}
+    <script>
+        (function () {
+            var theme = localStorage.getItem('fitframe_admin_theme') || 'light';
+            document.documentElement.setAttribute('data-bs-theme', theme);
+
+            if (localStorage.getItem('fitframe_admin_sidebar_collapsed') === '1') {
+                document.documentElement.classList.add('sidebar-collapsed');
+            }
+        })();
+    </script>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/backend.css') }}?v={{ filemtime(public_path('css/backend.css')) }}">
 </head>
 <body>
-    <div class="d-flex">
-        <aside class="bg-dark text-white p-3" style="width: 260px; min-height: 100vh;">
-            <h5 class="mb-4">Gestione FitFrame</h5>
+    <div class="d-flex backend-layout">
+        <aside class="backend-aside bg-dark text-white p-3">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="backend-brand-text mb-0">Gestione FitFrame</h5>
+                <button type="button" id="sidebar-toggle" class="btn btn-sm btn-outline-light border-0">
+                    <i class="fa-solid fa-chevron-left"></i>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
 
             <nav class="nav flex-column gap-1">
                 @if (auth()->user()->role === \App\Enums\UserRole::SuperAdmin)
-                    <a class="nav-link text-white" href="{{ route('backend.super-admin.index') }}">Super Admin</a>
-                    <a class="nav-link text-white" href="{{ route('backend.utenti.index') }}">Utenti</a>
-                    <a class="nav-link text-white" href="{{ route('backend.strutture.index') }}">Strutture</a>
+                    <a class="nav-link text-white" href="{{ route('backend.super-admin.index') }}">
+                        <i class="fa-solid fa-user-shield fa-fw"></i>
+                        <span class="backend-nav-label">Super Admin</span>
+                    </a>
+                    <a class="nav-link text-white" href="{{ route('backend.utenti.index') }}">
+                        <i class="fa-solid fa-users fa-fw"></i>
+                        <span class="backend-nav-label">Utenti</span>
+                    </a>
+                    <a class="nav-link text-white" href="{{ route('backend.strutture.index') }}">
+                        <i class="fa-solid fa-building fa-fw"></i>
+                        <span class="backend-nav-label">Strutture</span>
+                    </a>
                 @endif
             </nav>
 
             <form method="POST" action="{{ route('backend.logout') }}" class="mt-4">
                 @csrf
-                <button type="submit" class="btn btn-outline-light btn-sm w-100">Esci</button>
+                <button type="submit" class="btn btn-outline-light btn-sm w-100">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span class="backend-nav-label">Esci</span>
+                </button>
             </form>
         </aside>
 
-        <main class="flex-grow-1 p-4">
-            @impersonating
-                <div class="alert alert-warning d-flex justify-content-between align-items-center">
-                    <span>Stai impersonando {{ auth()->user()->name }}.</span>
-                    <a href="{{ route('backend.impersonate.leave') }}" class="btn btn-sm btn-dark">Torna al tuo account</a>
+        <div class="flex-grow-1 d-flex flex-column">
+            <nav class="navbar bg-body border-bottom px-3">
+                <span class="navbar-text">@yield('title', 'Dashboard')</span>
+
+                <div class="d-flex align-items-center gap-2 ms-auto">
+                    <i class="fa-solid fa-sun"></i>
+                    <div class="form-check form-switch mb-0">
+                        <input class="form-check-input" type="checkbox" role="switch" id="theme-toggle">
+                    </div>
+                    <i class="fa-solid fa-moon"></i>
                 </div>
-            @endImpersonating
+            </nav>
 
-            @if (session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
-            @endif
+            <main class="flex-grow-1 p-4">
+                @impersonating
+                    <div class="alert alert-warning d-flex justify-content-between align-items-center">
+                        <span>Stai impersonando {{ auth()->user()->name }}.</span>
+                        <a href="{{ route('backend.impersonate.leave') }}" class="btn btn-sm btn-dark">Torna al tuo account</a>
+                    </div>
+                @endImpersonating
 
-            @yield('content')
-        </main>
+                @if (session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                @endif
+
+                @if (session('error'))
+                    <div class="alert alert-danger">{{ session('error') }}</div>
+                @endif
+
+                @yield('content')
+            </main>
+        </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('js/backend.js') }}?v={{ filemtime(public_path('js/backend.js')) }}"></script>
 </body>
 </html>
 ```
 
 Note: `@impersonating`/`@endImpersonating` are registered by `lab404/laravel-impersonate` (Task 1) — they compile to `is_impersonating()` checks, safe to use even before any impersonation route exists (it just evaluates false).
 
-- [ ] **Step 5: Create the dashboard view**
+- [ ] **Step 7: Create the dashboard view**
 
 ```blade
 @extends('backend.layouts.app')
@@ -1631,7 +1810,7 @@ Note: `@impersonating`/`@endImpersonating` are registered by `lab404/laravel-imp
 @endsection
 ```
 
-- [ ] **Step 6: Wire the route**
+- [ ] **Step 8: Wire the route**
 
 Add to the `auth` group in `routes/backend.php`:
 
@@ -1641,21 +1820,29 @@ Route::get('/', DashboardController::class)->name('dashboard');
 
 Add `use App\Http\Controllers\Backend\DashboardController;` at the top.
 
-- [ ] **Step 7: Run tests to verify they pass**
+- [ ] **Step 9: Run tests to verify they pass**
 
 Run: `php artisan test --compact tests/Feature/Backend/DashboardTest.php`
-Expected: FAIL still — the menu links reference `backend.super-admin.index`, `backend.utenti.index`, `backend.strutture.index`, which don't exist until Tasks 8–10. **This is expected at this point in the plan** — either stub three placeholder named routes temporarily, or treat Tasks 7–10 as one working unit and only run this test after Task 10. Recommended: continue straight to Task 8 and come back to run this file once all three resource controllers exist.
+Expected: `test_layout_ships_the_sidebar_toggle_and_theme_switch` PASSes now. The two menu-visibility tests still FAIL — they reference `backend.super-admin.index`, `backend.utenti.index`, `backend.strutture.index`, which don't exist until Tasks 8–10. **This is expected at this point in the plan.** Continue straight to Task 8 and come back to run this file once all three resource controllers exist.
 
-- [ ] **Step 8: Also re-run Task 5's `AuthenticationTest.php` now that `backend.dashboard` exists**
+- [ ] **Step 10: Also re-run Task 5's `AuthenticationTest.php` now that `backend.dashboard` exists**
 
 Run: `php artisan test --compact tests/Feature/Backend/AuthenticationTest.php`
-Expected: all 6 tests PASS now.
+Expected: all tests PASS now.
 
-- [ ] **Step 9: Commit**
+- [ ] **Step 11: Manual browser check (PHPUnit can't drive real hover/click/localStorage)**
+
+Run `php artisan serve`, log in as a super_admin, and confirm in the browser:
+- Chevron collapses the aside to icon-only; clicking again re-expands it.
+- Hovering the collapsed aside shows the full menu as an overlay; moving the mouse away collapses it again without needing another click.
+- Reloading the page (or navigating to another `/admin/*` page) keeps the collapsed/expanded state — no flash of the wrong state.
+- The light/dark switch flips the main content area between themes instantly, survives a page reload, and the aside stays dark navy in both.
+
+- [ ] **Step 12: Commit**
 
 ```bash
-git add app/Http/Controllers/Backend/DashboardController.php resources/views/backend/layouts/app.blade.php resources/views/backend/dashboard.blade.php routes/backend.php tests/Feature/Backend/DashboardTest.php
-git commit -m "feat: backend layout with role-based aside menu and dashboard"
+git add app/Http/Controllers/Backend/DashboardController.php resources/views/backend/layouts/app.blade.php resources/views/backend/dashboard.blade.php public/css/backend.css public/js/backend.js routes/backend.php tests/Feature/Backend/DashboardTest.php
+git commit -m "feat: collapsible aside + dark mode toggle for the backend layout"
 ```
 
 ---
@@ -1971,10 +2158,6 @@ class GymController extends Controller
         <h1 class="h3 mb-0">Strutture</h1>
         <a href="{{ route('backend.strutture.create') }}" class="btn btn-primary">Nuova Struttura</a>
     </div>
-
-    @if (session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
-    @endif
 
     <table class="table">
         <thead>
@@ -2359,7 +2542,7 @@ class GymAdminController extends Controller
 
 <div class="mb-3">
     <label class="form-label">Password{{ isset($user) ? ' (lascia vuoto per non cambiarla)' : '' }}</label>
-    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror">
+    <input type="password" name="password" value="{{ old('password', isset($user) ? '' : '12345678') }}" class="form-control @error('password') is-invalid @enderror">
     @error('password')
         <div class="invalid-feedback">{{ $message }}</div>
     @enderror
@@ -2540,10 +2723,14 @@ class ImpersonationTest extends TestCase
 
         $this->actingAs($superAdmin)
             ->get(route('backend.impersonate', $anotherSuperAdmin->id))
-            ->assertForbidden();
+            ->assertRedirect();
+
+        $this->assertAuthenticatedAs($superAdmin);
     }
 }
 ```
+
+Nota: `lab404/laravel-impersonate`'s `ImpersonateController::take()` only `abort(403)`s per un rifiuto lato *attore* (`canImpersonate()` falso). Per un rifiuto lato *target* (`canBeImpersonated()` falso, questo caso), il pacchetto fa semplicemente `redirect()->back()` (302) senza impersonare — nessun buco di sicurezza (`$manager->take()` non viene mai chiamato), solo uno status code diverso da quello che ci si aspetterebbe. Il test verifica la cosa che conta davvero: `assertAuthenticatedAs($superAdmin)` conferma che l'impersonazione non è avvenuta, indipendentemente dallo status HTTP scelto dal pacchetto.
 
 - [ ] **Step 12: Run test to verify current behavior**
 
@@ -2571,14 +2758,89 @@ git commit -m "feat: Utenti (gym_admin) CRUD with impersonation"
 ### Task 10: Super Admin CRUD
 
 **Files:**
+- Modify: `app/Policies/UserPolicy.php`
 - Create: `app/Http/Requests/Backend/StoreSuperAdminRequest.php`
 - Create: `app/Http/Requests/Backend/UpdateSuperAdminRequest.php`
 - Create: `app/Http/Controllers/Backend/SuperAdminController.php`
 - Create: `resources/views/backend/super-admin/{index,create,edit,_form}.blade.php`
 - Modify: `routes/backend.php`
+- Test: `tests/Unit/Policies/UserPolicyTest.php`
 - Test: `tests/Feature/Backend/SuperAdminControllerTest.php`
 
-- [ ] **Step 1: Write the failing tests**
+**Important prerequisite fixed by this task:** Task 9's code review hardened `UserPolicy::update()`/`delete()` to require `$target->role === UserRole::GymAdmin` (closing a gap where the "never touch a super_admin via the gym-admin routes" guarantee rested only on controller-level guards). Those two abilities are now explicitly GymAdmin-target-only — reusing them here for super_admin-on-super_admin management would always return `false`. This task adds two dedicated abilities, `updateSuperAdmin`/`deleteSuperAdmin`, instead of reusing `update`/`delete`.
+
+- [ ] **Step 1: Write the failing tests for the new Policy abilities**
+
+```php
+// Aggiungi a tests/Unit/Policies/UserPolicyTest.php (in fondo alla classe esistente)
+
+public function test_super_admin_can_manage_another_super_admin_via_dedicated_ability(): void
+{
+    $superAdmin = User::factory()->superAdmin()->create();
+    $otherSuperAdmin = User::factory()->superAdmin()->create();
+
+    $this->assertTrue($this->policy->updateSuperAdmin($superAdmin, $otherSuperAdmin));
+    $this->assertTrue($this->policy->deleteSuperAdmin($superAdmin, $otherSuperAdmin));
+}
+
+public function test_super_admin_cannot_delete_themselves_via_dedicated_ability(): void
+{
+    $superAdmin = User::factory()->superAdmin()->create();
+
+    $this->assertFalse($this->policy->deleteSuperAdmin($superAdmin, $superAdmin));
+}
+
+public function test_dedicated_super_admin_abilities_reject_a_gym_admin_target(): void
+{
+    $superAdmin = User::factory()->superAdmin()->create();
+    $gymAdmin = User::factory()->create();
+
+    $this->assertFalse($this->policy->updateSuperAdmin($superAdmin, $gymAdmin));
+    $this->assertFalse($this->policy->deleteSuperAdmin($superAdmin, $gymAdmin));
+}
+
+public function test_gym_admin_cannot_use_dedicated_super_admin_abilities(): void
+{
+    $gymAdmin = User::factory()->create();
+    $superAdmin = User::factory()->superAdmin()->create();
+
+    $this->assertFalse($this->policy->updateSuperAdmin($gymAdmin, $superAdmin));
+    $this->assertFalse($this->policy->deleteSuperAdmin($gymAdmin, $superAdmin));
+}
+```
+
+- [ ] **Step 2: Run test to verify it fails**
+
+Run: `php artisan test --compact tests/Unit/Policies/UserPolicyTest.php`
+Expected: FAIL — `Call to undefined method App\Policies\UserPolicy::updateSuperAdmin()`.
+
+- [ ] **Step 3: Add the two dedicated abilities to `UserPolicy`**
+
+Add these two methods to the existing `app/Policies/UserPolicy.php` (alongside `update()`/`delete()`, which stay exactly as Task 9 left them — GymAdmin-target-only):
+
+```php
+    /**
+     * Usata da SuperAdminController: gestione di un altro super_admin.
+     */
+    public function updateSuperAdmin(User $user, User $target): bool
+    {
+        return $user->role === UserRole::SuperAdmin && $target->role === UserRole::SuperAdmin;
+    }
+
+    public function deleteSuperAdmin(User $user, User $target): bool
+    {
+        return $user->role === UserRole::SuperAdmin
+            && $target->role === UserRole::SuperAdmin
+            && $user->id !== $target->id;
+    }
+```
+
+- [ ] **Step 4: Run test to verify it passes**
+
+Run: `php artisan test --compact tests/Unit/Policies/UserPolicyTest.php`
+Expected: PASS (all tests in the file, old and new).
+
+- [ ] **Step 5: Write the failing tests for the CRUD**
 
 ```php
 <?php
@@ -2621,6 +2883,20 @@ class SuperAdminControllerTest extends TestCase
         ]);
     }
 
+    public function test_super_admin_can_update_another_super_admin(): void
+    {
+        $superAdmin = User::factory()->superAdmin()->create();
+        $other = User::factory()->superAdmin()->create();
+
+        $response = $this->actingAs($superAdmin)->put("/admin/super-admin/{$other->id}", [
+            'name' => 'Nome Cambiato',
+            'email' => $other->email,
+        ]);
+
+        $response->assertRedirect('/admin/super-admin');
+        $this->assertDatabaseHas('users', ['id' => $other->id, 'name' => 'Nome Cambiato']);
+    }
+
     public function test_super_admin_cannot_delete_themselves(): void
     {
         $superAdmin = User::factory()->superAdmin()->create();
@@ -2652,12 +2928,12 @@ class SuperAdminControllerTest extends TestCase
 }
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [ ] **Step 6: Run test to verify it fails**
 
 Run: `php artisan test --compact tests/Feature/Backend/SuperAdminControllerTest.php`
 Expected: FAIL — `/admin/super-admin` returns 404.
 
-- [ ] **Step 3: Create `StoreSuperAdminRequest`**
+- [ ] **Step 7: Create `StoreSuperAdminRequest`**
 
 ```php
 <?php
@@ -2689,7 +2965,7 @@ class StoreSuperAdminRequest extends FormRequest
 }
 ```
 
-- [ ] **Step 4: Create `UpdateSuperAdminRequest`**
+- [ ] **Step 8: Create `UpdateSuperAdminRequest`**
 
 ```php
 <?php
@@ -2704,7 +2980,7 @@ class UpdateSuperAdminRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->can('update', $this->route('user'));
+        return $this->user()->can('updateSuperAdmin', $this->route('user'));
     }
 
     /**
@@ -2721,7 +2997,9 @@ class UpdateSuperAdminRequest extends FormRequest
 }
 ```
 
-- [ ] **Step 5: Create `SuperAdminController`**
+Note: uses the dedicated `updateSuperAdmin` ability (Step 3), not the generic `update` — `UserPolicy::update()` is GymAdmin-target-only as of Task 9, and would always reject a super_admin target.
+
+- [ ] **Step 9: Create `SuperAdminController`**
 
 ```php
 <?php
@@ -2770,7 +3048,7 @@ class SuperAdminController extends Controller
     public function edit(User $user): View
     {
         abort_unless($user->role === UserRole::SuperAdmin, 404);
-        Gate::authorize('update', $user);
+        Gate::authorize('updateSuperAdmin', $user);
 
         return view('backend.super-admin.edit', ['user' => $user]);
     }
@@ -2793,7 +3071,7 @@ class SuperAdminController extends Controller
     public function destroy(User $user): RedirectResponse
     {
         abort_unless($user->role === UserRole::SuperAdmin, 404);
-        Gate::authorize('delete', $user);
+        Gate::authorize('deleteSuperAdmin', $user);
 
         $user->delete();
 
@@ -2802,7 +3080,9 @@ class SuperAdminController extends Controller
 }
 ```
 
-- [ ] **Step 6: Create the shared form partial**
+Note: `edit()`/`destroy()` run `abort_unless` before `Gate::authorize`, and have no FormRequest in front of them, so a GymAdmin id hitting these routes 404s. `update()` goes through `UpdateSuperAdminRequest::authorize()` first (resolved by Laravel before the controller body runs) — a GymAdmin id there gets rejected by `updateSuperAdmin`'s target-role check with a 403, not a 404. Same asymmetry already established and accepted in Task 9 for the mirror case (a super_admin id hitting the Utenti routes): both paths correctly block the action, they just differ in which HTTP status the blocking layer returns. Don't try to unify this — see Task 9's `GymAdminControllerTest::test_utenti_routes_404_for_a_super_admin_id` for the precedent.
+
+- [ ] **Step 10: Create the shared form partial**
 
 ```blade
 <div class="mb-3">
@@ -2823,14 +3103,14 @@ class SuperAdminController extends Controller
 
 <div class="mb-3">
     <label class="form-label">Password{{ isset($user) ? ' (lascia vuoto per non cambiarla)' : '' }}</label>
-    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror">
+    <input type="password" name="password" value="{{ old('password', isset($user) ? '' : '12345678') }}" class="form-control @error('password') is-invalid @enderror">
     @error('password')
         <div class="invalid-feedback">{{ $message }}</div>
     @enderror
 </div>
 ```
 
-- [ ] **Step 7: Create the index view**
+- [ ] **Step 11: Create the index view**
 
 ```blade
 @extends('backend.layouts.app')
@@ -2873,7 +3153,7 @@ class SuperAdminController extends Controller
 @endsection
 ```
 
-- [ ] **Step 8: Create the create/edit views**
+- [ ] **Step 12: Create the create/edit views**
 
 `resources/views/backend/super-admin/create.blade.php`:
 ```blade
@@ -2912,7 +3192,7 @@ class SuperAdminController extends Controller
 @endsection
 ```
 
-- [ ] **Step 9: Wire the routes**
+- [ ] **Step 13: Wire the routes**
 
 Add to the `auth` group in `routes/backend.php`:
 
@@ -2922,24 +3202,24 @@ Route::resource('super-admin', SuperAdminController::class)->except('show')->par
 
 Add `use App\Http\Controllers\Backend\SuperAdminController;` at the top.
 
-- [ ] **Step 10: Run tests to verify they pass**
+- [ ] **Step 14: Run tests to verify they pass**
 
 Run: `php artisan test --compact tests/Feature/Backend/SuperAdminControllerTest.php`
 Expected: PASS.
 
-- [ ] **Step 11: Run the full suite (all tasks together)**
+- [ ] **Step 15: Run the full suite (all tasks together)**
 
 Run: `php artisan test --compact`
 Expected: all PASS, including `DashboardTest`'s full menu assertions (`Strutture`, `Utenti`, `Super Admin` all now resolve).
 
-- [ ] **Step 12: Run Pint**
+- [ ] **Step 16: Run Pint**
 
 Run: `vendor/bin/pint --dirty --format agent`
 
-- [ ] **Step 13: Commit**
+- [ ] **Step 17: Commit**
 
 ```bash
-git add app/Http/Requests/Backend/StoreSuperAdminRequest.php app/Http/Requests/Backend/UpdateSuperAdminRequest.php app/Http/Controllers/Backend/SuperAdminController.php resources/views/backend/super-admin routes/backend.php tests/Feature/Backend/SuperAdminControllerTest.php
+git add app/Policies/UserPolicy.php app/Http/Requests/Backend/StoreSuperAdminRequest.php app/Http/Requests/Backend/UpdateSuperAdminRequest.php app/Http/Controllers/Backend/SuperAdminController.php resources/views/backend/super-admin routes/backend.php tests/Unit/Policies/UserPolicyTest.php tests/Feature/Backend/SuperAdminControllerTest.php
 git commit -m "feat: Super Admin CRUD"
 ```
 

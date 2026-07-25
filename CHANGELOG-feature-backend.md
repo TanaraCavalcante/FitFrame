@@ -1,3 +1,17 @@
+## [2026-07-25] - Pannello admin backend completo
+
+### Aggiunto
+- Pannello admin completo su dominio dedicato (`ADMIN_DOMAIN`, configurabile via `.env`): login/logout, reset password via email, CRUD Strutture (Gym), Utenti (gym_admin), Super Admin, impersonation.
+- Layout backend con sidebar collassabile (hover-preview), tema chiaro/scuro persistito, componenti `aside`/`navbar` separati.
+- `AdminsSeeder` per popolare un super_admin e un gym_admin di prova.
+
+### Modificato
+- Rotte del pannello admin spostate da prefisso `/admin` a routing per dominio (`Route::domain(config('app.admin_domain'))`), letto da `.env` invece di essere hardcoded.
+- Alert di sessione (`success`/`error`) centralizzati nel layout condiviso invece che ripetuti per singola vista.
+
+### Corretto
+- Suite di test aggiornata per il nuovo routing per dominio (rimossi i vecchi path `/admin/...`).
+
 ## [2026-07-25] - Design e piano del pannello admin backend
 
 ### Aggiunto
