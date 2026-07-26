@@ -21,7 +21,26 @@
         </div>
     </div>
 
+    @php $filtriAttivi = $search !== '' ? 1 : 0; @endphp
+
     <div class="card border-0 p-3">
+        <x-filter-toggle :count="$filtriAttivi" target="super-admin-filtri">
+            <form method="GET" action="{{ route('backend.super-admin.index') }}" class="row g-2 align-items-end">
+                <div class="col-md-5">
+                    <label class="form-label small text-gray-muted">Cerca</label>
+                    <input type="text" name="search" value="{{ $search }}" class="form-control form-control-sm" placeholder="Nome, cognome, email">
+                </div>
+                <div class="col-md-auto">
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-magnifying-glass me-1"></i>Cerca</button>
+                        @if ($filtriAttivi)
+                            <a href="{{ route('backend.super-admin.index') }}" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-xmark me-1"></i>Reset</a>
+                        @endif
+                    </div>
+                </div>
+            </form>
+        </x-filter-toggle>
+
         <div class="table-responsive">
             <table class="table table-hover mb-0">
                 <thead>
@@ -32,7 +51,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
+                    @forelse ($users as $user)
                         <tr>
                             <td>{{ $user->name }} {{ $user->surname }}</td>
                             <td>{{ $user->email }}</td>
@@ -47,7 +66,14 @@
                                 @endif
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="3" class="text-center text-gray-muted py-5">
+                                <i class="fa-solid fa-magnifying-glass fa-2x d-block mb-2" aria-hidden="true"></i>
+                                Nessun risultato trovato.
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

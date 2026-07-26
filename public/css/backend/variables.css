@@ -25,6 +25,10 @@
   --backend-aside-active-bg: #e8f1fc;   /* fundo do item de menu ATIVO */
   --backend-aside-active-color: #1d6fd4;/* texto/ícone do item ativo */
   --backend-aside-button-hover-color: #1d6fd4;
+
+  /* Viola "info" di Metronic — usato per .btn-purple / .btn-outline-purple / .btn-light-purple */
+  --backend-purple: #7239ea;
+  --backend-purple-rgb: 114, 57, 234;
 }
 
 [data-bs-theme="dark"] {
@@ -50,4 +54,7 @@
   --backend-aside-active-bg: #1a2b40;   /* azul bem escuro/dessaturado */
   --backend-aside-active-color: #7ab4f7;
   --backend-aside-button-hover-color: #7ab4f7;
+
+  --backend-purple: #883fff;
+  --backend-purple-rgb: 136, 63, 255;
 }

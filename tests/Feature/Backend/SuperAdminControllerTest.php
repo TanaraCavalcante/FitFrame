@@ -20,6 +20,18 @@ class SuperAdminControllerTest extends TestCase
         $this->actingAs($gymAdmin)->get('/super-admin')->assertForbidden();
     }
 
+    public function test_index_can_be_filtered_by_search(): void
+    {
+        $superAdmin = User::factory()->superAdmin()->create(['name' => 'Tanara', 'surname' => 'Cavalcante']);
+        User::factory()->superAdmin()->create(['name' => 'Altro', 'surname' => 'Admin']);
+
+        $response = $this->actingAs($superAdmin)->get('/super-admin?search=Tanara');
+
+        $response->assertOk();
+        $response->assertSee('Tanara Cavalcante');
+        $response->assertDontSee('Altro Admin');
+    }
+
     public function test_super_admin_can_create_another_super_admin_without_a_gym(): void
     {
         $superAdmin = User::factory()->superAdmin()->create();

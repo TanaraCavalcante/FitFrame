@@ -1,3 +1,13 @@
+## [2026-07-26] - Componente filtro nelle index e utility btn-light/btn-purple
+
+### Aggiunto
+- Componente `<x-filter-toggle>` (`resources/views/components/filter-toggle.blade.php`): pulsante "Filtri" collassabile (Bootstrap collapse) con badge del numero di filtri attivi, sopra la tabella.
+- Filtri lato server (query string, applicati con `->when()` nel controller): Strutture (ricerca su nome/tema/dominio), Utenti (ricerca + struttura), Super Admin (ricerca).
+- Stato vuoto (`@forelse`/`@empty`) nelle tre index quando il filtro non trova risultati, con icona e messaggio "Nessun risultato trovato.".
+- Utility `.btn-light-{primary,secondary,success,danger,warning,info}` in `generics.css` (stile Metronic, basate sulle CSS variable native di Bootstrap `--bs-{colore}-rgb`).
+- Colore viola "info" di Metronic (`--backend-purple` / `--backend-purple-rgb`, valori esatti presi dal CSS compilato di maelstrom) con `.btn-purple`, `.btn-outline-purple`, `.btn-light-purple`.
+- Test dei filtri per i tre controller (ricerca, filtro per struttura).
+
 ## [2026-07-26] - Toggle mostra/nascondi password nei form Utenti/Super Admin
 
 ### Aggiunto

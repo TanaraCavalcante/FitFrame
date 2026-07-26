@@ -20,6 +20,19 @@ class GymControllerTest extends TestCase
         $this->actingAs($gymAdmin)->get('http://gestione.fitframe.test/strutture')->assertForbidden();
     }
 
+    public function test_index_can_be_filtered_by_search(): void
+    {
+        $superAdmin = User::factory()->superAdmin()->create();
+        Gym::factory()->create(['name' => 'Pulse Gym']);
+        Gym::factory()->create(['name' => 'Iron House']);
+
+        $response = $this->actingAs($superAdmin)->get('http://gestione.fitframe.test/strutture?search=Pulse');
+
+        $response->assertOk();
+        $response->assertSee('Pulse Gym');
+        $response->assertDontSee('Iron House');
+    }
+
     public function test_create_form_can_be_rendered(): void
     {
         $superAdmin = User::factory()->superAdmin()->create();

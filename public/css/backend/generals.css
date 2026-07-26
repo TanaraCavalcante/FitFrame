@@ -135,6 +135,15 @@ html.sidebar-collapsed.sidebar-hovering .backend-aside .backend-menu-heading {
     transform: rotate(180deg);
 }
 
+/* * Filter */
+.filter-toggle-btn .fa-chevron-down {
+    transition: transform .15s ease;
+}
+
+.filter-toggle-btn[aria-expanded="true"] .fa-chevron-down {
+    transform: rotate(180deg);
+}
+
 #sidebar-toggle .fa-chevron-right {
     display: none;
 }
