@@ -97,7 +97,7 @@
                 <span
                     class="backend-avatar rounded-circle bg-aside-subtle hover-accent">{{ auth()->user()->initials() }}</span>
                 <div class="backend-nav-label backend-user-info">
-                    <div class="fw-semibold text-truncate">{{ auth()->user()->name }}</div>
+                    <div class="fw-semibold text-truncate">{{ auth()->user()->name }} {{ auth()->user()->surname }}</div>
                     <div class="small text-body-secondary text-truncate">
                         @if (auth()->user()->isSuperAdmin())
                             Super Admin
@@ -113,7 +113,7 @@
                     <span
                         class="backend-avatar backend-avatar-lg rounded-circle bg-aside-subtle text-aside">{{ auth()->user()->initials() }}</span>
                     <div class="backend-user-popover-meta">
-                        <div class="fw-semibold text-truncate">{{ auth()->user()->name }}</div>
+                        <div class="fw-semibold text-truncate">{{ auth()->user()->name }} {{ auth()->user()->surname }}</div>
                         <div class="small text-body-secondary text-truncate">{{ auth()->user()->email }}</div>
                     </div>
                 </div>

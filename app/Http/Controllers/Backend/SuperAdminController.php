@@ -33,7 +33,7 @@ class SuperAdminController extends Controller
     public function store(StoreSuperAdminRequest $request): RedirectResponse
     {
         User::create([
-            ...$request->safe()->only(['name', 'email']),
+            ...$request->safe()->only(['name', 'surname', 'email']),
             'password' => Hash::make($request->validated('password')),
             'role' => UserRole::SuperAdmin,
         ]);
@@ -53,7 +53,7 @@ class SuperAdminController extends Controller
     {
         abort_unless($user->role === UserRole::SuperAdmin, 404);
 
-        $data = $request->safe()->only(['name', 'email']);
+        $data = $request->safe()->only(['name', 'surname', 'email']);
 
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->validated('password'));

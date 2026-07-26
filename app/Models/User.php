@@ -17,12 +17,22 @@ class User extends Authenticatable
     use HasFactory, Impersonate, Notifiable;
 
     /**
+     * Rispecchia il default della colonna `surname` in migration.
+     *
+     * @var array<string, mixed>
+     */
+    protected $attributes = [
+        'surname' => '',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
     protected $fillable = [
         'name',
+        'surname',
         'email',
         'password',
         'role',
@@ -67,14 +77,12 @@ class User extends Authenticatable
     }
 
     /**
-     * Iniziali per l'avatar (prima lettera del primo e dell'ultimo nome, es. "W Tech Admin" → "WA").
+     * Iniziali per l'avatar (prima lettera di nome e cognome, es. "Tanara Cavalcante" → "TC").
      */
     public function initials(): string
     {
-        $parts = explode(' ', trim($this->name));
-
-        $first = mb_substr($parts[0], 0, 1);
-        $last = count($parts) > 1 ? mb_substr($parts[array_key_last($parts)], 0, 1) : '';
+        $first = mb_substr($this->name, 0, 1);
+        $last = $this->surname !== '' ? mb_substr($this->surname, 0, 1) : '';
 
         return mb_strtoupper($first.$last);
     }

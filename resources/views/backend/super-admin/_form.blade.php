@@ -1,8 +1,16 @@
 <div class="row">
-    <div class="col-12 mb-3">
+    <div class="col-md-6 mb-3">
         <label class="form-label required">Nome</label>
         <input type="text" name="name" value="{{ old('name', $user->name ?? '') }}" class="form-control @error('name') is-invalid @enderror">
         @error('name')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label required">Cognome</label>
+        <input type="text" name="surname" value="{{ old('surname', $user->surname ?? '') }}" class="form-control @error('surname') is-invalid @enderror">
+        @error('surname')
             <div class="invalid-feedback">{{ $message }}</div>
         @enderror
     </div>
