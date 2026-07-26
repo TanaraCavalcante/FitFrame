@@ -26,4 +26,17 @@ document.addEventListener('DOMContentLoaded', function () {
         document.documentElement.setAttribute('data-bs-theme', theme);
         localStorage.setItem('fitframe_admin_theme', theme);
     });
+
+    document.querySelectorAll('.password-toggle').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var input = button.closest('.input-group').querySelector('input');
+            var icon = button.querySelector('i');
+            var willShow = input.type === 'password';
+
+            input.type = willShow ? 'text' : 'password';
+            icon.classList.toggle('fa-eye', willShow);
+            icon.classList.toggle('fa-eye-slash', !willShow);
+            button.setAttribute('aria-label', willShow ? 'Nascondi password' : 'Mostra password');
+        });
+    });
 });
