@@ -1,3 +1,15 @@
+## [2026-07-26] - Menu aside con sezioni per ruolo e accordion Setup
+
+### Aggiunto
+- Aside organizzato in sezioni: header "Dashboard", header "Amministrazione" (solo super_admin: Strutture, Super Admin, Utenti in ordine alfabetico), header "Gestione" (entrambi i ruoli) con accordion "Setup" (Bootstrap collapse).
+- Voci figlie di Setup (Hero, Team, Galleria, Testimonianze, CTA, Ordina sezioni) protette da `Route::has()` — disabilitate con tooltip finché le rotte non esistono.
+- `.text-gray-muted` in `generics.css`, agganciata a `var(--bs-secondary-color)` (stessa variabile del sottotitolo dashboard) per i header di sezione.
+- `.fs-8` in `tipografia.css` per le label dei header, più piccole della scala `fs-*` di Bootstrap (che si ferma a `fs-6`).
+
+### Modificato
+- `.hover-accent` torna al colore pieno del testo a riposo (`--backend-aside-color`) invece del muted — il muted resta riservato ai soli header di sezione.
+- `DashboardTest` aggiornato per verificare le voci di menu viste da super_admin e gym_admin.
+
 ## [2026-07-25] - Navbar allineata all'aside
 
 ### Modificato

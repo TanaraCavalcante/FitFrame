@@ -19,8 +19,12 @@ class DashboardTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('Dashboard');
-        $response->assertDontSee('Strutture');
-        $response->assertDontSee('Utenti');
+        $response->assertSee('Amministrazione');
+        $response->assertSee('Strutture');
+        $response->assertSee('Utenti');
+        $response->assertSee('Super Admin');
+        $response->assertSee('Gestione');
+        $response->assertSee('Setup');
     }
 
     public function test_gym_admin_sees_the_shared_dashboard(): void
@@ -32,8 +36,12 @@ class DashboardTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('Dashboard');
+        $response->assertDontSee('Amministrazione');
         $response->assertDontSee('Strutture');
         $response->assertDontSee('Utenti');
+        $response->assertDontSee('Super Admin');
+        $response->assertSee('Gestione');
+        $response->assertSee('Setup');
     }
 
     public function test_layout_ships_the_sidebar_toggle_and_theme_switch(): void

@@ -1,7 +1,7 @@
 /* Utility riutilizzabili — una per comportamento, come in public/base/css/generics.css */
 
 .hover-accent {
-    color: var(--backend-aside-color-muted);
+    color: var(--backend-aside-color);
     transition: color .15s ease;
 }
 
@@ -28,6 +28,14 @@
 
 .text-aside {
     color: var(--backend-aside-color);
+}
+
+.text-aside-muted {
+    color: var(--backend-aside-color-muted);
+}
+
+.text-gray-muted {
+    color: var(--bs-secondary-color);
 }
 
 .border-aside {
