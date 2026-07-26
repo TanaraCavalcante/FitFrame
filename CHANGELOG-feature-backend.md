@@ -1,3 +1,9 @@
+## [2026-07-26] - Form Utenti/Super Admin: stesso layout a card di Strutture
+
+### Modificato
+- Create/edit di Utenti e Super Admin nel layout a due card (header con CTA "Indietro"/"Salva" — sempre "Salva", anche in creazione), come Strutture.
+- Form in grid Bootstrap con `.required` sui campi obbligatori; il campo Password è `required` solo in creazione (in modifica resta facoltativo, "lascia vuoto per non cambiarla").
+
 ## [2026-07-26] - Form Strutture: layout a card, grid e slug libero
 
 ### Aggiunto
