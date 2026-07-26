@@ -9,6 +9,10 @@ body {
 }
 
 /* Scala fs-* di Bootstrap si ferma a fs-6 (1rem) — fs-8 copre le label più piccole (header di sezione). */
+.fs-7 {
+    font-size: .85rem !important;
+}
+
 .fs-8 {
-    font-size: .7rem;
+    font-size: .7rem !important;
 }

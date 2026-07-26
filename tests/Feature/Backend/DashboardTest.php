@@ -53,7 +53,7 @@ class DashboardTest extends TestCase
         $response->assertOk();
         $response->assertSee('id="sidebar-toggle"', false);
         $response->assertSee('id="theme-toggle"', false);
-        $response->assertSee('backend.css', false);
+        $response->assertSee('backend/generals.css', false);
         $response->assertSee('backend.js', false);
     }
 
