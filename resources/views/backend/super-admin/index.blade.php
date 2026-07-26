@@ -34,7 +34,7 @@
                 <tbody>
                     @foreach ($users as $user)
                         <tr>
-                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->name }} {{ $user->surname }}</td>
                             <td>{{ $user->email }}</td>
                             <td class="text-end">
                                 <a href="{{ route('backend.super-admin.edit', $user) }}" class="btn btn-sm btn-outline-warning" title="Modifica"><i class="fa-solid fa-pen-to-square"></i></a>

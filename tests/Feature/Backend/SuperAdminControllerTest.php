@@ -25,7 +25,8 @@ class SuperAdminControllerTest extends TestCase
         $superAdmin = User::factory()->superAdmin()->create();
 
         $response = $this->actingAs($superAdmin)->post('/super-admin', [
-            'name' => 'Nuovo Super',
+            'name' => 'Nuovo',
+            'surname' => 'Super',
             'email' => 'nuovosuper@example.test',
             'password' => 'password123',
         ]);
@@ -44,12 +45,13 @@ class SuperAdminControllerTest extends TestCase
         $other = User::factory()->superAdmin()->create();
 
         $response = $this->actingAs($superAdmin)->put("/super-admin/{$other->id}", [
-            'name' => 'Nome Cambiato',
+            'name' => 'Nome',
+            'surname' => 'Cambiato',
             'email' => $other->email,
         ]);
 
         $response->assertRedirect('/super-admin');
-        $this->assertDatabaseHas('users', ['id' => $other->id, 'name' => 'Nome Cambiato']);
+        $this->assertDatabaseHas('users', ['id' => $other->id, 'name' => 'Nome', 'surname' => 'Cambiato']);
     }
 
     public function test_super_admin_cannot_delete_themselves(): void

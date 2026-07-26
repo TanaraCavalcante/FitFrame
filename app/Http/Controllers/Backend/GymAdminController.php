@@ -36,7 +36,7 @@ class GymAdminController extends Controller
     public function store(StoreGymAdminRequest $request): RedirectResponse
     {
         User::create([
-            ...$request->safe()->only(['name', 'email', 'gym_id']),
+            ...$request->safe()->only(['name', 'surname', 'email', 'gym_id']),
             'password' => Hash::make($request->validated('password')),
             'role' => UserRole::GymAdmin,
         ]);
@@ -59,7 +59,7 @@ class GymAdminController extends Controller
     {
         abort_unless($user->role === UserRole::GymAdmin, 404);
 
-        $data = $request->safe()->only(['name', 'email', 'gym_id']);
+        $data = $request->safe()->only(['name', 'surname', 'email', 'gym_id']);
 
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->validated('password'));

@@ -1,3 +1,15 @@
+## [2026-07-26] - Separazione nome/cognome per gli utenti
+
+### Aggiunto
+- Migrazione `add_surname_to_users_table` (idempotente, default `''`), colonna mirrorata in `User::$attributes`.
+- Campo "Cognome" nei form di Utenti e Super Admin, accanto a "Nome" (`col-md-6` ciascuno).
+
+### Modificato
+- `User::initials()` ora usa direttamente `name`+`surname` invece di fare parsing di una stringa unica.
+- Tutti i punti che mostravano solo `name` (dashboard, avatar/popover dell'aside, tabelle index di Utenti e Super Admin) ora mostrano nome e cognome insieme.
+- `UserFactory` genera `name`/`surname` separati (`firstName()`/`lastName()`); `AdminsSeeder` aggiornato di conseguenza.
+- Le 4 Form Request di Utenti/Super Admin validano `surname` come `required`.
+
 ## [2026-07-26] - Form Utenti/Super Admin: stesso layout a card di Strutture
 
 ### Modificato

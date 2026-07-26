@@ -16,7 +16,8 @@ class AdminsSeeder extends Seeder
     public function run(): void
     {
         User::factory()->create([
-            'name' => 'Tanara Cavalcante',
+            'name' => 'Tanara',
+            'surname' => 'Cavalcante',
             'email' => 'admin@fitframe.it',
             'password' => bcrypt('12345678'),
             'role' => UserRole::SuperAdmin,
@@ -24,7 +25,8 @@ class AdminsSeeder extends Seeder
         ]);
 
         User::factory()->create([
-            'name' => 'Admin Pulse',
+            'name' => 'Admin',
+            'surname' => 'Pulse',
             'email' => 'admin@pulse.it',
             'password' => bcrypt('12345678'),
             'role' => UserRole::GymAdmin,

@@ -26,7 +26,8 @@ class GymAdminControllerTest extends TestCase
         $gym = Gym::factory()->create();
 
         $response = $this->actingAs($superAdmin)->post('http://gestione.fitframe.test/utenti', [
-            'name' => 'Mario Rossi',
+            'name' => 'Mario',
+            'surname' => 'Rossi',
             'email' => 'mario@example.test',
             'password' => 'password123',
             'gym_id' => $gym->id,
@@ -47,7 +48,8 @@ class GymAdminControllerTest extends TestCase
         User::factory()->for($gym)->create();
 
         $response = $this->actingAs($superAdmin)->post('http://gestione.fitframe.test/utenti', [
-            'name' => 'Secondo Admin',
+            'name' => 'Secondo',
+            'surname' => 'Admin',
             'email' => 'secondo@example.test',
             'password' => 'password123',
             'gym_id' => $gym->id,
@@ -65,7 +67,8 @@ class GymAdminControllerTest extends TestCase
         $originalHash = $gymAdmin->password;
 
         $response = $this->actingAs($superAdmin)->put("http://gestione.fitframe.test/utenti/{$gymAdmin->id}", [
-            'name' => 'Nome Cambiato',
+            'name' => 'Nome',
+            'surname' => 'Cambiato',
             'email' => $gymAdmin->email,
             'gym_id' => $gym->id,
         ]);

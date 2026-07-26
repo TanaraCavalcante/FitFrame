@@ -10,16 +10,16 @@ class UserInitialsTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
-    public function test_initials_use_first_and_last_name(): void
+    public function test_initials_use_first_letter_of_name_and_surname(): void
     {
-        $user = User::factory()->make(['name' => 'W Tech Admin']);
+        $user = User::factory()->make(['name' => 'Tanara', 'surname' => 'Cavalcante']);
 
-        $this->assertSame('WA', $user->initials());
+        $this->assertSame('TC', $user->initials());
     }
 
-    public function test_initials_fall_back_to_a_single_letter_for_a_one_word_name(): void
+    public function test_initials_fall_back_to_a_single_letter_when_surname_is_empty(): void
     {
-        $user = User::factory()->make(['name' => 'Admin']);
+        $user = User::factory()->make(['name' => 'Admin', 'surname' => '']);
 
         $this->assertSame('A', $user->initials());
     }
