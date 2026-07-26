@@ -1,3 +1,12 @@
+## [2026-07-26] - Toggle mostra/nascondi password nei form Utenti/Super Admin
+
+### Aggiunto
+- Pulsante occhio (mostra/nascondi) sul campo Password in Utenti e Super Admin, via `input-group` + `.password-toggle` in `backend.js` (riutilizzabile per altri campi password futuri).
+- `autocomplete="off"`/`"new-password"` su email/password per impedire l'autofill del browser con credenziali salvate.
+
+### Modificato
+- Campo Password in creazione non ha più il valore `12345678` precompilato — resta vuoto, il super_admin sceglie la password.
+
 ## [2026-07-26] - Separazione nome/cognome per gli utenti
 
 ### Aggiunto
