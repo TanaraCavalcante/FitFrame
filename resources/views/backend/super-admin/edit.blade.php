@@ -9,13 +9,26 @@
 @endsection
 
 @section('content')
-    <h1 class="h3 mb-4">Modifica Super Admin</h1>
+    <div class="card border-0 mb-3 py-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="h3 mb-0">Modifica Super Admin</h1>
+                <div class="d-flex gap-2">
+                    <a href="{{ url()->previous() }}" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-arrow-left me-1"></i>Indietro</a>
+                    <button type="submit" form="super-admin-form" class="btn btn-sm btn-outline-success"><i class="fa-solid fa-floppy-disk me-1"></i>Salva</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <form method="POST" action="{{ route('backend.super-admin.update', $user) }}">
-        @csrf
-        @method('PUT')
-        @include('backend.super-admin._form')
+    <div class="card border-0">
+        <div class="card-body">
+            <form id="super-admin-form" method="POST" action="{{ route('backend.super-admin.update', $user) }}">
+                @csrf
+                @method('PUT')
+                @include('backend.super-admin._form')
 
-        <button type="submit" class="btn btn-primary">Salva</button>
-    </form>
+            </form>
+        </div>
+    </div>
 @endsection
