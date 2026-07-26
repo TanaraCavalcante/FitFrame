@@ -50,13 +50,27 @@ class GymControllerTest extends TestCase
         $this->assertDatabaseHas('domains', ['domain' => 'nuovapalestra.test']);
     }
 
-    public function test_slug_must_be_an_installed_theme(): void
+    public function test_slug_does_not_need_to_be_an_installed_theme(): void
     {
         $superAdmin = User::factory()->superAdmin()->create();
 
         $response = $this->actingAs($superAdmin)->post('http://gestione.fitframe.test/strutture', [
             'name' => 'Nuova Palestra',
             'slug' => 'non-esiste',
+            'domain' => 'nuovapalestra.test',
+        ]);
+
+        $response->assertRedirect('http://gestione.fitframe.test/strutture');
+        $this->assertDatabaseHas('gyms', ['name' => 'Nuova Palestra', 'slug' => 'non-esiste']);
+    }
+
+    public function test_slug_must_be_a_valid_identifier_format(): void
+    {
+        $superAdmin = User::factory()->superAdmin()->create();
+
+        $response = $this->actingAs($superAdmin)->post('http://gestione.fitframe.test/strutture', [
+            'name' => 'Nuova Palestra',
+            'slug' => 'non valido!',
             'domain' => 'nuovapalestra.test',
         ]);
 

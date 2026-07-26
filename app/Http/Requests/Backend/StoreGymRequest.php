@@ -4,7 +4,6 @@ namespace App\Http\Requests\Backend;
 
 use App\Models\Gym;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StoreGymRequest extends FormRequest
 {
@@ -20,7 +19,7 @@ class StoreGymRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', Rule::in(Gym::availableThemes())],
+            'slug' => ['required', 'string', 'max:255', 'alpha_dash'],
             'domain' => ['required', 'string', 'max:255', 'unique:domains,domain'],
         ];
     }

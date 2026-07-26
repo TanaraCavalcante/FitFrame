@@ -23,7 +23,7 @@ class UpdateGymRequest extends FormRequest
 
         return [
             'name' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', Rule::in(Gym::availableThemes())],
+            'slug' => ['required', 'string', 'max:255', 'alpha_dash'],
             'domain' => [
                 'required', 'string', 'max:255',
                 Rule::unique('domains', 'domain')->ignore($gym->domains->first()?->id),

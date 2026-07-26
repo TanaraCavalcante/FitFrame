@@ -26,7 +26,6 @@ class GymController extends Controller
         Gate::authorize('create', Gym::class);
 
         return view('backend.strutture.create', [
-            'themes' => Gym::availableThemes(),
             'gym' => null,
         ]);
     }
@@ -46,7 +45,6 @@ class GymController extends Controller
 
         return view('backend.strutture.edit', [
             'gym' => $gym->load('domains'),
-            'themes' => Gym::availableThemes(),
         ]);
     }
 

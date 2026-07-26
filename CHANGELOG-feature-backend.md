@@ -1,3 +1,22 @@
+## [2026-07-26] - Form Strutture: layout a card, grid e slug libero
+
+### Aggiunto
+- Create/edit di Strutture nel layout a due card (header con CTA "Indietro"/"Crea"/"Salva", body col form), come le index.
+- Form Strutture in grid Bootstrap: Nome `col-12`, Tema e Dominio `col-md-6`.
+- Classe `.required` in `generics.css` (asterisco rosso dopo la label, stile Metronic) applicata ai campi obbligatori del form Strutture.
+
+### Modificato
+- Campo "Tema" del form Strutture: da `<select>` (limitato ai temi già installati) a input di testo libero, default `base` — permette di assegnare uno slug per un tema non ancora costruito.
+- Validazione slug (`Store`/`UpdateGymRequest`): non più `Rule::in(temi installati)`, ora solo `alpha_dash`.
+- `ResolveGym`: se il tema dello slug non esiste (`Theme::exists()`), il sito resta sul tema `base` invece di errore/tema mancante.
+- `GymController` non passa più `$themes` alle view create/edit (non più necessario).
+
+## [2026-07-26] - Layout a card nelle index di Strutture/Utenti/Super Admin
+
+### Modificato
+- Header e tabella delle index di Strutture, Utenti e Super Admin ora dentro due `.card` separate (`border-0`, senza bordo) con spazio tra loro, per un aspetto più pulito.
+- Rimosso `table-striped` da tutte le tabelle (rimaneva solo su Super Admin), uniformando a `table-hover`.
+
 ## [2026-07-26] - Azioni icon-only nelle tabelle di Strutture/Utenti/Super Admin
 
 ### Aggiunto

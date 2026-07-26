@@ -31,7 +31,8 @@ class ResolveGym
 
         if ($domain) {
             // Dominio trovato: attiva il tema (igaster/laravel-theme) con lo slug della palestra.
-            Theme::set($domain->gym->slug);
+            // Se il tema non esiste ancora (slug libero non ancora implementato), resta "base".
+            Theme::set(Theme::exists($domain->gym->slug) ? $domain->gym->slug : 'base');
 
             // Condivide il Gym con tutte le view, cosi ogni pagina puo accedervi senza passarlo esplicitamente.
             view()->share('gym', $domain->gym);
