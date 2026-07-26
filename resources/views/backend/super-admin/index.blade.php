@@ -11,10 +11,13 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Super Admin</h1>
-        <a href="{{ route('backend.super-admin.create') }}" class="btn btn-primary">Nuovo Super Admin</a>
+        <div class="d-flex gap-2">
+            <a href="{{ url()->previous() }}" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-arrow-left me-1"></i>Indietro</a>
+            <a href="{{ route('backend.super-admin.create') }}" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-plus me-1"></i>Nuovo Super Admin</a>
+        </div>
     </div>
 
-    <table class="table">
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
                 <th>Nome</th>
@@ -28,12 +31,12 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td class="text-end">
-                        <a href="{{ route('backend.super-admin.edit', $user) }}" class="btn btn-sm btn-outline-secondary">Modifica</a>
+                        <a href="{{ route('backend.super-admin.edit', $user) }}" class="btn btn-sm btn-outline-warning" title="Modifica"><i class="fa-solid fa-pen-to-square"></i></a>
                         @if ($user->id !== auth()->id())
                             <form method="POST" action="{{ route('backend.super-admin.destroy', $user) }}" class="d-inline" onsubmit="return confirm('Eliminare questo super admin?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger">Elimina</button>
+                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Elimina"><i class="fa-solid fa-trash"></i></button>
                             </form>
                         @endif
                     </td>
