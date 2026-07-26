@@ -70,3 +70,121 @@
     border-color: var(--backend-accent);
     color: var(--backend-accent);
 }
+
+/* * BTN-LIGHT (stile Metronic) - sfondo tenue del colore, testo pieno; hover diventa pieno. */
+.btn-light-primary,
+.btn-light-secondary,
+.btn-light-success,
+.btn-light-danger,
+.btn-light-warning,
+.btn-light-info {
+    border-color: transparent;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.btn-light-primary {
+    background-color: rgba(var(--bs-primary-rgb), .1);
+    color: var(--bs-primary);
+}
+
+.btn-light-primary:hover,
+.btn-light-primary:focus {
+    background-color: var(--bs-primary);
+    color: #fff;
+}
+
+.btn-light-secondary {
+    background-color: rgba(var(--bs-secondary-rgb), .1);
+    color: var(--bs-secondary);
+}
+
+.btn-light-secondary:hover,
+.btn-light-secondary:focus {
+    background-color: var(--bs-secondary);
+    color: #fff;
+}
+
+.btn-light-success {
+    background-color: rgba(var(--bs-success-rgb), .1);
+    color: var(--bs-success);
+}
+
+.btn-light-success:hover,
+.btn-light-success:focus {
+    background-color: var(--bs-success);
+    color: #fff;
+}
+
+.btn-light-danger {
+    background-color: rgba(var(--bs-danger-rgb), .1);
+    color: var(--bs-danger);
+}
+
+.btn-light-danger:hover,
+.btn-light-danger:focus {
+    background-color: var(--bs-danger);
+    color: #fff;
+}
+
+.btn-light-warning {
+    background-color: rgba(var(--bs-warning-rgb), .1);
+    color: var(--bs-warning);
+}
+
+.btn-light-warning:hover,
+.btn-light-warning:focus {
+    background-color: var(--bs-warning);
+    color: #212529;
+}
+
+.btn-light-info {
+    background-color: rgba(var(--bs-info-rgb), .1);
+    color: var(--bs-info);
+}
+
+.btn-light-info:hover,
+.btn-light-info:focus {
+    background-color: var(--bs-info);
+    color: #212529;
+}
+
+/* * BTN-PURPLE - viola "info" di Metronic (--backend-purple, non è il --bs-info di questo Bootstrap, che è ciano). */
+.btn-purple {
+    background-color: var(--backend-purple);
+    border-color: var(--backend-purple);
+    color: #fff;
+}
+
+.btn-purple:hover,
+.btn-purple:focus {
+    background-color: var(--backend-purple);
+    border-color: var(--backend-purple);
+    color: #fff;
+    filter: brightness(.9);
+}
+
+.btn-outline-purple {
+    background-color: transparent;
+    border-color: var(--backend-purple);
+    color: var(--backend-purple);
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.btn-outline-purple:hover,
+.btn-outline-purple:focus {
+    background-color: var(--backend-purple);
+    color: #fff;
+}
+
+.btn-light-purple {
+    background-color: rgba(var(--backend-purple-rgb), .1);
+    border-color: transparent;
+    color: var(--backend-purple);
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.btn-light-purple:hover,
+.btn-light-purple:focus {
+    background-color: var(--backend-purple);
+    color: #fff;
+}

@@ -8,18 +8,31 @@ use App\Http\Requests\Backend\StoreSuperAdminRequest;
 use App\Http\Requests\Backend\UpdateSuperAdminRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 class SuperAdminController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         Gate::authorize('viewAny', User::class);
 
+        $search = $request->string('search')->toString();
+
+        $users = User::where('role', UserRole::SuperAdmin)
+            ->when($search !== '', fn ($query) => $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('surname', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            }))
+            ->orderBy('name')
+            ->get();
+
         return view('backend.super-admin.index', [
-            'users' => User::where('role', UserRole::SuperAdmin)->orderBy('name')->get(),
+            'users' => $users,
+            'search' => $search,
         ]);
     }
 

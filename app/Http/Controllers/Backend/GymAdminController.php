@@ -9,18 +9,36 @@ use App\Http\Requests\Backend\UpdateGymAdminRequest;
 use App\Models\Gym;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 class GymAdminController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         Gate::authorize('viewAny', User::class);
 
+        $search = $request->string('search')->toString();
+        $gymId = $request->integer('gym_id') ?: null;
+
+        $users = User::with('gym')
+            ->where('role', UserRole::GymAdmin)
+            ->when($search !== '', fn ($query) => $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('surname', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            }))
+            ->when($gymId, fn ($query) => $query->where('gym_id', $gymId))
+            ->orderBy('name')
+            ->get();
+
         return view('backend.utenti.index', [
-            'users' => User::with('gym')->where('role', UserRole::GymAdmin)->orderBy('name')->get(),
+            'users' => $users,
+            'gyms' => Gym::orderBy('name')->get(),
+            'search' => $search,
+            'gymId' => $gymId,
         ]);
     }
 

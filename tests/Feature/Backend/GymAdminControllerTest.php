@@ -20,6 +20,35 @@ class GymAdminControllerTest extends TestCase
         $this->actingAs($gymAdmin)->get('http://gestione.fitframe.test/utenti')->assertForbidden();
     }
 
+    public function test_index_can_be_filtered_by_search(): void
+    {
+        $superAdmin = User::factory()->superAdmin()->create();
+        $gym = Gym::factory()->create();
+        User::factory()->for($gym)->create(['name' => 'Mario', 'surname' => 'Rossi']);
+        User::factory()->for($gym)->create(['name' => 'Luigi', 'surname' => 'Verdi']);
+
+        $response = $this->actingAs($superAdmin)->get('http://gestione.fitframe.test/utenti?search=Mario');
+
+        $response->assertOk();
+        $response->assertSee('Mario Rossi');
+        $response->assertDontSee('Luigi Verdi');
+    }
+
+    public function test_index_can_be_filtered_by_gym(): void
+    {
+        $superAdmin = User::factory()->superAdmin()->create();
+        $gymA = Gym::factory()->create();
+        $gymB = Gym::factory()->create();
+        User::factory()->for($gymA)->create(['name' => 'Utente', 'surname' => 'DellaGymA']);
+        User::factory()->for($gymB)->create(['name' => 'Utente', 'surname' => 'DellaGymB']);
+
+        $response = $this->actingAs($superAdmin)->get("http://gestione.fitframe.test/utenti?gym_id={$gymA->id}");
+
+        $response->assertOk();
+        $response->assertSee('DellaGymA');
+        $response->assertDontSee('DellaGymB');
+    }
+
     public function test_super_admin_can_create_a_gym_admin(): void
     {
         $superAdmin = User::factory()->superAdmin()->create();

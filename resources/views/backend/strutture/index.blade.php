@@ -21,7 +21,26 @@
         </div>
     </div>
 
+    @php $filtriAttivi = collect(['search' => $search])->filter(fn ($value) => $value !== '')->count(); @endphp
+
     <div class="card border-0 p-3">
+        <x-filter-toggle :count="$filtriAttivi" target="strutture-filtri">
+            <form method="GET" action="{{ route('backend.strutture.index') }}" class="row g-2 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label small text-gray-muted">Cerca</label>
+                    <input type="text" name="search" value="{{ $search }}" class="form-control form-control-sm" placeholder="Nome, tema, dominio">
+                </div>
+                <div class="col-md-auto">
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-magnifying-glass me-1"></i>Cerca</button>
+                        @if ($filtriAttivi)
+                            <a href="{{ route('backend.strutture.index') }}" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-xmark me-1"></i>Reset</a>
+                        @endif
+                    </div>
+                </div>
+            </form>
+        </x-filter-toggle>
+
         <div class="table-responsive">
             <table class="table table-hover mb-0">
                 <thead>
@@ -33,7 +52,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($gyms as $gym)
+                    @forelse ($gyms as $gym)
                         <tr>
                             <td>{{ $gym->name }}</td>
                             <td>{{ $gym->slug }}</td>
@@ -47,7 +66,14 @@
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="4" class="text-center text-gray-muted py-5">
+                                <i class="fa-solid fa-magnifying-glass fa-2x d-block mb-2" aria-hidden="true"></i>
+                                Nessun risultato trovato.
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

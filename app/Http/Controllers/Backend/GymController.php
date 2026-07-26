@@ -7,17 +7,30 @@ use App\Http\Requests\Backend\StoreGymRequest;
 use App\Http\Requests\Backend\UpdateGymRequest;
 use App\Models\Gym;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class GymController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         Gate::authorize('viewAny', Gym::class);
 
+        $search = $request->string('search')->toString();
+
+        $gyms = Gym::with('domains')
+            ->when($search !== '', fn ($query) => $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('slug', 'like', "%{$search}%")
+                    ->orWhereHas('domains', fn ($query) => $query->where('domain', 'like', "%{$search}%"));
+            }))
+            ->orderBy('name')
+            ->get();
+
         return view('backend.strutture.index', [
-            'gyms' => Gym::with('domains')->orderBy('name')->get(),
+            'gyms' => $gyms,
+            'search' => $search,
         ]);
     }
 
