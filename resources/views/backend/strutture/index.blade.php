@@ -11,10 +11,13 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Strutture</h1>
-        <a href="{{ route('backend.strutture.create') }}" class="btn btn-primary">Nuova Struttura</a>
+        <div class="d-flex gap-2">
+            <a href="{{ url()->previous() }}" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-arrow-left me-1"></i>Indietro</a>
+            <a href="{{ route('backend.strutture.create') }}" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-plus me-1"></i>Nuova Struttura</a>
+        </div>
     </div>
 
-    <table class="table">
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
                 <th>Nome</th>
@@ -30,11 +33,11 @@
                     <td>{{ $gym->slug }}</td>
                     <td>{{ $gym->domains->first()?->domain }}</td>
                     <td class="text-end">
-                        <a href="{{ route('backend.strutture.edit', $gym) }}" class="btn btn-sm btn-outline-secondary">Modifica</a>
+                        <a href="{{ route('backend.strutture.edit', $gym) }}" class="btn btn-sm btn-outline-warning" title="Modifica"><i class="fa-solid fa-pen-to-square"></i></a>
                         <form method="POST" action="{{ route('backend.strutture.destroy', $gym) }}" class="d-inline" onsubmit="return confirm('Eliminare questa struttura?')">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-outline-danger">Elimina</button>
+                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Elimina"><i class="fa-solid fa-trash"></i></button>
                         </form>
                     </td>
                 </tr>

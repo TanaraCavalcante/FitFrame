@@ -12,10 +12,13 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Utenti</h1>
-        <a href="{{ route('backend.utenti.create') }}" class="btn btn-primary">Nuovo Utente</a>
+        <div class="d-flex gap-2">
+            <a href="{{ url()->previous() }}" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-arrow-left me-1"></i>Indietro</a>
+            <a href="{{ route('backend.utenti.create') }}" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-plus me-1"></i>Nuovo Utente</a>
+        </div>
     </div>
 
-    <table class="table">
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
                 <th>Nome</th>
@@ -32,13 +35,16 @@
                     <td>{{ $user->gym?->name }}</td>
                     <td class="text-end">
                         @canBeImpersonated($user)
-                            <a href="{{ route('backend.impersonate', $user->id) }}" class="btn btn-sm btn-outline-primary">Impersona</a>
+                            <a href="{{ route('backend.impersonate', $user->id) }}" class="btn btn-sm btn-outline-info" title="Impersona"><i class="fa-solid fa-user-secret"></i></a>
                         @endCanBeImpersonated
-                        <a href="{{ route('backend.utenti.edit', $user) }}" class="btn btn-sm btn-outline-secondary">Modifica</a>
+                        @if (auth()->user()->isSuperAdmin())
+                            <a href="#" class="btn btn-sm btn-outline-secondary" title="Reset password"><i class="fa-solid fa-lock"></i></a>
+                        @endif
+                        <a href="{{ route('backend.utenti.edit', $user) }}" class="btn btn-sm btn-outline-warning" title="Modifica"><i class="fa-solid fa-pen-to-square"></i></a>
                         <form method="POST" action="{{ route('backend.utenti.destroy', $user) }}" class="d-inline" onsubmit="return confirm('Eliminare questo utente?')">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-outline-danger">Elimina</button>
+                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Elimina"><i class="fa-solid fa-trash"></i></button>
                         </form>
                     </td>
                 </tr>

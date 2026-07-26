@@ -1,3 +1,10 @@
+## [2026-07-26] - Azioni icon-only nelle tabelle di Strutture/Utenti/Super Admin
+
+### Aggiunto
+- Pulsanti azione (Modifica, Elimina, Impersona) uniformati a icon-only (`btn-sm` outline + FontAwesome) con `title` per accessibilità, nelle index di Strutture, Utenti e Super Admin.
+- Pulsante "Reset password" (solo super_admin) nell'index di Utenti — solo UI, nessuna rotta/logica ancora.
+- Pulsanti "Indietro" / "Nuovo" uniformati nell'header delle tre index.
+
 ## [2026-07-26] - Breadcrumb per Strutture/Utenti/Super Admin e fix scroll aside
 
 ### Aggiunto
