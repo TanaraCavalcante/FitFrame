@@ -26,7 +26,7 @@
                     <div class="fw-semibold text-truncate">{{ auth()->user()->name }}</div>
                     <div class="small text-body-secondary text-truncate">
                         @if (auth()->user()->isSuperAdmin())
-                            {{ auth()->user()->email }}
+                            Super Admin
                         @else
                             {{ auth()->user()->gym->name }}
                         @endif
