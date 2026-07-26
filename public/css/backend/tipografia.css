@@ -7,3 +7,8 @@ body {
     font-variant-numeric: tabular-nums;
     font-feature-settings: 'tnum' 1;
 }
+
+/* Scala fs-* di Bootstrap si ferma a fs-6 (1rem) — fs-8 copre le label più piccole (header di sezione). */
+.fs-8 {
+    font-size: .7rem;
+}
