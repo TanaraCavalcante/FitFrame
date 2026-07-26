@@ -37,7 +37,7 @@ html.sidebar-collapsed.sidebar-hovering .backend-aside-slot {
     position: sticky;
     top: 0;
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
     z-index: 1020;
     overflow: hidden;
     transition:
@@ -45,6 +45,38 @@ html.sidebar-collapsed.sidebar-hovering .backend-aside-slot {
         border-color .15s ease,
         color .15s ease,
         transform .22s ease;
+}
+
+.backend-aside-nav {
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--backend-aside-color-muted) transparent;
+}
+
+.backend-aside-nav .backend-menu-heading {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: block;
+    width: 100%;
+    max-width: none;
+    overflow: visible;
+    background-color: var(--backend-aside-bg);
+}
+
+.backend-aside-nav::-webkit-scrollbar {
+    width: 6px;
+}
+
+.backend-aside-nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.backend-aside-nav::-webkit-scrollbar-thumb {
+    background-color: var(--backend-aside-color-muted);
+    border-radius: 3px;
 }
 
 /* Pagina corrente: solo colore accent, senza sfondo. */

@@ -1,3 +1,15 @@
+## [2026-07-26] - Breadcrumb per Strutture/Utenti/Super Admin e fix scroll aside
+
+### Aggiunto
+- Breadcrumb dedicato (home → sezione → pagina corrente) su index/create/edit di Strutture, Utenti e Super Admin.
+- `.fs-7` in `tipografia.css` (.85rem, via media tra `fs-6` di Bootstrap e `.fs-8`), usata nei breadcrumb.
+- Header di sezione dell'aside (`Dashboard`, `Amministrazione`, `Gestione`) ora `position: sticky` dentro `.backend-aside-nav` — restano visibili durante lo scroll del menu, con sfondo opaco per coprire le voci che scorrono sotto.
+
+### Corretto
+- `.mx-n3` non esiste in questo bundle Bootstrap (margini negativi disabilitati di default) — il nav dell'aside non copriva più la larghezza piena. Sostituito rimuovendo il padding orizzontale dall'`<aside>` e spostandolo su header/user-menu.
+- `.nav` di Bootstrap imposta `flex-wrap: wrap`: con l'altezza dell'aside ora fissa, generava una colonna fantasma quando l'accordion Setup si espandeva. Aggiunto `flex-nowrap`.
+- Cache-busting rotto: `backend.css` versionava solo l'aggregatore, non i quattro parziali `@import`ati, quindi le modifiche CSS potevano restare in cache del browser. Rimosso l'aggregatore, ogni parziale è ora linkato singolarmente con `filemtime()` proprio.
+
 ## [2026-07-26] - Menu aside con sezioni per ruolo e accordion Setup
 
 ### Aggiunto
