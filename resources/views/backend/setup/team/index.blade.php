@@ -33,12 +33,19 @@
         </div>
     </div>
 
+    {{-- Il tema attivo nell'admin non corrisponde a quello della struttura mostrata (nessun ResolveGym qui):
+         per verificare se esiste una foto di default calcoliamo il nome del tema di $gym esplicitamente,
+         con la stessa logica di ResolveGym, invece di affidarci al tema globale attivo. --}}
+    @php
+        $teamPlaceholderTheme = \Igaster\LaravelTheme\Facades\Theme::exists($gym->slug) ? $gym->slug : 'base';
+    @endphp
+
     <div class="card border-0 p-3">
         <div class="table-responsive">
             <table class="table table-hover mb-0">
                 <thead>
                     <tr>
-                        <th></th>
+                        <th>Foto</th>
                         <th>Nome</th>
                         <th>Specialità</th>
                         <th></th>
@@ -48,7 +55,18 @@
                     @forelse ($trainers as $trainer)
                         <tr>
                             <td style="width: 48px;">
-                                <img src="{{ $trainer->getFirstMediaUrl('photo') ?: theme_url('img/team/'.\Illuminate\Support\Str::slug($trainer->name).'.jpg') }}" alt="{{ $trainer->name }}" class="rounded" style="width: 40px; height: 40px; object-fit: cover;">
+                                @if ($trainer->getFirstMedia('photo'))
+                                    <img src="{{ $trainer->getFirstMediaUrl('photo') }}" alt="Foto di {{ $trainer->name }}" class="rounded" style="width: 40px; height: 40px; object-fit: cover;">
+                                @elseif (file_exists(public_path("{$teamPlaceholderTheme}/img/team/".\Illuminate\Support\Str::slug($trainer->name).'.jpg')))
+                                    <span class="text-success" title="Nessuna foto caricata: verrà usata quella di default del tema">
+                                        <i class="fa-solid fa-circle-check fa-lg" aria-hidden="true"></i>
+                                    </span>
+                                @else
+                                    <span class="text-danger" title="Nessuna foto disponibile, né caricata né di default">
+                                        <i class="fa-solid fa-circle-xmark fa-lg" aria-hidden="true"></i>
+                                    </span>
+                                @endif
+                            </td>
                             </td>
                             <td>{{ $trainer->name }}</td>
                             <td>{{ $trainer->specialty }}</td>
