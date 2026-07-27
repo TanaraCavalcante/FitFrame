@@ -1,19 +1,44 @@
+@php
+    $classesPerSlide = 4;
+    $allClasses = $gym->gymClasses;
+    $needsCarousel = $allClasses->count() > $classesPerSlide;
+@endphp
+
 <section id="classes" class="py-5">
     <div class="container">
         <span class="section-label">— {{ str_pad($position, 2, '0', STR_PAD_LEFT) }} / CORSI</span>
         <h2 class="font-heading text-uppercase fw-bold mb-4">{{ $gym->content('classes_title', 'Le nostre modalità') }}
         </h2>
 
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 justify-content-center">
-            @foreach ($gym->gymClasses as $class)
-                <div class="col">
-                    <div class="card-fit h-100 p-4">
-                        <i class="{{ $class->icon }} fs-2 text-fit-primary mb-3 d-block"></i>
-                        <h3 class="font-heading fw-bold fs-5">{{ $class->name }}</h3>
-                        <p class="text-muted-foreground mb-0">{{ $class->description }}</p>
+        @if ($needsCarousel)
+            <div class="classes-carousel">
+                <div class="classes-viewport">
+                    <div class="classes-track" data-classes-track>
+                        @foreach ($allClasses as $class)
+                            <div class="classes-card" data-classes-card>
+                                @include('sections._class-card', ['class' => $class])
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-            @endforeach
-        </div>
+
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    <button type="button" class="carousel-control-prev" data-classes-prev aria-label="Precedente">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="carousel-control-next" data-classes-next aria-label="Successivo">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        @else
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 justify-content-center">
+                @foreach ($allClasses as $class)
+                    <div class="col">
+                        @include('sections._class-card', ['class' => $class])
+                    </div>
+                @endforeach
+            </div>
+        @endif
     </div>
 </section>

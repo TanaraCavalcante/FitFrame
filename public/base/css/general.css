@@ -136,6 +136,62 @@ h1 {
     z-index: 2;
 }
 
+/* *---CORSI ---*/
+/* Striscia con solo i corsi visibili come .classes-card: lo scroll sposta la
+   riga intera di uno spessore di card per volta (calcolato in px in JS), mai
+   a blocchi — a differenza del carousel Bootstrap, che animerebbe l'intero
+   gruppo come un unico slide. */
+.classes-viewport {
+    overflow: hidden;
+}
+
+.classes-track {
+    display: flex;
+    gap: 1.5rem;
+    transition: transform .4s ease;
+}
+
+.classes-card {
+    flex: 0 0 100%;
+}
+
+@media (min-width: 768px) {
+    .classes-card {
+        flex: 0 0 calc((100% - 1.5rem) / 2);
+    }
+}
+
+@media (min-width: 992px) {
+    .classes-card {
+        flex: 0 0 calc((100% - 1.5rem * 3) / 4);
+    }
+}
+
+/* Frecce sotto le card, centrate: in laterale causava sovrapposizioni in responsive. */
+.classes-carousel .carousel-control-prev,
+.classes-carousel .carousel-control-next {
+    position: static;
+    width: auto;
+    height: 3rem;
+    opacity: 1;
+    background: none;
+    border: 0;
+}
+
+.classes-carousel .carousel-control-prev-icon,
+.classes-carousel .carousel-control-next-icon {
+    width: 3rem;
+    height: 3rem;
+    background-color: var(--color-primary);
+    background-size: 40%;
+    border-radius: 50%;
+}
+
+.classes-carousel button:disabled {
+    cursor: not-allowed;
+    opacity: .3;
+}
+
 /* *---GALLERIA ---*/
 /* Grid bento assimétrico: 1 foto grande (2 col x 2 row) + as demais pequenas, auto-preenchidas */
 .gallery-grid {

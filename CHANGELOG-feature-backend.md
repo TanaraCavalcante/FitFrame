@@ -1,3 +1,13 @@
+## [2026-07-27] - Carousel per la sezione Corsi nel frontend pubblico
+
+### Aggiunto
+- Sezione "Corsi" (`sections/classes.blade.php`): oltre 4 corsi attiva uno scorrimento a striscia (custom, senza il Carousel di Bootstrap) che sposta esattamente una card alla volta invece di animare l'intero blocco di 4.
+- Frecce prev/next sotto le card, centrate — evita le sovrapposizioni in responsive che si avevano posizionandole lateralmente.
+- Partial `sections/_class-card.blade.php` riutilizzato sia dalla griglia statica (≤4 corsi) sia dalla striscia scorrevole.
+
+### Modificato
+- Griglia dei corsi (`row-cols-lg-4`) con `justify-content-center`: con meno di 4 corsi le card si centrano invece di lasciare uno spazio vuoto a destra.
+
 ## [2026-07-27] - Gestione Corsi (classi)
 
 ### Aggiunto
