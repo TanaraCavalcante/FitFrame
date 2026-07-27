@@ -63,6 +63,12 @@
                             @error('image_'.$slot)
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
+                            @if ($slot === 1)
+                                <p class="small text-primary mb-0 mt-1">
+                                    <i class="fa-solid fa-circle-info me-1"></i>
+                                    Questa è l'immagine in evidenza nella galleria del sito.
+                                </p>
+                            @endif
                         </div>
                     @endforeach
                 </div>

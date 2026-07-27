@@ -1,3 +1,9 @@
+## [2026-07-27] - Messaggi di validazione in italiano + evidenza slot 1 Galleria
+
+### Aggiunto
+- `lang/it/validation.php`: traduzione completa dei messaggi di validazione Laravel (regole + attributi), mancante da quando il locale è `it` — tutti i form del backend (Corsi, Piani, Hero, Galleria) ora mostrano gli errori in italiano invece del default inglese del framework.
+- Sottotitolo informativo (`text-primary`) sotto il primo slot immagine della Galleria: chiarisce che è l'immagine in evidenza nella griglia bento del sito pubblico.
+
 ## [2026-07-27] - Fix ParseError nella sezione Galleria pubblica
 
 ### Corretto
