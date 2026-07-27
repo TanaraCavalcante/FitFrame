@@ -1,3 +1,14 @@
+## [2026-07-27] - Carousel automatico per la sezione Team nel frontend pubblico
+
+### Aggiunto
+- Sezione Team pubblica: oltre la soglia per breakpoint (mobile >2, tablet >3, desktop >4, stesso criterio "quante ne entrano per riga" di Corsi/Piani), le card scorrono in loop automatico e continuo (CSS puro, nessuna libreria), senza frecce — pausa al passaggio del mouse, disattivato per chi preferisce `prefers-reduced-motion`.
+- `sections/_team-card.blade.php`: card estratta per essere condivisa da griglia statica e striscia automatica.
+- Griglia statica (≤ soglia) centrata invece di lasciare un buco quando mancano card per riempire l'ultima riga.
+
+### Corretto
+- Altezza della foto in mobile (`.team-card`, `aspect-ratio` più alto sotto i 768px, sembrava schiacciata alla larghezza ridotta).
+- `</td>` duplicato nell'index Team che disallineava tutta la tabella (causa della "foto" che sembrava mostrare il nome del file al posto dell'icona).
+
 ## [2026-07-27] - Indicatore stato foto nell'index Team
 
 ### Corretto
