@@ -1,3 +1,8 @@
+@php
+    {{-- Ogni slot è indipendente: se la struttura ha caricato una foto dal backend, sostituisce solo quello slot — gli altri restano sul default del tema. --}}
+    $galleryImages = collect(range(1, 5))->mapWithKeys(fn (int $i) => [$i => $gym->getFirstMediaUrl("gallery_image_{$i}") ?: theme_url("img/galery{$i}.jpg")]);
+@endphp
+
 <section id="gallery" class="py-5">
     <div class="container">
         <span class="section-label">— {{ str_pad($position, 2, '0', STR_PAD_LEFT) }} / GALLERIA</span>
@@ -6,22 +11,20 @@
         {{--
             Nessun testo pesante qui, solo immagini. In bianco e nero di default,
             a colori al passaggio del mouse (vedi .gallery-item in general.css).
-            Percorsi tramite theme_url(), come logo/hero — foto vere ancora da
-            aggiungere in public/pulse/img/galery1.jpg...galery5.jpg.
         --}}
         {{-- Ogni thumbnail apre la modal e salta lo slide del carousel al proprio indice (vedi js/app.js) --}}
         <div class="gallery-grid">
-            @for ($i = 1; $i <= 5; $i++)
+            @foreach ($galleryImages as $i => $url)
                 <button
                     type="button"
                     class="gallery-item @if ($i === 1) gallery-item--large @endif"
-                    style="background-image: url('{{ theme_url("img/galery{$i}.jpg") }}')"
+                    style="background-image: url('{{ $url }}')"
                     data-bs-toggle="modal"
                     data-bs-target="#galleryModal"
                     data-index="{{ $i - 1 }}"
                     aria-label="{{ $gym->name }} — apri foto della struttura {{ $i }}"
                 ></button>
-            @endfor
+            @endforeach
         </div>
     </div>
 
@@ -37,11 +40,11 @@
                 <div class="d-flex flex-column align-items-center gap-3">
                     <div id="galleryCarousel" class="carousel slide">
                         <div class="carousel-inner">
-                            @for ($i = 1; $i <= 5; $i++)
+                            @foreach ($galleryImages as $i => $url)
                                 <div class="carousel-item @if ($i === 1) active @endif">
-                                    <img src="{{ theme_url("img/galery{$i}.jpg") }}" class="w-100 h-100 object-fit-contain d-block" alt="{{ $gym->name }} — foto della struttura {{ $i }}">
+                                    <img src="{{ $url }}" class="w-100 h-100 object-fit-contain d-block" alt="{{ $gym->name }} — foto della struttura {{ $i }}">
                                 </div>
-                            @endfor
+                            @endforeach
                         </div>
                     </div>
 
