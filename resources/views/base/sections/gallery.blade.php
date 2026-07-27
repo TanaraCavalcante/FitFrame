@@ -1,5 +1,5 @@
+{{-- Ogni slot è indipendente: se la struttura ha caricato una foto dal backend, sostituisce solo quello slot — gli altri restano sul default del tema. --}}
 @php
-    {{-- Ogni slot è indipendente: se la struttura ha caricato una foto dal backend, sostituisce solo quello slot — gli altri restano sul default del tema. --}}
     $galleryImages = collect(range(1, 5))->mapWithKeys(fn (int $i) => [$i => $gym->getFirstMediaUrl("gallery_image_{$i}") ?: theme_url("img/galery{$i}.jpg")]);
 @endphp
 

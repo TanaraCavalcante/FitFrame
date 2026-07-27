@@ -1,3 +1,8 @@
+## [2026-07-27] - Fix ParseError nella sezione Galleria pubblica
+
+### Corretto
+- `sections/gallery.blade.php`: commento Blade `{{-- --}}` lasciato dentro un blocco `@php...@endphp` (lì dentro è PHP puro, non compilato da Blade) causava `ParseError` su ogni caricamento della home pubblica. Spostato fuori dal blocco.
+
 ## [2026-07-27] - Gestione Galleria (foto struttura)
 
 ### Aggiunto
