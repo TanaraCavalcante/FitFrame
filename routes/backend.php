@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\GymController;
 use App\Http\Controllers\Backend\HeroController;
 use App\Http\Controllers\Backend\NewPasswordController;
 use App\Http\Controllers\Backend\PasswordResetLinkController;
+use App\Http\Controllers\Backend\PersonalTrainerController;
 use App\Http\Controllers\Backend\PlanController;
 use App\Http\Controllers\Backend\SuperAdminController;
 use Illuminate\Support\Facades\Route;
@@ -62,6 +63,17 @@ Route::domain(config('app.admin_domain'))->name('backend.')->group(function () {
             Route::delete('/{plan}', [PlanController::class, 'destroy'])->name('destroy');
             Route::post('/{plan}/move-up', [PlanController::class, 'moveUp'])->name('move-up');
             Route::post('/{plan}/move-down', [PlanController::class, 'moveDown'])->name('move-down');
+        });
+
+        Route::prefix('setup/team')->name('setup.team.')->group(function () {
+            Route::get('/', [PersonalTrainerController::class, 'index'])->name('index');
+            Route::get('/create', [PersonalTrainerController::class, 'create'])->name('create');
+            Route::post('/', [PersonalTrainerController::class, 'store'])->name('store');
+            Route::get('/{personalTrainer}/edit', [PersonalTrainerController::class, 'edit'])->name('edit');
+            Route::put('/{personalTrainer}', [PersonalTrainerController::class, 'update'])->name('update');
+            Route::delete('/{personalTrainer}', [PersonalTrainerController::class, 'destroy'])->name('destroy');
+            Route::post('/{personalTrainer}/move-up', [PersonalTrainerController::class, 'moveUp'])->name('move-up');
+            Route::post('/{personalTrainer}/move-down', [PersonalTrainerController::class, 'moveDown'])->name('move-down');
         });
 
         Route::impersonate();
