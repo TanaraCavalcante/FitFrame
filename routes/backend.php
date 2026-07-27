@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\GymController;
 use App\Http\Controllers\Backend\HeroController;
 use App\Http\Controllers\Backend\NewPasswordController;
 use App\Http\Controllers\Backend\PasswordResetLinkController;
+use App\Http\Controllers\Backend\PlanController;
 use App\Http\Controllers\Backend\SuperAdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +47,17 @@ Route::domain(config('app.admin_domain'))->name('backend.')->group(function () {
             Route::delete('/{gymClass}', [GymClassController::class, 'destroy'])->name('destroy');
             Route::post('/{gymClass}/move-up', [GymClassController::class, 'moveUp'])->name('move-up');
             Route::post('/{gymClass}/move-down', [GymClassController::class, 'moveDown'])->name('move-down');
+        });
+
+        Route::prefix('setup/piani')->name('setup.piani.')->group(function () {
+            Route::get('/', [PlanController::class, 'index'])->name('index');
+            Route::get('/create', [PlanController::class, 'create'])->name('create');
+            Route::post('/', [PlanController::class, 'store'])->name('store');
+            Route::get('/{plan}/edit', [PlanController::class, 'edit'])->name('edit');
+            Route::put('/{plan}', [PlanController::class, 'update'])->name('update');
+            Route::delete('/{plan}', [PlanController::class, 'destroy'])->name('destroy');
+            Route::post('/{plan}/move-up', [PlanController::class, 'moveUp'])->name('move-up');
+            Route::post('/{plan}/move-down', [PlanController::class, 'moveDown'])->name('move-down');
         });
 
         Route::impersonate();

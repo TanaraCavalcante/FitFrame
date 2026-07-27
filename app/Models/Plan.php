@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasOrderedSiblings;
 use Database\Factories\PlanFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Plan extends Model
 {
     /** @use HasFactory<PlanFactory> */
-    use HasFactory;
+    use HasFactory, HasOrderedSiblings;
 
     protected $fillable = ['gym_id', 'name', 'price', 'highlighted', 'order'];
 
@@ -37,6 +38,11 @@ class Plan extends Model
 
     public function planFeatures(): HasMany
     {
-        return $this->hasMany(PlanFeature::class);
+        return $this->hasMany(PlanFeature::class)->orderBy('order');
+    }
+
+    protected function siblingScopeColumn(): string
+    {
+        return 'gym_id';
     }
 }
