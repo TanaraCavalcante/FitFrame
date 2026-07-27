@@ -22,7 +22,6 @@ class PersonalTrainerFactory extends Factory
             'gym_id' => Gym::factory(),
             'name' => fake()->name(),
             'specialty' => fake()->randomElement(['Musculação', 'Funcional', 'Yoga', 'Crossfit']),
-            'photo_path' => 'base/team/placeholder.jpg',
             'order' => fake()->numberBetween(0, 10),
         ];
     }

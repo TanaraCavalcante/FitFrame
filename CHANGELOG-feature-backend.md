@@ -1,3 +1,18 @@
+## [2026-07-27] - Gestione Team (personal trainer)
+
+### Aggiunto
+- CRUD Team (`backend/setup/team`, rotte `backend.setup.team.*`): index con selettore struttura per il super_admin, create/edit, eliminazione, riordino su/giù, upload foto singola per membro.
+- 10 test per `PersonalTrainerController` (autorizzazione, CRUD, ordine, upload/rimozione foto).
+
+### Modificato
+- `PersonalTrainer`: sostituita la colonna `photo_path` (path statico del tema) con una media collection `photo` (Spatie MediaLibrary, singleFile) — coerente con Hero e Galleria. Aggiunto `HasOrderedSiblings` per il riordino.
+- `Gym::personalTrainers()` ora ordina esplicitamente per `order` (stessa lacuna già corretta per `gymClasses`/`plans`).
+- Sezione Team pubblica (`sections/team.blade.php`): ogni foto legge prima la media collection del backend, ricadendo sulla foto di default del tema (convenzione nome-slug, come nel seeder demo) se non caricata.
+- `ResolveGym`: eager-load di `gym.personalTrainers.media` per evitare N+1 sulla home pubblica.
+
+### Corretto
+- Migration `drop_photo_path_from_personal_trainers_table`: rimossa la colonna ormai sostituita dalla media collection.
+
 ## [2026-07-27] - Messaggi di validazione in italiano + evidenza slot 1 Galleria
 
 ### Aggiunto

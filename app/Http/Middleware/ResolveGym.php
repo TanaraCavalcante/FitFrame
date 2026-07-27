@@ -26,6 +26,7 @@ class ResolveGym
             'gym.plans' => fn ($query) => $query->orderBy('order'),
             'gym.plans.planFeatures' => fn ($query) => $query->orderBy('order'),
             'gym.personalTrainers' => fn ($query) => $query->orderBy('order'),
+            'gym.personalTrainers.media',
             'gym.testimonials' => fn ($query) => $query->orderBy('order'),
         ])->where('domain', $request->getHost())->first();
 

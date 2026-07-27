@@ -13,7 +13,6 @@ use App\Models\PlanFeature;
 use App\Models\Testimonial;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class GymSeeder extends Seeder
 {
@@ -179,7 +178,6 @@ class GymSeeder extends Seeder
                     'gym_id' => $gym->id,
                     'name' => $trainer['name'],
                     'specialty' => $trainer['specialty'],
-                    'photo_path' => "{$data['slug']}/img/team/".Str::slug($trainer['name']).'.jpg',
                     'order' => $order,
                 ]);
             }
