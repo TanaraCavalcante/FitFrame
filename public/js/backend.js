@@ -188,4 +188,29 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    document.querySelectorAll('.confirm-delete-form').forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            if (form.dataset.confirmed === '1') {
+                return;
+            }
+
+            event.preventDefault();
+
+            Swal.fire({
+                title: form.dataset.confirmTitle || 'Sei sicuro?',
+                text: form.dataset.confirmText || 'Questa azione non può essere annullata.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Elimina',
+                cancelButtonText: 'Annulla',
+                confirmButtonColor: '#dc3545',
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    form.dataset.confirmed = '1';
+                    form.submit();
+                }
+            });
+        });
+    });
 });

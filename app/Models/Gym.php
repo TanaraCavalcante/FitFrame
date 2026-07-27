@@ -51,7 +51,7 @@ class Gym extends Model implements HasMedia
 
     public function gymClasses(): HasMany
     {
-        return $this->hasMany(GymClass::class);
+        return $this->hasMany(GymClass::class)->orderBy('order');
     }
 
     public function plans(): HasMany

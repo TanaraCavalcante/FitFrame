@@ -4,7 +4,7 @@
         <h2 class="font-heading text-uppercase fw-bold mb-4">{{ $gym->content('classes_title', 'Le nostre modalità') }}
         </h2>
 
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 justify-content-center">
             @foreach ($gym->gymClasses as $class)
                 <div class="col">
                     <div class="card-fit h-100 p-4">
