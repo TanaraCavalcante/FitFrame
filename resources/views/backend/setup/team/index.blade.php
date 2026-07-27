@@ -67,7 +67,6 @@
                                     </span>
                                 @endif
                             </td>
-                            </td>
                             <td>{{ $trainer->name }}</td>
                             <td>{{ $trainer->specialty }}</td>
                             <td class="text-end">

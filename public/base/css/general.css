@@ -303,6 +303,103 @@ h1 {
     background: linear-gradient(to top, rgba(var(--color-background-rgb), 0.9), transparent);
 }
 
+/* Oltre 4 membri: striscia a scorrimento automatico e continuo, senza frecce.
+   Il track contiene due copie identiche del set (.team-marquee-group): l'animazione
+   trasla di -50%, cioè la larghezza di una copia, così il loop non ha soluzione di
+   continuità. Ogni card (anche l'ultima di ogni gruppo) ha lo stesso margin-right,
+   incluso il confine tra i due gruppi, per mantenere il ritmo degli spazi costante. */
+.team-marquee {
+    overflow: hidden;
+}
+
+.team-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: team-marquee-scroll 30s linear infinite;
+}
+
+.team-marquee-group {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.team-marquee-card {
+    flex: 0 0 220px;
+    margin-right: 1.5rem;
+}
+
+.team-marquee:hover .team-marquee-track {
+    animation-play-state: paused;
+}
+
+@keyframes team-marquee-scroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/*? Responsive TEAM: tutti i breakpoint della sezione raggruppati qui, in ordine crescente. */
+
+/* In mobile la card è più stretta (2 per riga): rapporto più alto per non farla sembrare schiacciata,
+   e giro del marquee un po' più veloce (spazio visibile minore). */
+@media (max-width: 767.98px) {
+    .team-card {
+        aspect-ratio: 3 / 5;
+    }
+
+    .team-marquee-track {
+        animation-duration: 18s;
+    }
+}
+
+
+/* Soglia per breakpoint (vedi team.blade.php): se il numero di membri non supera la
+   soglia di quel breakpoint, la striscia torna una griglia statica centrata invece di
+   scorrere — il gruppo duplicato (clone aria-hidden) va nascosto per non mostrare card ripetute. */
+@media (min-width: 768px) {
+    .team-marquee-card {
+        flex-basis: 250px;
+    }
+
+    .team-marquee--static-tablet .team-marquee-track {
+        flex-wrap: wrap;
+        justify-content: center;
+        width: auto;
+        animation: none;
+    }
+
+    .team-marquee--static-tablet .team-marquee-group[aria-hidden] {
+        display: none;
+    }
+}
+
+@media (min-width: 992px) {
+    .team-marquee-card {
+        flex-basis: 270px;
+    }
+
+    .team-marquee--static-desktop .team-marquee-track {
+        flex-wrap: wrap;
+        justify-content: center;
+        width: auto;
+        animation: none;
+    }
+
+    .team-marquee--static-desktop .team-marquee-group[aria-hidden] {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .team-marquee-track {
+        animation: none;
+    }
+}
+
 /* *---FOOTER ---*/
 .site-footer {
     background-color: #000;
