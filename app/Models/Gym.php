@@ -8,13 +8,26 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Gym extends Model
+class Gym extends Model implements HasMedia
 {
     /** @use HasFactory<GymFactory> */
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $fillable = ['name', 'slug'];
+
+    /**
+     * Visual dell'hero: al massimo 3 immagini oppure un video, mai entrambi.
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('hero_image_1')->singleFile();
+        $this->addMediaCollection('hero_image_2')->singleFile();
+        $this->addMediaCollection('hero_image_3')->singleFile();
+        $this->addMediaCollection('hero_video')->singleFile();
+    }
 
     public function domains(): HasMany
     {

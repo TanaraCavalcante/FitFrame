@@ -108,6 +108,34 @@ h1 {
     color: var(--color-muted-foreground);
 }
 
+/* Modalità video: il <video> fa da sfondo, il gradiente diventa un overlay separato sopra di esso. */
+.hero--video {
+    background-image: none;
+    overflow: hidden;
+}
+
+.hero-video-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.hero--video::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-image: linear-gradient(rgba(var(--color-background-rgb), 0.4), rgba(var(--color-background-rgb), 0.85));
+}
+
+.hero--video .container {
+    position: relative;
+    z-index: 2;
+}
+
 /* *---GALLERIA ---*/
 /* Grid bento assimétrico: 1 foto grande (2 col x 2 row) + as demais pequenas, auto-preenchidas */
 .gallery-grid {

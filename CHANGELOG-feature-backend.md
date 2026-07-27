@@ -1,3 +1,15 @@
+## [2026-07-27] - Gestione contenuti Hero (testo, immagini, video)
+
+### Aggiunto
+- Pagina `backend/setup/hero.blade.php` (rotte `backend.setup.hero`/`.update`): tab "Testo"/"Visual" nel pannello admin, selettore struttura per il super_admin.
+- `Gym` implementa `HasMedia`/`InteractsWithMedia` (spatie/laravel-medialibrary, installato ma inutilizzato finora): collection `hero_image_1/2/3` (singleFile ciascuna) e `hero_video` (singleFile).
+- Sezione Visual: 3 slot immagine indipendenti con anteprima, upload e pulsante di rimozione per slot; slot video con anteprima, upload e rimozione; radio "Immagini"/"Video" per scegliere quale sia attivo — `hero_visual_mode` salvato in `contents`, senza cancellare l'altro set di file (si può tornare indietro senza ricaricare nulla).
+- Validazione client-side del video (formato/dimensione) in `backend.js`, in aggiunta a quella server-side.
+- `config/media-library.php` pubblicato, `max_file_size` allineato a 50MB (era 10MB di default: causava un 500 non gestito su upload validi lato Laravel ma rifiutati dal pacchetto).
+- Frontend pubblico (`elements/hero.blade.php`): legge `hero_visual_mode` per mostrare immagine (casuale se più di una) o video di sfondo, con fallback al file statico del tema se non configurato.
+- Alert di sessione (`success`/`error`) resi `alert-dismissible` con pulsante di chiusura.
+- 12 test per `HeroController` (autorizzazione, cambio struttura, testo, upload/rimozione immagini e video, persistenza del `visual_mode`).
+
 ## [2026-07-26] - Componente filtro nelle index e utility btn-light/btn-purple
 
 ### Aggiunto

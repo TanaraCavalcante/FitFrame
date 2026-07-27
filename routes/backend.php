@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\AuthenticatedSessionController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\GymAdminController;
 use App\Http\Controllers\Backend\GymController;
+use App\Http\Controllers\Backend\HeroController;
 use App\Http\Controllers\Backend\NewPasswordController;
 use App\Http\Controllers\Backend\PasswordResetLinkController;
 use App\Http\Controllers\Backend\SuperAdminController;
@@ -31,6 +32,9 @@ Route::domain(config('app.admin_domain'))->name('backend.')->group(function () {
         Route::resource('utenti', GymAdminController::class)->except('show')->parameters(['utenti' => 'user']);
 
         Route::resource('super-admin', SuperAdminController::class)->except('show')->parameters(['super-admin' => 'user']);
+
+        Route::get('setup/hero', [HeroController::class, 'edit'])->name('setup.hero');
+        Route::put('setup/hero', [HeroController::class, 'update'])->name('setup.hero.update');
 
         Route::impersonate();
     });
