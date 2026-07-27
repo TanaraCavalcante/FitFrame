@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\AuthenticatedSessionController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\GymAdminController;
+use App\Http\Controllers\Backend\GymClassController;
 use App\Http\Controllers\Backend\GymController;
 use App\Http\Controllers\Backend\HeroController;
 use App\Http\Controllers\Backend\NewPasswordController;
@@ -35,6 +36,17 @@ Route::domain(config('app.admin_domain'))->name('backend.')->group(function () {
 
         Route::get('setup/hero', [HeroController::class, 'edit'])->name('setup.hero');
         Route::put('setup/hero', [HeroController::class, 'update'])->name('setup.hero.update');
+
+        Route::prefix('setup/corsi')->name('setup.corsi.')->group(function () {
+            Route::get('/', [GymClassController::class, 'index'])->name('index');
+            Route::get('/create', [GymClassController::class, 'create'])->name('create');
+            Route::post('/', [GymClassController::class, 'store'])->name('store');
+            Route::get('/{gymClass}/edit', [GymClassController::class, 'edit'])->name('edit');
+            Route::put('/{gymClass}', [GymClassController::class, 'update'])->name('update');
+            Route::delete('/{gymClass}', [GymClassController::class, 'destroy'])->name('destroy');
+            Route::post('/{gymClass}/move-up', [GymClassController::class, 'moveUp'])->name('move-up');
+            Route::post('/{gymClass}/move-down', [GymClassController::class, 'moveDown'])->name('move-down');
+        });
 
         Route::impersonate();
     });

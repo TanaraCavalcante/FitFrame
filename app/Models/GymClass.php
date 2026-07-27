@@ -18,4 +18,26 @@ class GymClass extends Model
     {
         return $this->belongsTo(Gym::class);
     }
+
+    /**
+     * Corso precedente della stessa palestra, per ordine.
+     */
+    public function previousSibling(): ?self
+    {
+        return static::where('gym_id', $this->gym_id)
+            ->where('order', '<', $this->order)
+            ->orderByDesc('order')
+            ->first();
+    }
+
+    /**
+     * Corso successivo della stessa palestra, per ordine.
+     */
+    public function nextSibling(): ?self
+    {
+        return static::where('gym_id', $this->gym_id)
+            ->where('order', '>', $this->order)
+            ->orderBy('order')
+            ->first();
+    }
 }

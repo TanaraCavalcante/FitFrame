@@ -1,3 +1,16 @@
+## [2026-07-27] - Gestione Corsi (classi)
+
+### Aggiunto
+- CRUD Corsi (`backend/setup/corsi`, rotte `backend.setup.corsi.*`): index con selettore struttura per il super_admin, create/edit, eliminazione.
+- Riordino manuale (pulsanti su/giù) che scambia la colonna `order` tra corsi adiacenti della stessa palestra; `GymClass::previousSibling()`/`nextSibling()` nel model.
+- Voce "Corsi" nel menu Setup dell'aside, subito dopo "Hero" (ordine delle sezioni nel frontend pubblico).
+- Conferma di eliminazione con SweetAlert2 (CDN) al posto del `confirm()` nativo — classe riutilizzabile `.confirm-delete-form` in `backend.js`, applicata per ora solo ai Corsi.
+- 9 test per `GymClassController` (autorizzazione, CRUD, riordino, ordinamento in lista).
+
+### Corretto
+- `Gym::gymClasses()` ora ordina esplicitamente per `order` (mancava lato admin; il frontend pubblico era già corretto tramite l'eager-load in `ResolveGym`).
+- Sezione "Corsi" nel frontend pubblico: la griglia usa `justify-content-center`, così con meno di 4 corsi le card si centrano invece di lasciare uno spazio vuoto a destra.
+
 ## [2026-07-27] - Riorganizzazione header pagina Hero
 
 ### Modificato
