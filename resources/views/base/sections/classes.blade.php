@@ -11,11 +11,11 @@
         </h2>
 
         @if ($needsCarousel)
-            <div class="classes-carousel">
+            <div class="classes-carousel carousel-strip">
                 <div class="classes-viewport">
-                    <div class="classes-track" data-classes-track>
+                    <div class="classes-track" data-slider-track data-slider-breakpoints='{"992":4,"768":2,"0":1}'>
                         @foreach ($allClasses as $class)
-                            <div class="classes-card" data-classes-card>
+                            <div class="classes-card">
                                 @include('sections._class-card', ['class' => $class])
                             </div>
                         @endforeach
@@ -23,10 +23,10 @@
                 </div>
 
                 <div class="d-flex justify-content-center gap-3 mt-4">
-                    <button type="button" class="carousel-control-prev" data-classes-prev aria-label="Precedente">
+                    <button type="button" class="carousel-control-prev" data-slider-prev aria-label="Precedente">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="carousel-control-next" data-classes-next aria-label="Successivo">
+                    <button type="button" class="carousel-control-next" data-slider-next aria-label="Successivo">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     </button>
                 </div>
