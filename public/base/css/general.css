@@ -167,9 +167,10 @@ h1 {
     }
 }
 
-/* Frecce sotto le card, centrate: in laterale causava sovrapposizioni in responsive. */
-.classes-carousel .carousel-control-prev,
-.classes-carousel .carousel-control-next {
+/* Frecce sotto le card, centrate: in laterale causava sovrapposizioni in responsive.
+   Condivise da tutte le sezioni con striscia scorrevole (.carousel-strip), es. Corsi e Piani. */
+.carousel-strip .carousel-control-prev,
+.carousel-strip .carousel-control-next {
     position: static;
     width: auto;
     height: 3rem;
@@ -178,8 +179,8 @@ h1 {
     border: 0;
 }
 
-.classes-carousel .carousel-control-prev-icon,
-.classes-carousel .carousel-control-next-icon {
+.carousel-strip .carousel-control-prev-icon,
+.carousel-strip .carousel-control-next-icon {
     width: 3rem;
     height: 3rem;
     background-color: var(--color-primary);
@@ -187,9 +188,37 @@ h1 {
     border-radius: 50%;
 }
 
-.classes-carousel button:disabled {
+.carousel-strip button:disabled {
     cursor: not-allowed;
     opacity: .3;
+}
+
+/* *---PIANI ---*/
+/* Stessa logica della striscia Corsi (vedi sopra), soglia e breakpoint diversi:
+   3 piani visibili da md in su (la griglia statica usa col-md-4), 1 sotto. */
+/* Padding-top compensa il badge "Più popolare" (.plan-card__badge, top: -0.75rem in
+   components.css), che altrimenti verrebbe tagliato dall'overflow: hidden. Il
+   margin-top negativo annulla lo spazio extra così il layout non si sposta. */
+.plans-viewport {
+    overflow: hidden;
+    padding-top: 1rem;
+    margin-top: -1rem;
+}
+
+.plans-track {
+    display: flex;
+    gap: 1.5rem;
+    transition: transform .4s ease;
+}
+
+.plans-card {
+    flex: 0 0 100%;
+}
+
+@media (min-width: 768px) {
+    .plans-card {
+        flex: 0 0 calc((100% - 1.5rem * 2) / 3);
+    }
 }
 
 /* *---GALLERIA ---*/

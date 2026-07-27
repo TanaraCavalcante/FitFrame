@@ -26,19 +26,24 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(tick);
     });
 
-    // Corsi: la striscia scorre di una card alla volta (in px reali), mai a blocchi interi.
-    document.querySelectorAll('[data-classes-track]').forEach((track) => {
-        const container = track.closest('.classes-carousel');
-        const prevBtn = container.querySelector('[data-classes-prev]');
-        const nextBtn = container.querySelector('[data-classes-next]');
-        const cards = Array.from(track.querySelectorAll('[data-classes-card]'));
+    // Striscia scorrevole (Corsi, Piani, ...): scorre di una card alla volta (in px reali), mai a blocchi interi.
+    document.querySelectorAll('[data-slider-track]').forEach((track) => {
+        const container = track.closest('.carousel-strip');
+        const prevBtn = container.querySelector('[data-slider-prev]');
+        const nextBtn = container.querySelector('[data-slider-next]');
+        const cards = Array.from(track.children);
+        const breakpoints = JSON.parse(track.dataset.sliderBreakpoints);
 
         let index = 0;
 
         const visibleCount = () => {
-            if (window.innerWidth >= 992) return 4;
-            if (window.innerWidth >= 768) return 2;
-            return 1;
+            const width = window.innerWidth;
+            const match = Object.keys(breakpoints)
+                .map(Number)
+                .sort((a, b) => b - a)
+                .find((breakpoint) => width >= breakpoint);
+
+            return breakpoints[match] ?? 1;
         };
 
         const update = () => {

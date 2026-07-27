@@ -1,3 +1,16 @@
+## [2026-07-27] - Carousel per la sezione Piani nel frontend pubblico
+
+### Aggiunto
+- Sezione Piani pubblica: carousel a striscia scorrevole (stessa struttura di Corsi) quando la struttura ha più di 3 piani, altrimenti griglia statica invariata.
+- Partial `sections/_plan-card.blade.php`: card del piano estratta per essere condivisa da griglia e carousel.
+
+### Modificato
+- JS del carousel generalizzato in `public/js/app.js`: da attributi specifici `data-classes-*` a `data-slider-track`/`data-slider-prev`/`data-slider-next` con breakpoint di visibilità passati via `data-slider-breakpoints` (JSON), riusato ora sia da Corsi che da Piani senza duplicare la logica.
+- CSS delle frecce spostato da `.classes-carousel` a `.carousel-strip` (classe condivisa) in `public/base/css/general.css`; aggiunto blocco `.plans-viewport`/`.plans-track`/`.plans-card`.
+
+### Corretto
+- Badge "Più popolare" (`.plan-card__badge`, `top: -0.75rem`) veniva tagliato da `overflow: hidden` nel carousel: aggiunto `padding-top`/`margin-top` compensativi su `.plans-viewport`.
+
 ## [2026-07-27] - Gestione Piani (abbonamenti)
 
 ### Aggiunto
