@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\AuthenticatedSessionController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\GalleryController;
 use App\Http\Controllers\Backend\GymAdminController;
 use App\Http\Controllers\Backend\GymClassController;
 use App\Http\Controllers\Backend\GymController;
@@ -48,6 +49,9 @@ Route::domain(config('app.admin_domain'))->name('backend.')->group(function () {
             Route::post('/{gymClass}/move-up', [GymClassController::class, 'moveUp'])->name('move-up');
             Route::post('/{gymClass}/move-down', [GymClassController::class, 'moveDown'])->name('move-down');
         });
+
+        Route::get('setup/gallery', [GalleryController::class, 'edit'])->name('setup.gallery');
+        Route::put('setup/gallery', [GalleryController::class, 'update'])->name('setup.gallery.update');
 
         Route::prefix('setup/piani')->name('setup.piani.')->group(function () {
             Route::get('/', [PlanController::class, 'index'])->name('index');

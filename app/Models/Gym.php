@@ -19,7 +19,8 @@ class Gym extends Model implements HasMedia
     protected $fillable = ['name', 'slug'];
 
     /**
-     * Visual dell'hero: al massimo 3 immagini oppure un video, mai entrambi.
+     * Visual dell'hero (3 immagini oppure un video, mai entrambi) e le 5 foto della galleria.
+     * Ogni slot è una collection indipendente: se vuota, il frontend ricade sulla foto di default del tema.
      */
     public function registerMediaCollections(): void
     {
@@ -27,6 +28,12 @@ class Gym extends Model implements HasMedia
         $this->addMediaCollection('hero_image_2')->singleFile();
         $this->addMediaCollection('hero_image_3')->singleFile();
         $this->addMediaCollection('hero_video')->singleFile();
+
+        $this->addMediaCollection('gallery_image_1')->singleFile();
+        $this->addMediaCollection('gallery_image_2')->singleFile();
+        $this->addMediaCollection('gallery_image_3')->singleFile();
+        $this->addMediaCollection('gallery_image_4')->singleFile();
+        $this->addMediaCollection('gallery_image_5')->singleFile();
     }
 
     public function domains(): HasMany

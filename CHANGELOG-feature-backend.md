@@ -1,3 +1,13 @@
+## [2026-07-27] - Gestione Galleria (foto struttura)
+
+### Aggiunto
+- CRUD Galleria (`backend/setup/gallery`, rotte `backend.setup.gallery`/`backend.setup.gallery.update`): 5 slot immagine indipendenti, upload/rimozione singola come nell'Hero, select struttura per il super_admin sotto le CTA (stesso pattern di Corsi/Piani).
+- 5 test per `GalleryController` (autorizzazione, dropdown super_admin, upload multi-slot, rimozione slot).
+
+### Modificato
+- Sezione Galleria pubblica (`sections/gallery.blade.php`): ogni foto ora legge prima la media collection `gallery_image_{n}` della struttura, ricadendo sulla foto di default del tema solo per gli slot lasciati vuoti.
+- `Gym::registerMediaCollections()`: aggiunte le 5 collection `gallery_image_1`...`gallery_image_5` (singleFile), accanto a quelle già esistenti dell'hero.
+
 ## [2026-07-27] - Carousel per la sezione Piani nel frontend pubblico
 
 ### Aggiunto
