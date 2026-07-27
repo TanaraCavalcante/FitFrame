@@ -12,7 +12,18 @@
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
                 <h1 class="h3 mb-0">Hero</h1>
+                <div class="d-flex gap-2">
+                    <a href="{{ url()->previous() }}" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-arrow-left me-1"></i>Indietro</a>
+                    <button type="submit" form="hero-form" class="btn btn-sm btn-outline-success"><i class="fa-solid fa-floppy-disk me-1"></i>Salva</button>
+                </div>
+            </div>
 
+            <hr class="my-3">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-sm btn-outline-primary tab-toggle-btn active" data-tab-group="hero" data-tab-target="hero-testo"><i class="fa-solid fa-align-left me-1"></i>Testo</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary tab-toggle-btn" data-tab-group="hero" data-tab-target="hero-visual"><i class="fa-solid fa-photo-film me-1"></i>Visual</button>
+                </div>
                 @if ($gyms->isNotEmpty())
                     <form method="GET" action="{{ route('backend.setup.hero') }}" class="d-flex align-items-center gap-2">
                         <label class="form-label small text-gray-muted mb-0">Struttura</label>
@@ -23,18 +34,6 @@
                         </select>
                     </form>
                 @endif
-
-                <div class="d-flex gap-2">
-                    <a href="{{ url()->previous() }}" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-arrow-left me-1"></i>Indietro</a>
-                    <button type="submit" form="hero-form" class="btn btn-sm btn-outline-success"><i class="fa-solid fa-floppy-disk me-1"></i>Salva</button>
-                </div>
-            </div>
-
-            <hr class="my-3">
-
-            <div class="d-flex gap-2">
-                <button type="button" class="btn btn-sm btn-outline-primary tab-toggle-btn active" data-tab-group="hero" data-tab-target="hero-testo"><i class="fa-solid fa-align-left me-1"></i>Testo</button>
-                <button type="button" class="btn btn-sm btn-outline-primary tab-toggle-btn" data-tab-group="hero" data-tab-target="hero-visual"><i class="fa-solid fa-photo-film me-1"></i>Visual</button>
             </div>
         </div>
     </div>
