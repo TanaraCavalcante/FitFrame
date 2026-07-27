@@ -1,3 +1,16 @@
+## [2026-07-27] - Gestione Piani (abbonamenti)
+
+### Aggiunto
+- CRUD Piani (`backend/setup/piani`, rotte `backend.setup.piani.*`): index con selettore struttura per il super_admin, create/edit, eliminazione, riordino su/giù.
+- Caratteristiche del piano gestite come lista dinamica nel form (bottone "Aggiungi caratteristica", JS vanilla) — al salvataggio sostituiscono tutte quelle esistenti.
+- Un solo piano "in evidenza" per struttura: selezionarne uno disattiva automaticamente gli altri.
+- Voce "Piani" nel menu Setup dell'aside, dopo "Corsi" (ordine delle sezioni nel frontend pubblico).
+- 8 test per `PlanController` (autorizzazione, CRUD, caratteristiche, evidenza esclusiva, riordino).
+- Trait `App\Models\Concerns\HasOrderedSiblings`: centralizza la query di elemento precedente/successivo per ordine, usata ora sia da `GymClass` che da `Plan`.
+
+### Corretto
+- `Gym::plans()` e `Plan::planFeatures()` ora ordinano esplicitamente per `order` (mancava lato admin, come già successo per `GymClass`; il frontend pubblico restava corretto solo grazie all'eager-load in `ResolveGym`).
+
 ## [2026-07-27] - Carousel per la sezione Corsi nel frontend pubblico
 
 ### Aggiunto

@@ -213,4 +213,28 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
+
+    var addFeatureBtn = document.getElementById('plan-feature-add');
+
+    if (addFeatureBtn) {
+        addFeatureBtn.addEventListener('click', function () {
+            var list = document.getElementById('plan-features-list');
+            var row = document.createElement('div');
+
+            row.className = 'input-group mb-2 plan-feature-row';
+            row.innerHTML =
+                '<input type="text" name="features[]" class="form-control" placeholder="Es. Accesso illimitato alle lezioni">' +
+                '<button type="button" class="btn btn-outline-danger plan-feature-remove" title="Rimuovi"><i class="fa-solid fa-xmark"></i></button>';
+
+            list.appendChild(row);
+        });
+
+        document.addEventListener('click', function (event) {
+            var removeBtn = event.target.closest('.plan-feature-remove');
+
+            if (removeBtn) {
+                removeBtn.closest('.plan-feature-row').remove();
+            }
+        });
+    }
 });

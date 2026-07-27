@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasOrderedSiblings;
 use Database\Factories\GymClassFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class GymClass extends Model
 {
     /** @use HasFactory<GymClassFactory> */
-    use HasFactory;
+    use HasFactory, HasOrderedSiblings;
 
     protected $fillable = ['gym_id', 'name', 'description', 'icon', 'order'];
 
@@ -19,25 +20,8 @@ class GymClass extends Model
         return $this->belongsTo(Gym::class);
     }
 
-    /**
-     * Corso precedente della stessa palestra, per ordine.
-     */
-    public function previousSibling(): ?self
+    protected function siblingScopeColumn(): string
     {
-        return static::where('gym_id', $this->gym_id)
-            ->where('order', '<', $this->order)
-            ->orderByDesc('order')
-            ->first();
-    }
-
-    /**
-     * Corso successivo della stessa palestra, per ordine.
-     */
-    public function nextSibling(): ?self
-    {
-        return static::where('gym_id', $this->gym_id)
-            ->where('order', '>', $this->order)
-            ->orderBy('order')
-            ->first();
+        return 'gym_id';
     }
 }

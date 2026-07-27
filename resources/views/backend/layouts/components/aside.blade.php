@@ -53,6 +53,7 @@
                 $setupChildren = [
                     ['label' => 'Hero', 'icon' => 'fa-image', 'route' => 'backend.setup.hero'],
                     ['label' => 'Corsi', 'icon' => 'fa-dumbbell', 'route' => 'backend.setup.corsi.index'],
+                    ['label' => 'Piani', 'icon' => 'fa-tags', 'route' => 'backend.setup.piani.index'],
                     ['label' => 'Team', 'icon' => 'fa-people-group', 'route' => 'backend.setup.team'],
                     ['label' => 'Galleria', 'icon' => 'fa-images', 'route' => 'backend.setup.gallery'],
                     ['label' => 'Testimonianze', 'icon' => 'fa-quote-left', 'route' => 'backend.setup.testimonials'],
