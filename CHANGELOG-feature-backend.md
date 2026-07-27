@@ -1,3 +1,8 @@
+## [2026-07-27] - Riorganizzazione header pagina Hero
+
+### Modificato
+- Header della pagina Hero: toggle "Testo"/"Visual" e selettore struttura spostati sotto la riga di titolo/azioni, in una riga propria dopo il separatore.
+
 ## [2026-07-27] - Gestione contenuti Hero (testo, immagini, video)
 
 ### Aggiunto
