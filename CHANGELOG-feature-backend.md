@@ -1,3 +1,9 @@
+## [2026-07-27] - Indicatore stato foto nell'index Team
+
+### Corretto
+- Colonna "Foto" dell'index Team: `theme_url()` risolveva rispetto al tema globale attivo, che nel backend non corrisponde alla struttura mostrata (nessun `ResolveGym` qui) — per le strutture diverse da quella con tema attivo l'immagine di fallback risultava rotta (mostrava il nome del file al posto della foto).
+- Sostituita con tre stati calcolati esplicitamente sul tema della struttura in questione (stessa logica di `ResolveGym`): foto caricata → miniatura reale; nessuna foto ma default del tema presente su disco → icona verde di spunta; nessuna delle due → icona rossa "x".
+
 ## [2026-07-27] - Gestione Team (personal trainer)
 
 ### Aggiunto
