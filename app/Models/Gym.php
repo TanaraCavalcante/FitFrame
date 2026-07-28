@@ -43,7 +43,7 @@ class Gym extends Model implements HasMedia
 
     public function gymSections(): HasMany
     {
-        return $this->hasMany(GymSection::class);
+        return $this->hasMany(GymSection::class)->orderBy('order');
     }
 
     public function contact(): HasOne

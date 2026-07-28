@@ -1,3 +1,14 @@
+## [2026-07-28] - Gestione ordine sezioni (ultima pagina Setup)
+
+### Aggiunto
+- CRUD "Ordina sezioni" (`backend/setup/order`, rotte `backend.setup.order`/`.move-up`/`.move-down`): lista le 6 sezioni riordinabili di una struttura (Corsi, Piani, Galleria, Team, Testimonianze, CTA finale) con icona ed etichetta, riordino su/giù. Nessun create/edit/delete: le sezioni sono fisse, solo l'ordine è personalizzabile. Hero, intestazione e footer restano fissi e non compaiono qui.
+- `GymSection::DEFAULT_ORDER` centralizza l'elenco delle 6 sezioni (era duplicato in `GymSeeder`), più `label()`/`icon()` per la UI admin. Aggiunto `HasOrderedSiblings` per il riordino.
+- 7 test per `GymSectionController`.
+
+### Corretto
+- `GymController@store` (CRUD Strutture): creare una nuova struttura non generava le righe `gym_sections` di default — la sua pagina pubblica risultava priva di tutte le sezioni riordinabili (Corsi, Piani, Galleria, Team, Testimonianze, CTA finale), mostrando solo Hero/intestazione/footer. Ora seeda `GymSection::DEFAULT_ORDER` alla creazione.
+- `Gym::gymSections()` ora ordina esplicitamente per `order` (stessa lacuna già corretta per le altre relazioni riordinabili).
+
 ## [2026-07-28] - Allineato .env.example al locale italiano del progetto
 
 ### Corretto
