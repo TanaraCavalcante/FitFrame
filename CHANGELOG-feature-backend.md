@@ -1,3 +1,12 @@
+## [2026-07-28] - Gestione CTA finale e Contatti + restyling tab in stile underline
+
+### Aggiunto
+- CRUD CTA (`backend/setup/cta`, rotte `backend.setup.cta`/`backend.setup.cta.update`): pagina singola come Hero, gestisce testo della sezione CTA finale (titolo, sottotitolo, testo pulsante), slogan del footer, e tutti i campi Contatti (indirizzo, telefono, email, WhatsApp, Instagram, orari) — `address`/`phone`/`hours` obbligatori (NOT NULL a livello di DB), gli altri opzionali. Usa `$gym->contact()->updateOrCreate(...)` perché la palestra potrebbe non avere ancora una riga Contact.
+- 7 test per `CtaController`.
+
+### Modificato
+- Le due card di CTA e Hero sono state unite in una sola, con le sezioni "Cta finali"/"Contatti" (e "Testo"/"Visual" in Hero) navigabili tramite tab in stile underline di Bootstrap (`.nav-underline`) invece di due card separate — riusa il meccanismo JS generico dei tab già esistente (`.tab-toggle-btn`) e la classe `.hover-accent` già presente nel CSS del backend. Aggiunta una sola regola CSS (`.nav-underline .nav-link.active`) per colorare il testo della tab attiva.
+
 ## [2026-07-28] - Fix marquee Team in tablet + soglia tablet allineata al mobile
 
 ### Corretto
