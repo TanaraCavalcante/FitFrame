@@ -1,3 +1,12 @@
+## [2026-07-28] - Gestione Testimonianze
+
+### Aggiunto
+- CRUD Testimonianze (`backend/setup/testimonianze`, rotte `backend.setup.testimonianze.*`): index con selettore struttura per il super_admin, create/edit, eliminazione, riordino su/giù. Campi: autore, testo, "cliente da" (opzionale).
+- 8 test per `TestimonialController` (autorizzazione, CRUD, ordine).
+
+### Modificato
+- `Gym::testimonials()` ora ordina esplicitamente per `order` (stessa lacuna già corretta per `gymClasses`/`plans`/`personalTrainers`). `Testimonial` usa `HasOrderedSiblings` per il riordino.
+
 ## [2026-07-27] - Carousel automatico per la sezione Team nel frontend pubblico
 
 ### Aggiunto

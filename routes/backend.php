@@ -12,6 +12,7 @@ use App\Http\Controllers\Backend\PasswordResetLinkController;
 use App\Http\Controllers\Backend\PersonalTrainerController;
 use App\Http\Controllers\Backend\PlanController;
 use App\Http\Controllers\Backend\SuperAdminController;
+use App\Http\Controllers\Backend\TestimonialController;
 use Illuminate\Support\Facades\Route;
 
 Route::domain(config('app.admin_domain'))->name('backend.')->group(function () {
@@ -74,6 +75,17 @@ Route::domain(config('app.admin_domain'))->name('backend.')->group(function () {
             Route::delete('/{personalTrainer}', [PersonalTrainerController::class, 'destroy'])->name('destroy');
             Route::post('/{personalTrainer}/move-up', [PersonalTrainerController::class, 'moveUp'])->name('move-up');
             Route::post('/{personalTrainer}/move-down', [PersonalTrainerController::class, 'moveDown'])->name('move-down');
+        });
+
+        Route::prefix('setup/testimonianze')->name('setup.testimonianze.')->group(function () {
+            Route::get('/', [TestimonialController::class, 'index'])->name('index');
+            Route::get('/create', [TestimonialController::class, 'create'])->name('create');
+            Route::post('/', [TestimonialController::class, 'store'])->name('store');
+            Route::get('/{testimonial}/edit', [TestimonialController::class, 'edit'])->name('edit');
+            Route::put('/{testimonial}', [TestimonialController::class, 'update'])->name('update');
+            Route::delete('/{testimonial}', [TestimonialController::class, 'destroy'])->name('destroy');
+            Route::post('/{testimonial}/move-up', [TestimonialController::class, 'moveUp'])->name('move-up');
+            Route::post('/{testimonial}/move-down', [TestimonialController::class, 'moveDown'])->name('move-down');
         });
 
         Route::impersonate();

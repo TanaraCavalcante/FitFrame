@@ -56,7 +56,7 @@
                     ['label' => 'Piani', 'icon' => 'fa-tags', 'route' => 'backend.setup.piani.index'],
                     ['label' => 'Team', 'icon' => 'fa-people-group', 'route' => 'backend.setup.team.index'],
                     ['label' => 'Galleria', 'icon' => 'fa-images', 'route' => 'backend.setup.gallery'],
-                    ['label' => 'Testimonianze', 'icon' => 'fa-quote-left', 'route' => 'backend.setup.testimonials'],
+                    ['label' => 'Testimonianze', 'icon' => 'fa-quote-left', 'route' => 'backend.setup.testimonianze.index'],
                     ['label' => 'CTA', 'icon' => 'fa-bullhorn', 'route' => 'backend.setup.cta'],
                     ['label' => 'Ordina sezioni', 'icon' => 'fa-sort', 'route' => 'backend.setup.order'],
                 ];
