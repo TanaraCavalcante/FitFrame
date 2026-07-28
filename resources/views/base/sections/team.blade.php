@@ -1,19 +1,17 @@
 {{--
     Soglia = quante card entrano per riga a quella dimensione (stesso criterio di
-    Corsi/Piani): mobile 2, tablet 3, desktop 4. Il server non conosce il viewport,
-    quindi la struttura "marquee" (set duplicato) si usa già a partire dalla soglia
-    più bassa (mobile); le classi --static-tablet/--static-desktop dicono alla CSS
-    di disattivare l'animazione e mostrare una griglia statica sui breakpoint la cui
-    soglia non è superata.
+    Corsi/Piani): mobile e tablet condividono la soglia 2 (girano già a partire da 3
+    membri), desktop 4. Il server non conosce il viewport, quindi la struttura
+    "marquee" (set duplicato) si usa già a partire dalla soglia più bassa; la classe
+    --static-desktop dice alla CSS di disattivare l'animazione e mostrare una griglia
+    statica su desktop quando la soglia lì non è superata.
 --}}
 @php
     $mobileThreshold = 2;
-    $tabletThreshold = 3;
     $desktopThreshold = 4;
     $allTrainers = $gym->personalTrainers;
     $trainerCount = $allTrainers->count();
     $needsMarquee = $trainerCount > $mobileThreshold;
-    $staticOnTablet = $trainerCount <= $tabletThreshold;
     $staticOnDesktop = $trainerCount <= $desktopThreshold;
 @endphp
 
@@ -24,10 +22,7 @@
 
         @if ($needsMarquee)
             {{-- Striscia a scorrimento automatico e continuo, senza frecce (a differenza di Corsi/Piani) --}}
-            <div class="team-marquee
-                @if ($staticOnTablet) team-marquee--static-tablet @endif
-                @if ($staticOnDesktop) team-marquee--static-desktop @endif
-            ">
+            <div class="team-marquee @if ($staticOnDesktop) team-marquee--static-desktop @endif">
                 <div class="team-marquee-track">
                     <div class="team-marquee-group">
                         @foreach ($allTrainers as $trainer)
