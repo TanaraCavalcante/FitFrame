@@ -1,3 +1,8 @@
+## [2026-07-28] - Allineato .env.example al locale italiano del progetto
+
+### Corretto
+- `.env.example` aveva ancora `APP_LOCALE=en`/`APP_FAKER_LOCALE=en_US`, mentre l'app è italiana (vedi `lang/it/`). Allineato a `it`/`it_IT`, mantenendo `APP_FALLBACK_LOCALE=en` (non tutti i file `lang/it/*.php` esistono ancora, es. auth/pagination).
+
 ## [2026-07-28] - Gestione CTA finale e Contatti + restyling tab in stile underline
 
 ### Aggiunto
