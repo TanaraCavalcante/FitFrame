@@ -357,36 +357,33 @@ h1 {
 }
 
 
-/* Soglia per breakpoint (vedi team.blade.php): se il numero di membri non supera la
-   soglia di quel breakpoint, la striscia torna una griglia statica centrata invece di
-   scorrere — il gruppo duplicato (clone aria-hidden) va nascosto per non mostrare card ripetute. */
 @media (min-width: 768px) {
     .team-marquee-card {
         flex-basis: 250px;
     }
-
-    .team-marquee--static-tablet .team-marquee-track {
-        flex-wrap: wrap;
-        justify-content: center;
-        width: auto;
-        animation: none;
-    }
-
-    .team-marquee--static-tablet .team-marquee-group[aria-hidden] {
-        display: none;
-    }
 }
 
+/* Soglia per breakpoint (vedi team.blade.php): se il numero di membri non supera la
+   soglia desktop, la striscia torna una griglia statica centrata invece di scorrere —
+   il gruppo duplicato (clone aria-hidden) va nascosto per non mostrare card ripetute.
+   Il wrap va sul GROUP (contiene le card vere), non sul track: il track ha un solo
+   figlio visibile (il gruppo), e un flex-item unico non va mai a capo da solo —
+   trabocca e basta, tagliato dall'overflow:hidden del contenitore. */
 @media (min-width: 992px) {
     .team-marquee-card {
         flex-basis: 270px;
     }
 
     .team-marquee--static-desktop .team-marquee-track {
-        flex-wrap: wrap;
-        justify-content: center;
         width: auto;
         animation: none;
+    }
+
+    .team-marquee--static-desktop .team-marquee-group {
+        flex-wrap: wrap;
+        justify-content: center;
+        flex-shrink: 1;
+        width: 100%;
     }
 
     .team-marquee--static-desktop .team-marquee-group[aria-hidden] {

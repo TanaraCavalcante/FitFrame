@@ -1,3 +1,11 @@
+## [2026-07-28] - Fix marquee Team in tablet + soglia tablet allineata al mobile
+
+### Corretto
+- Marquee Team in modalità statica (sotto soglia): il wrap/centering era applicato a `.team-marquee-track`, che ha un solo figlio visibile (`.team-marquee-group`) — un flex-item unico non va mai a capo da solo, quindi le 3 card traboccavano e venivano tagliate dall'`overflow: hidden` del contenitore (visibile su iPad in tablet). Spostato wrap/justify-content sul group, che contiene le card vere.
+
+### Modificato
+- Soglia tablet rimossa: ora condivide quella del mobile (gira già a partire da 3 membri, come il mobile), invece di restare statica fino a 3 e girare solo da 4. Solo il desktop mantiene un limite differenziato (statico fino a 4, gira da 5). Rimossa la classe `.team-marquee--static-tablet`, diventata irraggiungibile.
+
 ## [2026-07-28] - Carousel automatico per la sezione Testimonianze nel frontend pubblico
 
 ### Aggiunto
