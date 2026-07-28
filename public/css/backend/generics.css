@@ -188,3 +188,8 @@
     background-color: var(--backend-purple);
     color: #fff;
 }
+
+/* Tab attiva (es. pagina CTA): border-bottom eredita da currentcolor, basta il colore */
+.nav-underline .nav-link.active {
+    color: var(--backend-accent);
+}

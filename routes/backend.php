@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\AuthenticatedSessionController;
+use App\Http\Controllers\Backend\CtaController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\GalleryController;
 use App\Http\Controllers\Backend\GymAdminController;
@@ -87,6 +88,9 @@ Route::domain(config('app.admin_domain'))->name('backend.')->group(function () {
             Route::post('/{testimonial}/move-up', [TestimonialController::class, 'moveUp'])->name('move-up');
             Route::post('/{testimonial}/move-down', [TestimonialController::class, 'moveDown'])->name('move-down');
         });
+
+        Route::get('setup/cta', [CtaController::class, 'edit'])->name('setup.cta');
+        Route::put('setup/cta', [CtaController::class, 'update'])->name('setup.cta.update');
 
         Route::impersonate();
     });
