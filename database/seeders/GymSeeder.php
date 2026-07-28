@@ -117,10 +117,6 @@ class GymSeeder extends Seeder
             ],
         ];
 
-        // Ordine di default delle sezioni riordinabili (vedi docs/6-temas.md sezione H).
-        // "contact-cta" con trattino, per corrispondere al nome del file Blade.
-        $defaultSectionOrder = ['classes', 'plans', 'gallery', 'team', 'testimonials', 'contact-cta'];
-
         foreach ($gyms as $data) {
             $gym = Gym::create([
                 'name' => $data['name'],
@@ -137,7 +133,7 @@ class GymSeeder extends Seeder
                 ...$data['contact'],
             ]);
 
-            foreach ($defaultSectionOrder as $order => $section) {
+            foreach (GymSection::DEFAULT_ORDER as $order => $section) {
                 GymSection::create([
                     'gym_id' => $gym->id,
                     'section' => $section,

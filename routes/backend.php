@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\GalleryController;
 use App\Http\Controllers\Backend\GymAdminController;
 use App\Http\Controllers\Backend\GymClassController;
 use App\Http\Controllers\Backend\GymController;
+use App\Http\Controllers\Backend\GymSectionController;
 use App\Http\Controllers\Backend\HeroController;
 use App\Http\Controllers\Backend\NewPasswordController;
 use App\Http\Controllers\Backend\PasswordResetLinkController;
@@ -91,6 +92,10 @@ Route::domain(config('app.admin_domain'))->name('backend.')->group(function () {
 
         Route::get('setup/cta', [CtaController::class, 'edit'])->name('setup.cta');
         Route::put('setup/cta', [CtaController::class, 'update'])->name('setup.cta.update');
+
+        Route::get('setup/order', [GymSectionController::class, 'index'])->name('setup.order');
+        Route::post('setup/order/{gymSection}/move-up', [GymSectionController::class, 'moveUp'])->name('setup.order.move-up');
+        Route::post('setup/order/{gymSection}/move-down', [GymSectionController::class, 'moveDown'])->name('setup.order.move-down');
 
         Route::impersonate();
     });

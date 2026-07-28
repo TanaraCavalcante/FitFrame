@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\StoreGymRequest;
 use App\Http\Requests\Backend\UpdateGymRequest;
 use App\Models\Gym;
+use App\Models\GymSection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -48,6 +49,10 @@ class GymController extends Controller
         $gym = Gym::create($request->safe()->only(['name', 'slug']));
 
         $gym->domains()->create(['domain' => $request->validated('domain')]);
+
+        foreach (GymSection::DEFAULT_ORDER as $order => $section) {
+            $gym->gymSections()->create(['section' => $section, 'order' => $order]);
+        }
 
         return redirect()->route('backend.strutture.index')->with('success', 'Struttura creata con successo.');
     }
