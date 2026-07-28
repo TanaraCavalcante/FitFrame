@@ -315,7 +315,7 @@ h1 {
 .team-marquee-track {
     display: flex;
     width: max-content;
-    animation: team-marquee-scroll 30s linear infinite;
+    animation: marquee-scroll 30s linear infinite;
 }
 
 .team-marquee-group {
@@ -332,7 +332,7 @@ h1 {
     animation-play-state: paused;
 }
 
-@keyframes team-marquee-scroll {
+@keyframes marquee-scroll {
     from {
         transform: translateX(0);
     }
@@ -396,6 +396,53 @@ h1 {
 
 @media (prefers-reduced-motion: reduce) {
     .team-marquee-track {
+        animation: none;
+    }
+}
+
+/* *---TESTIMONIANZE ---*/
+/* Oltre 3 testimonianze: striscia a scorrimento automatico, stesso meccanismo di Team
+   (vedi sopra) — qui basta un'unica soglia "> 3" su tutte le dimensioni, perché la
+   griglia statica ha un solo breakpoint reale (row-cols-1 / row-cols-lg-3). */
+.testimonials-marquee {
+    overflow: hidden;
+}
+
+.testimonials-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll 35s linear infinite;
+}
+
+.testimonials-marquee-group {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.testimonials-marquee-card {
+    flex: 0 0 300px;
+    margin-right: 1.5rem;
+}
+
+.testimonials-marquee:hover .testimonials-marquee-track {
+    animation-play-state: paused;
+}
+
+/* Responsive TESTIMONIANZE: raggruppato qui, in ordine crescente. */
+@media (max-width: 767.98px) {
+    .testimonials-marquee-track {
+        animation-duration: 22s;
+    }
+}
+
+@media (min-width: 992px) {
+    .testimonials-marquee-card {
+        flex-basis: 380px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .testimonials-marquee-track {
         animation: none;
     }
 }

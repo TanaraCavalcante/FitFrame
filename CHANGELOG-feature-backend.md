@@ -1,3 +1,12 @@
+## [2026-07-28] - Carousel automatico per la sezione Testimonianze nel frontend pubblico
+
+### Aggiunto
+- Sezione Testimonianze pubblica: oltre 3 testimonianze, striscia a scorrimento automatico e continuo (stesso meccanismo di Team), senza frecce. Sotto la soglia, griglia statica centrata (invariata la logica, solo aggiunto `justify-content-center` per evitare il buco laterale con meno di 3 card).
+- `sections/_testimonial-card.blade.php`: card estratta per essere condivisa da griglia e striscia.
+
+### Modificato
+- `@keyframes team-marquee-scroll` rinominato in `marquee-scroll`: condiviso da Team e Testimonianze invece di duplicare la stessa regola.
+
 ## [2026-07-28] - Gestione Testimonianze
 
 ### Aggiunto
