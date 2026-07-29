@@ -4,6 +4,12 @@ Tutte le modifiche rilevanti a questo progetto sono documentate in questo file.
 
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/).
 
+## [1.0.5] - 2026-07-29
+
+### Aggiunto
+- Sezione Piani (`#plans`): sfondo con gradiente diagonale animato (`--color-background` → `--color-surface`), rispetta `prefers-reduced-motion`.
+- Bordo (`--color-background`) sulle card piano non in evidenza, per delimitarle dal nuovo sfondo animato.
+
 ## [1.0.4] - 2026-07-29
 
 ### Aggiunto

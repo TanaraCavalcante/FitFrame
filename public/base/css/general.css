@@ -194,6 +194,30 @@ h1 {
 }
 
 /* *---PIANI ---*/
+/* Sfondo con gradiente diagonale in movimento continuo (background-position anima
+   su un background-size maggiorato). alternate evita lo scatto a fine ciclo:
+   il gradiente torna indietro invece di "saltare" all'inizio. */
+#plans {
+    background: linear-gradient(135deg, var(--color-background), var(--color-surface), var(--color-background));
+    background-size: 200% 200%;
+    animation: plans-gradient-move 12s ease-in-out infinite alternate;
+}
+
+@keyframes plans-gradient-move {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #plans {
+        animation: none;
+    }
+}
+
 /* Stessa logica della striscia Corsi (vedi sopra), soglia e breakpoint diversi:
    3 piani visibili da md in su (la griglia statica usa col-md-4), 1 sotto. */
 /* Padding-top compensa il badge "Più popolare" (.plan-card__badge, top: -0.75rem in
