@@ -1,59 +1,201 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# FitFrame
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Piattaforma **multi-tenant** che genera landing page per palestre. Una sola
+applicazione Laravel serve **più palestre diverse**, ognuna con il proprio
+dominio, tema (colori/tipografia/loghi) e contenuto — tutte costruite sopra
+la stessa struttura di pagina, con un pannello admin per gestire tutto senza
+toccare codice.
 
-## About Laravel
+## Indice
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [Stack](#stack)
+- [Funzionalità](#funzionalità)
+- [Requisiti](#requisiti)
+- [Installazione](#installazione)
+- [Domini locali (multi-tenant)](#domini-locali-multi-tenant)
+- [Utenti di test](#utenti-di-test)
+- [Migration e seeder](#migration-e-seeder)
+- [Temi](#temi)
+- [Test](#test)
+- [Struttura del progetto](#struttura-del-progetto)
+- [Documentazione](#documentazione)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**Backend**
+- PHP 8.3
+- Laravel 12 (struttura file v11: middleware/provider in `bootstrap/app.php`, niente `app/Http/Kernel.php`)
+- MySQL (SQLite in ambienti dove serve, vedi `.env.example`)
+- [`igaster/laravel-theme`](https://github.com/igaster/laravel-theme) — risoluzione del tema attivo per dominio (`config/themes.php`, `theme.json` per tema, helper `theme_url()`)
+- [`spatie/laravel-medialibrary`](https://spatie.be/docs/laravel-medialibrary) — upload immagini/video (hero, team, galleria)
+- [`lab404/laravel-impersonate`](https://github.com/404labfr/laravel-impersonate) — impersonation (super_admin → gym_admin)
+- Laravel Boost — linee guida/tool MCP per lo sviluppo assistito da AI (non influisce sulla produzione)
 
-## Learning Laravel
+**Frontend**
+- Blade puro — nessuna SPA, nessun framework JS
+- Nessun bundler (Vite/Webpack) — CSS/JS serviti staticamente da `public/`, niente `npm run build`
+- Bootstrap 5 (via CDN)
+- Font Awesome Free (via CDN)
+- Google Fonts (via CDN, una famiglia per tema)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Funzionalità
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Sito pubblico** (una landing page per struttura, risolta per dominio)
+- Header/Navbar, Hero (immagini o video), Corsi/Modalità, Piani (carousel se >3), Galleria (grid bento), Team, Testimonianze, CTA finale + Contatti, Footer
+- Ordine e titolo delle sezioni personalizzabili per struttura
+- Favicon e `<title>` (nome struttura) risolti per tema, con fallback al tema `base`
 
-## Laravel Sponsors
+**Pannello admin** (dominio dedicato, `ADMIN_DOMAIN`)
+- Login/logout, reset password via email, rate limiting
+- Ruoli `super_admin` (gestisce tutte le strutture e gli admin) / `gym_admin` (gestisce solo la propria struttura)
+- Impersonation: il super_admin può assumere l'identità di un gym_admin
+- CRUD strutture (Gym) e utenti (gym_admin/super_admin)
+- CRUD contenuto per sezione: Hero, Corsi, Piani (con caratteristiche e piano "in evidenza"), Team, Testimonianze, Galleria (5 slot), CTA + Contatti
+- Ordina sezioni: riordino e titolo di ognuna delle 6 sezioni configurabili
+- Tema chiaro/scuro persistito, sidebar collassabile, conferme di eliminazione via SweetAlert2
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Requisiti
 
-### Premium Partners
+- PHP ^8.3
+- Composer
+- MySQL (o SQLite per un setup rapido/locale)
+- Un modo per servire domini multipli in locale — [Laravel Valet](https://laravel.com/docs/valet) (macOS/Linux) consigliato; su Windows: Laragon, Laravel Herd o WSL2 + Valet Linux
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Installazione
 
-## Contributing
+```bash
+git clone git@github.com:TanaraCavalcante/FitFrame.git
+cd FitFrame
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+composer install
 
-## Code of Conduct
+cp .env.example .env
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Configura `.env` (database, `APP_URL`, `ADMIN_DOMAIN` — vedi sotto), poi:
 
-## Security Vulnerabilities
+```bash
+php artisan migrate --seed
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Il seeder crea 3 strutture di esempio con contenuto completo, i relativi domini e gli utenti admin (vedi [Migration e seeder](#migration-e-seeder)).
 
-## License
+Avvia il progetto (server + queue listener + log in un solo comando):
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+composer dev
+```
+
+Oppure separatamente: `php artisan serve`, `php artisan queue:listen`, `php artisan pail`.
+
+## Domini locali (multi-tenant)
+
+L'app riconosce quale struttura servire in base al dominio della richiesta (tabella `domains` → `Gym`, middleware `App\Http\Middleware\ResolveGym`). Il seeder crea 3 domini:
+
+```
+pulse.test
+zenflow.test
+iron-house.test
+```
+
+Con Valet:
+
+```bash
+valet link pulse
+valet link zenflow
+valet link iron-house
+```
+
+Il pannello admin vive su un dominio a parte, configurato in `.env`:
+
+```
+ADMIN_DOMAIN=gestione.fitframe.test
+```
+
+```bash
+valet link gestione.fitframe   # o il nome scelto per ADMIN_DOMAIN
+```
+
+## Utenti di test
+
+Creati da `AdminsSeeder`:
+
+| Ruolo | Email | Password | Struttura |
+|---|---|---|---|
+| super_admin | `admin@fitframe.it` | `12345678` | nessuna (accesso a tutte) |
+| gym_admin | `admin@pulse.it` | `12345678` | Pulse |
+
+## Migration e seeder
+
+**Migration** (`database/migrations/`) — schema principale:
+
+- `gyms` — struttura (nome, slug)
+- `domains` — dominio → struttura (una struttura può avere più domini)
+- `gym_sections` — ordine e titolo delle sezioni riordinabili per struttura
+- `contents` — testi liberi per sezione (key/value legati al `gym_id`)
+- `contacts` — dati di contatto/footer per struttura
+- `gym_classes`, `plans` + `plan_features`, `testimonials`, `personal_trainers` — contenuto CRUD per sezione, con `order` per il riordino
+- `media` — tabella di Spatie MediaLibrary (upload hero, team, galleria)
+- `users` (esteso con `role`, `gym_id`, `surname`) — autenticazione admin
+
+Esegui tutto con:
+
+```bash
+php artisan migrate
+```
+
+**Seeder** (`database/seeders/`):
+
+- `GymSeeder` — popola 3 strutture demo (Pulse, Zenflow, Iron House) con dominio, contatti, ordine sezioni e contenuto completo (hero, corsi, piani, team, testimonianze)
+- `AdminsSeeder` — crea gli utenti admin di test (vedi tabella sopra)
+- `DatabaseSeeder` — orchestratore, richiama i due sopra in ordine
+
+```bash
+php artisan db:seed
+# oppure, da zero:
+php artisan migrate:fresh --seed
+```
+
+## Temi
+
+Ogni struttura ha un tema (`igaster/laravel-theme`), attivato per slug dal middleware `ResolveGym`. Un tema può ereditare da un altro (`extends` in `theme.json`) — se un asset non esiste nel tema attivo, si risale alla catena di eredità fino a trovarlo.
+
+```
+resources/views/{slug}/theme.json   → { "name", "extends", "asset-path" }
+public/{slug}/css/variables.css     → colori e tipografia (design token, non nel DB)
+public/{slug}/img/...                → favicon, foto team, galleria, ecc.
+```
+
+Temi disponibili: `base` (tema principale, nessun genitore — CSS strutturale condiviso da tutti), `pulse`, `zenflow`, `iron-house` (tutti estendono `base`).
+
+Per aggiungere un tema: crea `resources/views/{slug}/theme.json` con `"extends": "base"`, poi `public/{slug}/css/variables.css` con le variabili da sovrascrivere. Tutto il resto (asset, favicon inclusi) ricade su `base` finché non lo personalizzi.
+
+## Test
+
+PHPUnit (nessun Pest):
+
+```bash
+php artisan test --compact
+php artisan test --compact tests/Feature/Backend/NomeDelTest.php
+php artisan test --compact --filter=nomeDelTest
+```
+
+## Struttura del progetto
+
+```
+app/Http/Controllers/Backend/   Controller del pannello admin
+app/Http/Middleware/ResolveGym.php   Risoluzione struttura/tema per dominio
+app/Models/                     Gym, Domain, GymSection, Content, Contact,
+                                 GymClass, Plan, PlanFeature, Testimonial,
+                                 PersonalTrainer, User
+resources/views/base/            View pubbliche condivise da tutti i temi
+resources/views/{slug}/          theme.json per tema (pulse, zenflow, iron-house)
+resources/views/backend/         View del pannello admin
+public/base/                     CSS/JS/asset strutturali condivisi
+public/{slug}/                   Asset specifici del tema
+```
+
+## Documentazione
+
+Approfondimenti in `docs/`: stack, architettura del progetto, multi-tenant, ordine delle sezioni, pannello admin, gestione temi.

@@ -4,6 +4,11 @@ Tutte le modifiche rilevanti a questo progetto sono documentate in questo file.
 
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/).
 
+## [1.0.6] - 2026-07-29
+
+### Aggiunto
+- `README.md` completo: stack, funzionalità, installazione, domini locali multi-tenant, utenti di test, migration/seeder, gestione temi, test.
+
 ## [1.0.5] - 2026-07-29
 
 ### Aggiunto
