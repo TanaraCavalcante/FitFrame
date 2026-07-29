@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Backend\Concerns\ResolvesGymFromRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\UpdateGalleryRequest;
 use App\Models\Gym;
@@ -13,6 +14,8 @@ use Throwable;
 
 class GalleryController extends Controller
 {
+    use ResolvesGymFromRequest;
+
     /**
      * Slot per le 5 foto della galleria, ognuno una collection media indipendente.
      *
@@ -52,14 +55,5 @@ class GalleryController extends Controller
         }
 
         return redirect()->route('backend.setup.gallery', ['gym_id' => $gym->id])->with('success', 'Galleria aggiornata con successo.');
-    }
-
-    private function resolveGym(Request $request): Gym
-    {
-        if ($request->user()->isSuperAdmin()) {
-            return Gym::findOrFail($request->integer('gym_id') ?: Gym::orderBy('name')->value('id'));
-        }
-
-        return $request->user()->gym;
     }
 }

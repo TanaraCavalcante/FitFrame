@@ -1,3 +1,12 @@
+## [2026-07-29] - Revisione pre-merge: estratto resolveGym(), eager-load media mancante
+
+### Aggiunto
+- `App\Http\Controllers\Backend\Concerns\ResolvesGymFromRequest`: estrae il metodo `resolveGym()` duplicato identico in 8 controller Setup (Hero, Corsi, Piani, Galleria, Team, Testimonianze, CTA, Ordina sezioni), riscontrato nella revisione pre-merge della PR #1.
+
+### Corretto
+- `ResolveGym` middleware non eager-caricava `gym.media` (le collection Spatie MediaLibrary di Hero e Galleria) — causava fino a 9 query lazy aggiuntive per caricamento della home pubblica.
+- Commento obsoleto in `GymPolicy::manage()` ("spec futura") aggiornato: è ormai il percorso di autorizzazione principale di tutte le pagine Setup.
+
 ## [2026-07-29] - Titoli delle sezioni in "Ordina sezioni"
 
 ### Aggiunto

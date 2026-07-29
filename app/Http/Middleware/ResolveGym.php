@@ -22,6 +22,7 @@ class ResolveGym
         $domain = Domain::with([
             'gym.contents',
             'gym.contact',
+            'gym.media',
             'gym.gymClasses' => fn ($query) => $query->orderBy('order'),
             'gym.plans' => fn ($query) => $query->orderBy('order'),
             'gym.plans.planFeatures' => fn ($query) => $query->orderBy('order'),

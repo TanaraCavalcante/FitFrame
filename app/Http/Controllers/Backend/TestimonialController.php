@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Backend\Concerns\ResolvesGymFromRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\StoreTestimonialRequest;
 use App\Http\Requests\Backend\UpdateTestimonialRequest;
@@ -14,6 +15,8 @@ use Illuminate\View\View;
 
 class TestimonialController extends Controller
 {
+    use ResolvesGymFromRequest;
+
     public function index(Request $request): View
     {
         $gym = $this->resolveGym($request);
@@ -106,14 +109,5 @@ class TestimonialController extends Controller
         $order = $testimonial->order;
         $testimonial->update(['order' => $sibling->order]);
         $sibling->update(['order' => $order]);
-    }
-
-    private function resolveGym(Request $request): Gym
-    {
-        if ($request->user()->isSuperAdmin()) {
-            return Gym::findOrFail($request->integer('gym_id') ?: Gym::orderBy('name')->value('id'));
-        }
-
-        return $request->user()->gym;
     }
 }

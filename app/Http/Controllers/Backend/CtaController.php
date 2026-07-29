@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Backend\Concerns\ResolvesGymFromRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\UpdateCtaRequest;
 use App\Models\Gym;
@@ -12,6 +13,8 @@ use Illuminate\View\View;
 
 class CtaController extends Controller
 {
+    use ResolvesGymFromRequest;
+
     /**
      * Chiavi di `contents` gestite da questa pagina.
      *
@@ -62,14 +65,5 @@ class CtaController extends Controller
         ]);
 
         return redirect()->route('backend.setup.cta', ['gym_id' => $gym->id])->with('success', 'CTA aggiornata con successo.');
-    }
-
-    private function resolveGym(Request $request): Gym
-    {
-        if ($request->user()->isSuperAdmin()) {
-            return Gym::findOrFail($request->integer('gym_id') ?: Gym::orderBy('name')->value('id'));
-        }
-
-        return $request->user()->gym;
     }
 }

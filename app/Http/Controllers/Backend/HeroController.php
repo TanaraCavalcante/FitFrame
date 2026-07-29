@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Backend\Concerns\ResolvesGymFromRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\UpdateHeroRequest;
 use App\Models\Gym;
@@ -13,6 +14,8 @@ use Throwable;
 
 class HeroController extends Controller
 {
+    use ResolvesGymFromRequest;
+
     /**
      * Chiavi di `contents` gestite da questa pagina.
      *
@@ -87,14 +90,5 @@ class HeroController extends Controller
         }
 
         return redirect()->route('backend.setup.hero', ['gym_id' => $gym->id])->with('success', 'Hero aggiornato con successo.');
-    }
-
-    private function resolveGym(Request $request): Gym
-    {
-        if ($request->user()->isSuperAdmin()) {
-            return Gym::findOrFail($request->integer('gym_id') ?: Gym::orderBy('name')->value('id'));
-        }
-
-        return $request->user()->gym;
     }
 }
