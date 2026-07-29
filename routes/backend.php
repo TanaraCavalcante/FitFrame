@@ -94,6 +94,7 @@ Route::domain(config('app.admin_domain'))->name('backend.')->group(function () {
         Route::put('setup/cta', [CtaController::class, 'update'])->name('setup.cta.update');
 
         Route::get('setup/order', [GymSectionController::class, 'index'])->name('setup.order');
+        Route::put('setup/order', [GymSectionController::class, 'updateTitles'])->name('setup.order.update');
         Route::post('setup/order/{gymSection}/move-up', [GymSectionController::class, 'moveUp'])->name('setup.order.move-up');
         Route::post('setup/order/{gymSection}/move-down', [GymSectionController::class, 'moveDown'])->name('setup.order.move-down');
 

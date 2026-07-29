@@ -83,6 +83,48 @@ class GymSectionControllerTest extends TestCase
         $response->assertSeeInOrder(['Corsi', 'Piani']);
     }
 
+    public function test_gym_admin_can_update_section_titles(): void
+    {
+        $gym = Gym::factory()->create();
+        $gymAdmin = User::factory()->for($gym)->create();
+
+        $response = $this->actingAs($gymAdmin)->put('http://gestione.fitframe.test/setup/order', [
+            'gym_id' => $gym->id,
+            'classes_title' => 'I nostri corsi',
+            'plans_title' => 'I nostri piani',
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseHas('contents', ['gym_id' => $gym->id, 'key' => 'classes_title', 'value' => 'I nostri corsi']);
+        $this->assertDatabaseHas('contents', ['gym_id' => $gym->id, 'key' => 'plans_title', 'value' => 'I nostri piani']);
+    }
+
+    public function test_leaving_a_title_empty_removes_the_existing_override(): void
+    {
+        $gym = Gym::factory()->create();
+        $gymAdmin = User::factory()->for($gym)->create();
+        $gym->contents()->create(['key' => 'classes_title', 'value' => 'Vecchio titolo']);
+
+        $this->actingAs($gymAdmin)->put('http://gestione.fitframe.test/setup/order', [
+            'gym_id' => $gym->id,
+            'classes_title' => '',
+        ]);
+
+        $this->assertDatabaseMissing('contents', ['gym_id' => $gym->id, 'key' => 'classes_title']);
+    }
+
+    public function test_gym_admin_cannot_update_titles_of_another_gym(): void
+    {
+        $ownGym = Gym::factory()->create();
+        $otherGym = Gym::factory()->create();
+        $gymAdmin = User::factory()->for($ownGym)->create();
+
+        $this->actingAs($gymAdmin)->put('http://gestione.fitframe.test/setup/order', [
+            'gym_id' => $otherGym->id,
+            'classes_title' => 'Rubato',
+        ])->assertForbidden();
+    }
+
     public function test_creating_a_gym_seeds_the_default_section_order(): void
     {
         $superAdmin = User::factory()->superAdmin()->create();

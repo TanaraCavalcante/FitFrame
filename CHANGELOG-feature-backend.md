@@ -1,3 +1,13 @@
+## [2026-07-29] - Titoli delle sezioni in "Ordina sezioni"
+
+### Aggiunto
+- Nuova tab "Titoli" nella pagina "Ordina sezioni": un campo titolo per ognuna delle 5 sezioni gestibili (Corsi, Piani, Galleria, Team, Testimonianze) — prima non erano modificabili da nessuna parte. Il titolo del CTA finale resta gestito nella sua pagina dedicata, per non duplicare lo stesso campo in due posti.
+- `GymSection::titleContentKeyFor()`/`defaultTitle()`: mappa sezione → content key e testo di default, usata sia dal controller che dalla view.
+- 4 test aggiuntivi su `GymSectionControllerTest` (persistenza titoli, rimozione con campo vuoto, autorizzazione).
+
+### Modificato
+- Pagina "Ordina sezioni" riorganizzata in due tab in stile underline ("Ordina"/"Titoli", stesso pattern di Hero e CTA) invece di due card sempre visibili una sotto l'altra.
+
 ## [2026-07-28] - Gestione ordine sezioni (ultima pagina Setup)
 
 ### Aggiunto
