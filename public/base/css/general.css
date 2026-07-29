@@ -300,7 +300,7 @@ h1 {
     right: 0;
     bottom: 0;
     padding: 1rem;
-    background: linear-gradient(to top, rgba(var(--color-background-rgb), 0.9), transparent);
+    background: linear-gradient(to top, rgba(var(--color-background-rgb), 0.95) 0%, rgba(var(--color-background-rgb), 0.75) 70%, transparent 100%);
 }
 
 /* Oltre 4 membri: striscia a scorrimento automatico e continuo, senza frecce.

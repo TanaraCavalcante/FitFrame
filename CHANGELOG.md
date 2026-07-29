@@ -4,6 +4,11 @@ Tutte le modifiche rilevanti a questo progetto sono documentate in questo file.
 
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/).
 
+## [1.0.3] - 2026-07-29
+
+### Corretto
+- `.team-card__overlay`: gradiente sulla card del team troppo chiaro alla base, nome poco leggibile — stop intermedio più solido, gradiente comunque mantenuto.
+
 ## [1.0.2] - 2026-07-29
 
 ### Aggiunto
