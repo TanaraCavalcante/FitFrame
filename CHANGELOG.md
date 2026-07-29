@@ -4,6 +4,15 @@ Tutte le modifiche rilevanti a questo progetto sono documentate in questo file.
 
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/).
 
+## [1.0.2] - 2026-07-29
+
+### Aggiunto
+- Favicon per-tema in tutte le view (frontend e backend), con fallback automatico al tema `base` se il tema attivo non ha un proprio `favicon.ico`.
+
+### Modificato
+- Frontend: `<title>` usa il nome della struttura (`$gym->name`) invece del nome dell'app.
+- Backend: `<title>` prefissato con `FitFrame | `, mantenendo il titolo specifico di ogni pagina.
+
 ## [1.0.1] - 2026-07-29
 
 ### Aggiunto

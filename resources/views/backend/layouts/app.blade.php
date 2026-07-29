@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Gestione FitFrame')</title>
+    <title>FitFrame | @yield('title', 'Gestione')</title>
+    <link rel="icon" href="{{ asset('base/img/favicon/favicon.ico') }}">
 
     {{-- *
          * Applica tema e stato della sidebar PRIMA del paint, leggendo
