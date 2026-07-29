@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Contact;
+use App\Models\Content;
 use App\Models\Domain;
 use App\Models\Gym;
 use App\Models\GymClass;
@@ -97,10 +98,78 @@ class GymSeeder extends Seeder
                 'domain' => 'zenflow.test',
                 'contact' => [
                     'address' => 'Viale Leonardo da Vinci, Prato',
+                    'email' => 'info@zenflow.gym',
                     'phone' => '+39 0574 123 456',
                     'whatsapp' => '+39 333 234 5678',
                     'instagram' => '@zenflow.gym',
                     'hours' => 'Lun-Ven 07:00-21:00, Sab 09:00-13:00',
+                ],
+                // Tono sereno e accogliente (Yoga/Pilates), a differenza del tono energico di Pulse.
+                'contents' => [
+                    'hero_kicker' => '— Zenflow Studio',
+                    'hero_title' => 'Trova il tuo centro',
+                    'hero_subtitle' => 'Uno spazio per respirare, muoverti con intenzione e riconnettere corpo e mente. Al tuo ritmo, nei tuoi tempi.',
+                    'hero_cta_primary' => 'Prenota la tua lezione',
+                    'hero_cta_secondary' => 'Scopri le pratiche',
+                    'classes_title' => 'Le nostre pratiche',
+                    'plans_title' => 'Piani pensati per te',
+                    'gallery_title' => 'Il nostro spazio',
+                    'team_title' => 'Chi guida il tuo percorso',
+                    'testimonials_title' => 'Storie di chi pratica',
+                    'cta_title' => 'Pronto a iniziare il tuo percorso?',
+                    'cta_subtitle' => 'La tua prima lezione è offerta da noi. Vieni a respirare con noi.',
+                    'cta_button' => 'Prova gratis',
+                    'footer_slogan' => 'Movimento con intenzione. Benessere ogni giorno.',
+                ],
+                'classes' => [
+                    ['name' => 'Hatha Yoga', 'icon' => 'fa-solid fa-om', 'description' => 'Posture consapevoli e respiro per costruire forza e serenità.'],
+                    ['name' => 'Pilates', 'icon' => 'fa-solid fa-person', 'description' => 'Movimenti precisi che rinforzano il core e migliorano la tua postura.'],
+                    ['name' => 'Meditazione', 'icon' => 'fa-solid fa-brain', 'description' => 'Momenti di silenzio guidato per calmare la mente e ridurre lo stress.'],
+                    ['name' => 'Yin Yoga', 'icon' => 'fa-solid fa-leaf', 'description' => 'Una pratica lenta e profonda per allungare, rilassare e rigenerare.'],
+                ],
+                'plans' => [
+                    [
+                        'name' => 'Essenziale',
+                        'price' => 119.00,
+                        'highlighted' => false,
+                        'features' => [
+                            '8 lezioni al mese',
+                            'Accesso all\'app di meditazione',
+                            'Orari flessibili',
+                        ],
+                    ],
+                    [
+                        'name' => 'Equilibrio',
+                        'price' => 189.00,
+                        'highlighted' => true,
+                        'features' => [
+                            'Lezioni illimitate',
+                            'Tutte le pratiche',
+                            '1 sessione di benessere al mese',
+                            'Community esclusiva',
+                        ],
+                    ],
+                    [
+                        'name' => 'Pienezza',
+                        'price' => 279.00,
+                        'highlighted' => false,
+                        'features' => [
+                            'Tutto quello incluso in Equilibrio',
+                            'Lezioni private 2 volte al mese',
+                            'Supporto individuale',
+                            'Workshop inclusi',
+                        ],
+                    ],
+                ],
+                'team' => [
+                    ['name' => 'Elena Ferraro', 'specialty' => 'Insegnante di Hatha Yoga e Meditazione'],
+                    ['name' => 'Marco Villa', 'specialty' => 'Istruttore di Pilates'],
+                    ['name' => 'Sara Bianchi', 'specialty' => 'Insegnante di Yin Yoga'],
+                ],
+                'testimonials' => [
+                    ['author_name' => 'Beatrice L.', 'member_since' => 'Allieva da 6 mesi', 'text' => 'Ho trovato qui la pausa che mancava nella mia routine. Esco da ogni lezione più leggera.'],
+                    ['author_name' => 'Andrea P.', 'member_since' => 'Allievo da 1 anno', 'text' => 'Il Pilates ha trasformato la mia postura e i dolori alla schiena sono spariti. Lo consiglio ad occhi chiusi.'],
+                    ['author_name' => 'Giulia R.', 'member_since' => 'Allieva da 3 mesi', 'text' => 'Più che una palestra, è un rifugio. L\'energia del posto è diversa.'],
                 ],
             ],
             [
@@ -132,6 +201,14 @@ class GymSeeder extends Seeder
                 'gym_id' => $gym->id,
                 ...$data['contact'],
             ]);
+
+            foreach ($data['contents'] ?? [] as $key => $value) {
+                Content::create([
+                    'gym_id' => $gym->id,
+                    'key' => $key,
+                    'value' => $value,
+                ]);
+            }
 
             foreach (GymSection::DEFAULT_ORDER as $order => $section) {
                 GymSection::create([
