@@ -1,0 +1,16 @@
+/*
+ * Tema "zen-flow" — Yoga/Pilates. Leve, sereno, equilíbrio.
+ * Solo colori e tipografia: il resto (spacing, componenti, layout)
+ * è standard per tutti i temi, vedi public/base/css/general.css.
+ */
+:root {
+  --color-background: #FAF7F2;
+  --color-background-rgb: 250, 247, 242;
+  --color-surface: #FFFFFF;
+  --color-foreground: #2D2D2D;
+  --color-muted-foreground: #7A756E;
+  --color-primary: #6B8E7F;
+  --color-accent: #C97B5A;
+  --font-heading: 'Cormorant Garamond', serif;
+  --font-body: 'Inter', sans-serif;
+}
