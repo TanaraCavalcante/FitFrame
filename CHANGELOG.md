@@ -4,6 +4,11 @@ Tutte le modifiche rilevanti a questo progetto sono documentate in questo file.
 
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/).
 
+## [1.0.4] - 2026-07-29
+
+### Aggiunto
+- Foto del team (Elena Ferraro, Marco Villa, Sara Bianchi) per il tema Zenflow.
+
 ## [1.0.3] - 2026-07-29
 
 ### Corretto
