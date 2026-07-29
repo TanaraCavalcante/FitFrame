@@ -29,7 +29,7 @@ class GymPolicy
     }
 
     /**
-     * Usata dai controller "Contenuti" (spec futura): super_admin gestisce
+     * Usata dai controller "Setup" (Hero, Corsi, Piani, ecc.): super_admin gestisce
      * qualunque struttura, gym_admin solo la propria.
      */
     public function manage(User $user, Gym $gym): bool

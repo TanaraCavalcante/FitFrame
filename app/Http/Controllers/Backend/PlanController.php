@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Backend\Concerns\ResolvesGymFromRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\StorePlanRequest;
 use App\Http\Requests\Backend\UpdatePlanRequest;
@@ -14,6 +15,8 @@ use Illuminate\View\View;
 
 class PlanController extends Controller
 {
+    use ResolvesGymFromRequest;
+
     public function index(Request $request): View
     {
         $gym = $this->resolveGym($request);
@@ -146,14 +149,5 @@ class PlanController extends Controller
         $order = $plan->order;
         $plan->update(['order' => $sibling->order]);
         $sibling->update(['order' => $order]);
-    }
-
-    private function resolveGym(Request $request): Gym
-    {
-        if ($request->user()->isSuperAdmin()) {
-            return Gym::findOrFail($request->integer('gym_id') ?: Gym::orderBy('name')->value('id'));
-        }
-
-        return $request->user()->gym;
     }
 }

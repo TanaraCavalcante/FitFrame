@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Backend\Concerns\ResolvesGymFromRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\StorePersonalTrainerRequest;
 use App\Http\Requests\Backend\UpdatePersonalTrainerRequest;
@@ -15,6 +16,8 @@ use Throwable;
 
 class PersonalTrainerController extends Controller
 {
+    use ResolvesGymFromRequest;
+
     public function index(Request $request): View
     {
         $gym = $this->resolveGym($request);
@@ -131,14 +134,5 @@ class PersonalTrainerController extends Controller
         $order = $personalTrainer->order;
         $personalTrainer->update(['order' => $sibling->order]);
         $sibling->update(['order' => $order]);
-    }
-
-    private function resolveGym(Request $request): Gym
-    {
-        if ($request->user()->isSuperAdmin()) {
-            return Gym::findOrFail($request->integer('gym_id') ?: Gym::orderBy('name')->value('id'));
-        }
-
-        return $request->user()->gym;
     }
 }
