@@ -31,5 +31,10 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('password-reset', function (Request $request) {
             return Limit::perMinute(5)->by($request->ip());
         });
+
+        // Limita le domande al chatbot di aiuto a 10 al minuto per utente, per contenere i costi verso il servizio RAG/Groq.
+        RateLimiter::for('chat', function (Request $request) {
+            return Limit::perMinute(10)->by($request->user()->id);
+        });
     }
 }
