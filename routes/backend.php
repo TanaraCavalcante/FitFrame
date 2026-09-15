@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\AuthenticatedSessionController;
+use App\Http\Controllers\Backend\ChatController;
 use App\Http\Controllers\Backend\CtaController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\GalleryController;
@@ -33,6 +34,8 @@ Route::domain(config('app.admin_domain'))->name('backend.')->group(function () {
         Route::redirect('/', 'dashboard');
         Route::get('dashboard', DashboardController::class)->name('dashboard');
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
+        Route::post('chat', [ChatController::class, 'ask'])->name('chat')->middleware('throttle:chat');
 
         Route::resource('strutture', GymController::class)->except('show')->parameters(['strutture' => 'gym']);
 
