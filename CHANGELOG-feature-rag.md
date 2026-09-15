@@ -4,6 +4,15 @@ Tutte le modifiche rilevanti al branch `feature/rag` sono documentate in questo 
 
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/).
 
+## [2026-09-15] - Widget frontend del chatbot (Fase 5)
+
+### Aggiunto
+- Mockup del widget (canvas con 3 stati: chiuso, aperto chiaro, aperto scuro) presentato e approvato esplicitamente prima dell'implementazione, come richiesto dal checkpoint di design del piano.
+- Blade component `backend.layouts.components.chat-widget`: pulsante flottante (FAB) + pannello di chat (header, cronologia messaggi, campo domanda), incluso in `app.blade.php` solo per le pagine autenticate.
+- `public/css/backend/chat-widget.css`, aggiunto al loop di stylesheet di `app.blade.php` — riusa i token colore/ombra già esistenti in `variables.css` (light/dark).
+- `public/js/backend-chat.js`: apertura/chiusura del pannello, invio della domanda via `fetch` (header `X-CSRF-TOKEN`), indicatore "sta scrivendo", rendering della risposta o di un messaggio di errore controllato in caso di servizio non disponibile.
+- Meta tag `csrf-token` in `app.blade.php`, necessario per la chiamata `fetch` POST del widget.
+
 ## [2026-09-15] - Implementazione lato Laravel del chatbot RAG (Fasi 1-4)
 
 ### Aggiunto
