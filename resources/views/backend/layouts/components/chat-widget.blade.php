@@ -37,6 +37,22 @@
                 <div class="chat-widget-bubble">Ciao! Sono l'assistente del gestionale FitFrame. Chiedimi pure come
                     usare una funzionalità.</div>
             </div>
+
+            @foreach ($chatHistory as $chatMessage)
+                <div class="chat-widget-msg is-user">
+                    <div class="chat-widget-bubble">{{ $chatMessage->question }}</div>
+                </div>
+                <div class="chat-widget-msg is-assistant">
+                    <div class="chat-widget-msg-avatar">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" />
+                        </svg>
+                    </div>
+                    <div class="chat-widget-bubble">{{ $chatMessage->answer }}</div>
+                </div>
+            @endforeach
         </div>
 
         <form class="chat-widget-form" id="chat-widget-form">

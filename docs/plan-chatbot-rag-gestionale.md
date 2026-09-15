@@ -124,6 +124,20 @@ FAISS o chiamata diretta a Groq vive in questo repository.
 - [x] Meta tag `csrf-token` aggiunto in `app.blade.php` (necessario per
       la chiamata `fetch` POST del widget)
 
+### Fase 6 — Cronologia visibile nel widget (aggiunta dopo il test manuale)
+- [x] Emerso testando manualmente l'integrazione end-to-end: i messaggi
+      erano già persistiti in `chat_messages`, ma il widget non li
+      recuperava al reload della pagina — mostrava solo la conversazione
+      accumulata nella sessione del browser corrente
+- [x] Relazione `User::chatMessages()` (`hasMany(ChatMessage::class)`)
+- [x] View composer su `backend.layouts.components.chat-widget` in
+      `AppServiceProvider` (`Auth::user()->chatMessages()->latest()->take(20)`),
+      nessun endpoint HTTP aggiuntivo: la cronologia è renderizzata
+      server-side nell'HTML iniziale della pagina, coerente con
+      l'assenza di build JS/SPA nel resto del gestionale
+- [x] Isolamento verificato con test: la cronologia di un utente non è
+      visibile a un altro utente autenticato
+
 ## Migration necessarie
 
 | Tabella | Colonne principali | Note |

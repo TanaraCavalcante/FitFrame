@@ -20,4 +20,12 @@ class ChatMessageTest extends TestCase
 
         $this->assertTrue($chatMessage->user->is($user));
     }
+
+    public function test_a_user_has_many_chat_messages(): void
+    {
+        $user = User::factory()->create();
+        $chatMessage = ChatMessage::factory()->for($user)->create();
+
+        $this->assertTrue($user->chatMessages->contains($chatMessage));
+    }
 }

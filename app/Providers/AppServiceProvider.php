@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -35,6 +37,13 @@ class AppServiceProvider extends ServiceProvider
         // Limita le domande al chatbot di aiuto a 10 al minuto per utente, per contenere i costi verso il servizio RAG/Groq.
         RateLimiter::for('chat', function (Request $request) {
             return Limit::perMinute(10)->by($request->user()->id);
+        });
+
+        // Passa al widget di chat la cronologia recente dell'utente autenticato, per farla sopravvivere al reload della pagina.
+        View::composer('backend.layouts.components.chat-widget', function ($view) {
+            $view->with('chatHistory', Auth::check()
+                ? Auth::user()->chatMessages()->latest()->take(20)->get()->reverse()->values()
+                : collect());
         });
     }
 }
