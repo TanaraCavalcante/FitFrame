@@ -4,6 +4,13 @@ Tutte le modifiche rilevanti al branch `feature/rag` sono documentate in questo 
 
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/).
 
+## [2026-09-15] - Paginazione della cronologia del widget (Fase 7)
+
+### Aggiunto
+- `GET chat/history` (`ChatController@history`, nome `backend.chat.history`): ritorna le 20 domande/risposte precedenti a un `before_id` dato, scoperte all'utente autenticato, con `has_more` per sapere se restano altre pagine.
+- Pulsante "Carica cronologia precedente" in cima al pannello del widget — visibile solo quando esistono più di 20 messaggi salvati, carica il blocco successivo mantenendo la posizione di scroll.
+- Test di isolamento tra utenti e di paginazione (ordine cronologico, `has_more`, `before_id` obbligatorio).
+
 ## [2026-09-15] - Cronologia persistente visibile nel widget (Fase 6)
 
 ### Aggiunto

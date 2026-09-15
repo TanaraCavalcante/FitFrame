@@ -36,6 +36,7 @@ Route::domain(config('app.admin_domain'))->name('backend.')->group(function () {
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
         Route::post('chat', [ChatController::class, 'ask'])->name('chat')->middleware('throttle:chat');
+        Route::get('chat/history', [ChatController::class, 'history'])->name('chat.history');
 
         Route::resource('strutture', GymController::class)->except('show')->parameters(['strutture' => 'gym']);
 

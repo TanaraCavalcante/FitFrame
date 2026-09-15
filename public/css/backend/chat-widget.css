@@ -119,6 +119,33 @@
     color: var(--backend-aside-color);
 }
 
+.chat-widget-load-more {
+    align-self: center;
+    padding: 6px 14px;
+    border: none;
+    border-radius: 20px;
+    background-color: transparent;
+    color: var(--backend-aside-color-muted);
+    font-size: .75rem;
+    cursor: pointer;
+}
+
+.chat-widget-load-more:hover {
+    background-color: var(--backend-aside-hover-bg);
+    color: var(--backend-accent);
+}
+
+.chat-widget-load-more:disabled {
+    opacity: .5;
+    cursor: default;
+}
+
+.chat-widget-history-pair {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
 .chat-widget-messages {
     flex: 1;
     overflow-y: auto;
