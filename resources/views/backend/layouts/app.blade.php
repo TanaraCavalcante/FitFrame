@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FitFrame | @yield('title', 'Gestione')</title>
     <link rel="icon" href="{{ asset('base/img/favicon/favicon.ico') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- *
          * Applica tema e stato della sidebar PRIMA del paint, leggendo
@@ -24,7 +25,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    @foreach (['variables', 'generics', 'tipografia', 'generals'] as $backendStylesheet)
+    @foreach (['variables', 'generics', 'tipografia', 'generals', 'chat-widget'] as $backendStylesheet)
         <link rel="stylesheet" href="{{ asset("css/backend/{$backendStylesheet}.css") }}?v={{ filemtime(public_path("css/backend/{$backendStylesheet}.css")) }}">
     @endforeach
 </head>
@@ -65,8 +66,11 @@
         </div>
     </div>
 
+    @include('backend.layouts.components.chat-widget')
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/backend.js') }}?v={{ filemtime(public_path('js/backend.js')) }}"></script>
+    <script src="{{ asset('js/backend-chat.js') }}?v={{ filemtime(public_path('js/backend-chat.js')) }}"></script>
 </body>
 </html>

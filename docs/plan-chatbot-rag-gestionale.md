@@ -104,17 +104,25 @@ FAISS o chiamata diretta a Groq vive in questo repository.
       risposta, gestione errori)
 
 ### Fase 5 — Frontend (widget)
-- [ ] ⚠️ **Checkpoint obbligatorio prima di iniziare**: presentare
-      un'analisi/mockup del design del widget (posizione, stile,
-      comportamento) e attendere conferma esplicita dell'utente — non
-      procedere all'implementazione di questa fase senza quel via libera
-- [ ] Blade component `backend.layouts.components.chat-widget` (floating
-      button + pannello, markup Bootstrap coerente con lo stile esistente
-      — es. classi `bg-popover`, `rounded-3` già usate nell'aside)
-- [ ] JS vanilla (es. `public/js/backend-chat.js`, incluso in
-      `app.blade.php` accanto a `backend.js`, stesso pattern di
-      cache-busting con `filemtime()`)
-- [ ] Include del component in `resources/views/backend/layouts/app.blade.php`
+- [x] ⚠️ **Checkpoint obbligatorio prima di iniziare**: mockup presentato
+      (canvas con 3 stati — chiuso, aperto chiaro, aperto scuro) e
+      approvato esplicitamente dall'utente prima di scrivere il codice
+- [x] Blade component `backend.layouts.components.chat-widget` (floating
+      button + pannello, riusa i token colore/ombra già esistenti in
+      `variables.css`, non nuove classi Bootstrap `bg-popover`/`rounded-3`
+      dirette ma lo stesso linguaggio visivo)
+- [x] JS vanilla (`public/js/backend-chat.js`, incluso in `app.blade.php`
+      accanto a `backend.js`, stesso pattern di cache-busting con
+      `filemtime()`) — apre/chiude il pannello, invia la domanda via
+      `fetch` con header CSRF, mostra un indicatore "sta scrivendo" e la
+      risposta (o un messaggio di errore se il servizio non risponde)
+- [x] Include del component in `resources/views/backend/layouts/app.blade.php`
+      (solo pagine autenticate — il login usa un layout standalone
+      separato, senza il widget)
+- [x] Nuovo foglio di stile `public/css/backend/chat-widget.css`,
+      aggiunto al loop di stylesheet già esistente in `app.blade.php`
+- [x] Meta tag `csrf-token` aggiunto in `app.blade.php` (necessario per
+      la chiamata `fetch` POST del widget)
 
 ## Migration necessarie
 
