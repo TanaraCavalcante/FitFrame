@@ -1,4 +1,6 @@
-<div class="chat-widget" id="chat-widget" data-chat-url="{{ route('backend.chat') }}">
+<div class="chat-widget" id="chat-widget" data-chat-url="{{ route('backend.chat') }}"
+    data-history-url="{{ route('backend.chat.history') }}"
+    data-oldest-message-id="{{ $chatHistory->first()->id ?? '' }}">
     <button type="button" class="chat-widget-fab" id="chat-widget-open" aria-label="Apri assistente di aiuto">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
             stroke-linecap="round" stroke-linejoin="round">
@@ -27,6 +29,11 @@
         </div>
 
         <div class="chat-widget-messages" id="chat-widget-messages">
+            <button type="button" class="chat-widget-load-more" id="chat-widget-load-more"
+                @if (! $chatHistoryHasMore) hidden @endif>
+                Carica cronologia precedente
+            </button>
+
             <div class="chat-widget-msg is-assistant">
                 <div class="chat-widget-msg-avatar">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -39,18 +46,20 @@
             </div>
 
             @foreach ($chatHistory as $chatMessage)
-                <div class="chat-widget-msg is-user">
-                    <div class="chat-widget-bubble">{{ $chatMessage->question }}</div>
-                </div>
-                <div class="chat-widget-msg is-assistant">
-                    <div class="chat-widget-msg-avatar">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path
-                                d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" />
-                        </svg>
+                <div class="chat-widget-history-pair" data-message-id="{{ $chatMessage->id }}">
+                    <div class="chat-widget-msg is-user">
+                        <div class="chat-widget-bubble">{{ $chatMessage->question }}</div>
                     </div>
-                    <div class="chat-widget-bubble">{{ $chatMessage->answer }}</div>
+                    <div class="chat-widget-msg is-assistant">
+                        <div class="chat-widget-msg-avatar">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" />
+                            </svg>
+                        </div>
+                        <div class="chat-widget-bubble">{{ $chatMessage->answer }}</div>
+                    </div>
                 </div>
             @endforeach
         </div>

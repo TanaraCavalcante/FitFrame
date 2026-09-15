@@ -31,4 +31,34 @@ class ChatController extends Controller
 
         return response()->json(['risposta' => $risposta]);
     }
+
+    public function history(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'before_id' => ['required', 'integer'],
+        ]);
+
+        $messages = ChatMessage::query()
+            ->where('user_id', $request->user()->id)
+            ->where('id', '<', $validated['before_id'])
+            ->latest('id')
+            ->limit(20)
+            ->get()
+            ->reverse()
+            ->values();
+
+        $hasMore = $messages->isNotEmpty() && ChatMessage::query()
+            ->where('user_id', $request->user()->id)
+            ->where('id', '<', $messages->first()->id)
+            ->exists();
+
+        return response()->json([
+            'messages' => $messages->map(fn (ChatMessage $message) => [
+                'id' => $message->id,
+                'question' => $message->question,
+                'answer' => $message->answer,
+            ]),
+            'has_more' => $hasMore,
+        ]);
+    }
 }

@@ -41,9 +41,12 @@ class AppServiceProvider extends ServiceProvider
 
         // Passa al widget di chat la cronologia recente dell'utente autenticato, per farla sopravvivere al reload della pagina.
         View::composer('backend.layouts.components.chat-widget', function ($view) {
-            $view->with('chatHistory', Auth::check()
-                ? Auth::user()->chatMessages()->latest()->take(20)->get()->reverse()->values()
-                : collect());
+            $chatHistory = Auth::check()
+                ? Auth::user()->chatMessages()->latest('id')->take(20)->get()->reverse()->values()
+                : collect();
+
+            $view->with('chatHistory', $chatHistory);
+            $view->with('chatHistoryHasMore', Auth::check() && Auth::user()->chatMessages()->count() > $chatHistory->count());
         });
     }
 }

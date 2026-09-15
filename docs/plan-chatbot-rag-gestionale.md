@@ -138,6 +138,21 @@ FAISS o chiamata diretta a Groq vive in questo repository.
 - [x] Isolamento verificato con test: la cronologia di un utente non è
       visibile a un altro utente autenticato
 
+### Fase 7 — Paginazione della cronologia (a richiesta dell'utente)
+- [x] Le 20 più recenti bastano per riprendere il contesto, ma non danno
+      accesso allo storico più vecchio — aggiunto un caricamento
+      esplicito "on demand", non un aumento del limite fisso (che
+      avrebbe appesantito ogni caricamento di pagina del gestionale)
+- [x] `GET chat/history` (nome `backend.chat.history`, `before_id`
+      obbligatorio): ritorna le 20 domande/risposte precedenti a quella
+      indicata, in ordine cronologico, più `has_more`
+- [x] Pulsante "Carica cronologia precedente" in cima al pannello,
+      nascosto quando non c'è altro da caricare; ad ogni click recupera
+      il prossimo blocco e lo inserisce sopra i messaggi già visibili,
+      mantenendo la posizione di scroll
+- [x] Isolamento verificato con test: `before_id` non permette di
+      leggere messaggi di un altro utente
+
 ## Migration necessarie
 
 | Tabella | Colonne principali | Note |
@@ -149,6 +164,7 @@ FAISS o chiamata diretta a Groq vive in questo repository.
 | Metodo | URI | Controller/Azione | Note |
 |---|---|---|---|
 | POST | chat | ChatController@ask | dentro `Route::domain(admin_domain)`, nome `backend.chat`, middleware `auth` + `throttle:chat` — nessun prefisso `backend/` nell'URI (coerente con le altre rotte in `routes/backend.php`, es. `dashboard`, `setup/hero`) |
+| GET | chat/history | ChatController@history | nome `backend.chat.history`, middleware `auth`, nessun throttle (sola lettura, scoperta all'utente autenticato) |
 
 ## Rischi e note
 
