@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     openBtn.addEventListener('click', function () {
         widget.classList.add('is-open');
         input.focus();
+        messages.scrollTop = messages.scrollHeight;
     });
 
     closeBtn.addEventListener('click', function () {

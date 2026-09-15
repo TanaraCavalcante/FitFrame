@@ -4,6 +4,15 @@ Tutte le modifiche rilevanti al branch `feature/rag` sono documentate in questo 
 
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/).
 
+## [2026-09-15] - Cronologia persistente visibile nel widget (Fase 6)
+
+### Aggiunto
+- Relazione `User::chatMessages()` (`hasMany`).
+- View composer in `AppServiceProvider` che passa al componente `chat-widget` le ultime 20 domande/risposte dell'utente autenticato, renderizzate server-side — la conversazione sopravvive a un reload della pagina, senza endpoint HTTP aggiuntivo.
+
+### Corretto
+- La migration `chat_messages` non era mai stata applicata al database MySQL locale di sviluppo (solo alla SQLite in-memory dei test) — il widget falliva con "Assistente temporaneamente non disponibile" al primo test manuale end-to-end. Risolto eseguendo `php artisan migrate`.
+
 ## [2026-09-15] - Widget frontend del chatbot (Fase 5)
 
 ### Aggiunto
