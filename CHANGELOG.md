@@ -4,6 +4,24 @@ Tutte le modifiche rilevanti a questo progetto sono documentate in questo file.
 
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/).
 
+## [1.1.0] - 2026-09-17
+
+Chatbot di aiuto contestuale nel gestionale, basato su RAG — architettura a due componenti: FitFrame gestisce autenticazione, rate limiting, persistenza della cronologia e widget; un servizio Python separato (`fitframe-rag`, non in questo repository) possiede l'intera pipeline RAG (base di conoscenza, embeddings, ricerca, chiamata a Groq).
+
+### Aggiunto
+- `POST chat` (`ChatController@ask`): valida la domanda, la inoltra a `RagServiceClient` (chiamata HTTP a `fitframe-rag` con `Authorization: Bearer`), salva la coppia domanda/risposta in `ChatMessage`, ritorna la risposta in JSON o un fallback controllato (503, `RagServiceUnavailableException`) se il servizio non è raggiungibile.
+- `GET chat/history` (`ChatController@history`): pagina la cronologia dell'utente autenticato 20 messaggi alla volta, a partire da un `before_id`, con `has_more` per sapere se restano altre pagine.
+- Migration e modello `ChatMessage` (`user_id`, `question`, `answer`), relazione `User::chatMessages()`.
+- Widget di chat flottante (Blade component `backend.layouts.components.chat-widget`, incluso solo nelle pagine autenticate del backend): apertura/chiusura, invio della domanda via `fetch`, indicatore "sta scrivendo", cronologia visibile persistita tra reload tramite view composer (ultime 20 coppie renderizzate server-side) con paginazione "Carica cronologia precedente".
+- Rate limiter dedicato `chat` (10 richieste al minuto per utente), per contenere i costi verso il servizio RAG/Groq.
+- Config `services.rag` (`RAG_SERVICE_URL`/`RAG_SERVICE_TOKEN`).
+- `docs/plan-chatbot-rag-gestionale.md`: piano di implementazione (architettura, fasi, checkpoint di design).
+
+### Corretto
+- Migration `chat_messages` non applicata al database MySQL locale di sviluppo (solo alla SQLite in-memory dei test) — il widget falliva con "Assistente temporaneamente non disponibile" al primo test manuale end-to-end.
+
+Lo storico dettagliato, commit per commit, di questa feature è stato consolidato da `CHANGELOG-feature-rag.md` (rimosso dopo il merge in questa entry).
+
 ## [1.0.6] - 2026-07-29
 
 ### Aggiunto
