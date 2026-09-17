@@ -1,13 +1,13 @@
 <div class="backend-aside-slot bg-aside border-aside">
     <aside class="backend-aside bg-aside text-aside pt-3 pb-3">
-        <div class="d-flex justify-content-between align-items-center mb-4 px-3 flex-shrink-0">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-shrink-0">
             <div class="backend-brand-text mb-0">
                 <img src="{{ asset('backend/img/logo.png') }}" alt="Gestione FitFrame"
                     class="backend-logo backend-logo-light">
                 <img src="{{ asset('backend/img/logo-dark.png') }}" alt="Gestione FitFrame"
                     class="backend-logo backend-logo-dark">
             </div>
-            <a href="#" id="sidebar-toggle" class="text-decoration-none hover-accent"
+            <a href="#" id="sidebar-toggle" class="text-decoration-none hover-accent px-3"
                 aria-label="Comprimi o espandi il menu">
                 <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
                 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
