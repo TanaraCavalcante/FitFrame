@@ -4,6 +4,16 @@ Tutte le modifiche rilevanti al branch `feature/login-page` sono documentate in 
 
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/).
 
+## [2026-09-17] - Layout guest condiviso e redesign di "Password dimenticata"
+
+### Aggiunto
+- `resources/views/backend/layouts/guest.blade.php`: layout condiviso (`@extends`/`@yield`, stesso pattern di `backend.layouts.app`) per le pagine di autenticazione non autenticate — head, shell split marca/form una sola volta.
+- `resources/views/backend/auth/forgot-password.blade.php`: riportata allo stesso stile del login (icona email, card, bottone), ora costruita sul layout `guest` — prima era ancora nel vecchio markup Bootstrap grezzo.
+- Testo del pannello di marca personalizzabile per pagina via `@yield('brand-title', ...)`/`@yield('brand-text', ...)` con default riusato dal login; "Password dimenticata" usa un testo dedicato ("Recupera l'accesso.").
+
+### Modificato
+- `login.blade.php` estratto nello stesso layout `guest` (solo `title` e `form` cambiano da pagina a pagina).
+
 ## [2026-09-17] - Redesign della pagina di login
 
 ### Aggiunto

@@ -1,34 +1,35 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password dimenticata — Gestione FitFrame</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-</head>
-<body class="bg-light">
-    <div class="d-flex align-items-center justify-content-center vh-100">
-        <div class="card p-4" style="max-width: 400px; width: 100%;">
-            <h3 class="mb-4">Password dimenticata</h3>
+@extends('backend.layouts.guest')
 
-            @if (session('status'))
-                <div class="alert alert-success">{{ session('status') }}</div>
-            @endif
+@section('title', 'Password dimenticata')
 
-            <form method="POST" action="{{ route('backend.password.email') }}">
-                @csrf
+@section('brand-title', "Recupera l'accesso.")
 
-                <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" required autofocus autocomplete="username">
-                    @error('email')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+@section('brand-text', "Inserisci l'email del tuo account: ti mandiamo un link per impostare una nuova password.")
 
-                <button type="submit" class="btn btn-primary w-100">Invia link di reset</button>
-            </form>
+@section('form')
+    <h3 class="mb-1 fw-bold text-aside">Password dimenticata</h3>
+    <p class="text-aside-muted mb-4">Inserisci la tua email per ricevere il link di reset</p>
+
+    @if (session('status'))
+        <div class="alert alert-success">{{ session('status') }}</div>
+    @endif
+
+    <form method="POST" action="{{ route('backend.password.email') }}">
+        @csrf
+
+        <div class="mb-4">
+            <label class="form-label text-aside">Email</label>
+            <div class="input-group auth-input-group">
+                <span class="input-group-text"><i class="fa-solid fa-envelope" aria-hidden="true"></i></span>
+                <input type="email" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" required autofocus autocomplete="username">
+                @error('email')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
         </div>
-    </div>
-</body>
-</html>
+
+        <button type="submit" class="btn auth-submit-btn w-100">Invia link di reset</button>
+
+        <a href="{{ route('backend.login') }}" class="d-block text-center mt-3 small hover-accent">Torna al login</a>
+    </form>
+@endsection
