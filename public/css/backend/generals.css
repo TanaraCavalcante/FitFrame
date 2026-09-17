@@ -129,11 +129,11 @@ html.sidebar-collapsed.sidebar-hovering .backend-aside .backend-menu-heading {
 
 /* Il logo (immagine) è più largo delle label di testo: max-width dedicato per non tagliarlo. */
 .backend-brand-text {
-    max-width: 230px;
+    max-width: 320px;
 }
 
 html.sidebar-collapsed.sidebar-hovering .backend-aside .backend-brand-text {
-    max-width: 230px;
+    max-width: 320px;
 }
 
 .backend-nav-link .fa-chevron-down {
@@ -166,7 +166,7 @@ html.sidebar-collapsed #sidebar-toggle .fa-chevron-right {
 }
 
 .backend-logo {
-    height: 75px;
+    height: 45px;
     width: auto;
 }
 
