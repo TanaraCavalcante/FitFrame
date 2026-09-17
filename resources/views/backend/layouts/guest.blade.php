@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     @foreach (['variables', 'generics', 'tipografia', 'generals', 'auth'] as $backendStylesheet)
-        <link rel="stylesheet" href="{{ asset("css/backend/{$backendStylesheet}.css") }}?v={{ filemtime(public_path("css/backend/{$backendStylesheet}.css")) }}">
+        @php($backendStylesheetPath = "css/backend/{$backendStylesheet}.css")
+        <link rel="stylesheet" href="{{ asset($backendStylesheetPath) }}?v={{ filemtime(public_path($backendStylesheetPath)) }}">
     @endforeach
 </head>
 <body>

@@ -1,6 +1,6 @@
 <div class="backend-aside-slot bg-aside border-aside">
     <aside class="backend-aside bg-aside text-aside pt-3 pb-3">
-        <div class="d-flex justify-content-between align-items-center mb-4 flex-shrink-0">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-shrink-0 ps-3">
             <div class="backend-brand-text mb-0">
                 <img src="{{ asset('backend/img/logo.png') }}" alt="Gestione FitFrame"
                     class="backend-logo backend-logo-light">
@@ -74,9 +74,10 @@
             <div class="collapse @if ($setupActive) show @endif" id="setup-menu">
                 <div class="nav flex-column flex-nowrap gap-1">
                     @foreach ($setupChildren as $child)
-                        @if (\Illuminate\Support\Facades\Route::has($child['route']))
-                            <a class="nav-link backend-nav-link ps-4 hover-accent @if (request()->routeIs($child['route'])) active @endif"
-                                href="{{ route($child['route']) }}">
+                        @php($childRoute = $child['route'])
+                        @if (\Illuminate\Support\Facades\Route::has($childRoute))
+                            <a class="nav-link backend-nav-link ps-4 hover-accent @if (request()->routeIs($childRoute)) active @endif"
+                                href="{{ route($childRoute) }}">
                                 <i class="fa-solid {{ $child['icon'] }} me-3" aria-hidden="true"></i>
                                 <span class="backend-nav-label">{{ $child['label'] }}</span>
                             </a>

@@ -4,6 +4,17 @@ Tutte le modifiche rilevanti al branch `feature/login-page` sono documentate in 
 
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/).
 
+## [2026-09-17] - Fix diagnostica editor e allineamento logo sidebar
+
+### Corretto
+- `app.blade.php` e `guest.blade.php`: il loop degli stylesheet backend costruiva il path direttamente dentro `asset()`/`public_path()` con interpolazione (`"css/backend/{$var}.css"`), facendo scattare falsi positivi "Asset not found" nell'estensione Laravel dell'editor (impossibilitata a risolvere staticamente il valore). Ora il path è calcolato prima in una variabile via `@php`.
+- `aside.blade.php`: stesso problema per `route($child['route'])` nel loop del menu Setup (l'estensione arrivava persino a segnalare "Route [route] not found", confondendo la chiave dell'array con il nome della rotta) — estratto in `$childRoute`.
+- `public/css/backend/generals.css`: la logo della sidebar (sostituita di recente con una versione più larga) veniva tagliata — non era il `max-width` del contenitore il vincolo reale, ma la larghezza fissa della sidebar stessa (260px). Altezza del logo ridotta da 75px a 45px (la larghezza si adatta da sola via `width: auto`, proporzioni invariate).
+- Riga della logo nella sidebar: aggiunto `ps-3` per allinearla orizzontalmente con le icone delle voci di menu sottostanti (che partono a 16px, mentre la logo partiva da 0).
+
+### Aggiunto
+- `.vscode/settings.json` (non versionato, escluso da `.gitignore`): `tailwindCSS.validate: false` — il progetto usa Bootstrap, non Tailwind; l'estensione Tailwind IntelliSense segnalava le classi Bootstrap (`flex-grow-1`, `flex-shrink-0`) come da riscrivere nella forma "canonica" Tailwind.
+
 ## [2026-09-17] - Layout guest condiviso e redesign di "Password dimenticata"
 
 ### Aggiunto
