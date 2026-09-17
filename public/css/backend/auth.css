@@ -1,0 +1,91 @@
+/* Layout split della pagina di login/autenticazione — riusa i token di variables.css. */
+
+.auth-shell {
+    background-color: var(--backend-page-bg);
+}
+
+.auth-brand-panel {
+    background: linear-gradient(155deg, #232b35 0%, #12161c 100%);
+}
+
+.auth-brand-panel::before,
+.auth-brand-panel::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(var(--backend-accent-rgb, 29, 111, 212), .18);
+}
+
+.auth-brand-panel::before {
+    width: 420px;
+    height: 420px;
+    top: -140px;
+    right: -120px;
+}
+
+.auth-brand-panel::after {
+    width: 280px;
+    height: 280px;
+    bottom: -100px;
+    left: -80px;
+    background: rgba(255, 255, 255, .06);
+}
+
+.auth-brand-content {
+    z-index: 1;
+    max-width: 360px;
+}
+
+.auth-form-panel {
+    background-color: var(--backend-page-bg);
+}
+
+.auth-card {
+    max-width: 460px;
+    background-color: var(--backend-surface-bg);
+    border-color: var(--backend-aside-border);
+    box-shadow: 0 20px 48px rgba(20, 25, 32, .08);
+    animation: auth-card-in .35s ease both;
+}
+
+@keyframes auth-card-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .auth-card {
+        animation: none;
+    }
+}
+
+.auth-input-group .input-group-text {
+    background-color: var(--backend-surface-bg);
+    color: var(--backend-aside-color-muted);
+}
+
+.auth-submit-btn {
+    background-color: var(--backend-accent);
+    border-color: var(--backend-accent);
+    color: var(--backend-accent-contrast);
+    transition: background-color .15s ease, border-color .15s ease, transform .15s ease;
+}
+
+.auth-submit-btn:hover,
+.auth-submit-btn:focus {
+    background-color: var(--backend-accent);
+    border-color: var(--backend-accent);
+    color: var(--backend-accent-contrast);
+    filter: brightness(.92);
+    transform: translateY(-1px);
+}
+
+.auth-submit-btn:active {
+    transform: translateY(0);
+}
