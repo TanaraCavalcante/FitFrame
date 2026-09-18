@@ -4,6 +4,26 @@ Tutte le modifiche rilevanti a questo progetto sono documentate in questo file.
 
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/).
 
+## [1.2.0] - 2026-09-18
+
+Redesign completo delle tre pagine di autenticazione (login, password dimenticata, reimposta password), prima nel Bootstrap grezzo di default, ora coerenti con il design system del backend.
+
+### Aggiunto
+- `resources/views/backend/layouts/guest.blade.php`: layout condiviso (`@extends`/`@yield`, stesso pattern di `backend.layouts.app`) per le pagine di autenticazione non autenticate — head, shell split marca/form definiti una sola volta. Login, "Password dimenticata" e "Reimposta password" ora vi si appoggiano, cambiando solo `title`, `form` e — dove serve — il testo del pannello di marca (`@yield('brand-title', ...)`/`@yield('brand-text', ...)`, es. "Recupera l'accesso." per il reset).
+- Layout split (pannello di marca + form) con grid Bootstrap (`col-lg-5`/`col-lg-7`), impilato in mobile/tablet con il form sempre in cima.
+- Icone nei campi email/password, toggle mostra/nascondi password su tutti i campi password, animazione di entrata del card.
+- `public/css/backend/auth.css`: stili dedicati al layout di autenticazione (gradiente del pannello di marca, ecc.), riusando i token di `variables.css` — solo ciò che non ha un equivalente diretto nelle utility di Bootstrap.
+
+### Modificato
+- `public/js/backend.js`: aggiunte guardie (`if (elemento)`) prima di agganciare gli event listener di sidebar/tema, così lo script può essere incluso in sicurezza anche in pagine standalone senza l'intero shell autenticato.
+- Sostituiti `public/backend/img/logo.png` e `logo-dark.png` con le nuove versioni del logo.
+
+### Corretto
+- Logo della sidebar (tagliata dalla nuova versione più larga): non era il `max-width` del contenitore il vincolo reale ma la larghezza fissa della sidebar (260px) — altezza del logo ridotta da 75px a 45px (proporzioni invariate via `width: auto`) e allineata alle icone del menu (`ps-3`).
+- Falsi positivi "Asset/Route not found" nell'estensione Laravel dell'editor, causati da `asset()`/`route()` con path costruiti per interpolazione dentro loop — path ora calcolati prima in una variabile via `@php`.
+
+Lo storico dettagliato, commit per commit, di questa feature è stato consolidato da `CHANGELOG-feature-login-page.md` (rimosso dopo il merge in questa entry).
+
 ## [1.1.0] - 2026-09-17
 
 Chatbot di aiuto contestuale nel gestionale, basato su RAG — architettura a due componenti: FitFrame gestisce autenticazione, rate limiting, persistenza della cronologia e widget; un servizio Python separato (`fitframe-rag`, non in questo repository) possiede l'intera pipeline RAG (base di conoscenza, embeddings, ricerca, chiamata a Groq).
