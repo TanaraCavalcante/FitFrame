@@ -4,6 +4,11 @@ Tutte le modifiche rilevanti al branch `feature/login-page` sono documentate in 
 
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/).
 
+## [2026-09-18] - Redesign di "Reimposta password"
+
+### Aggiunto
+- `resources/views/backend/auth/reset-password.blade.php`: portata sullo stesso stile di login/forgot-password (layout `backend.layouts.guest`, icone nei campi email/password, toggle mostra/nascondi su entrambi i campi password, link "Torna al login") — prima era l'ultima pagina di autenticazione rimasta nel vecchio markup Bootstrap grezzo.
+
 ## [2026-09-17] - Fix diagnostica editor e allineamento logo sidebar
 
 ### Corretto
