@@ -202,7 +202,7 @@ Se il servizio non è in esecuzione, non risponde o rifiuta il token (`401`/`503
 
 I contenuti che l'assistente conosce vivono in `knowledge_base/` dentro `fitframe-rag`, non in questo repository.
 
-Dettagli e decisioni in `docs/plan-chatbot-rag-gestionale.md`.
+Documentazione completa in `docs/8-assistente-rag.md`; decisioni di progetto in `docs/superpowers/plans/plan-chatbot-rag-gestionale.md`.
 
 ## Test
 
@@ -234,4 +234,4 @@ public/{slug}/                   Asset specifici del tema
 
 ## Documentazione
 
-Approfondimenti in `docs/`: stack, architettura del progetto, multi-tenant, ordine delle sezioni, pannello admin, gestione temi, piano dell'assistente RAG (`plan-chatbot-rag-gestionale.md`).
+Approfondimenti in `docs/`: stack, architettura del progetto, multi-tenant, ordine delle sezioni, pannello admin, gestione temi, assistente RAG (`8-assistente-rag.md`, più il piano in `docs/superpowers/plans/`).
