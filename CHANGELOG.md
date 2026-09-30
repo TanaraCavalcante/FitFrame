@@ -24,6 +24,21 @@ Redesign completo delle tre pagine di autenticazione (login, password dimenticat
 
 Lo storico dettagliato, commit per commit, di questa feature è stato consolidato da `CHANGELOG-feature-login-page.md` (rimosso dopo il merge in questa entry).
 
+## [1.2.1] - 2026-09-23
+
+Documentazione dell'assistente RAG: nuova pagina dedicata e sezione nel README.
+
+### Aggiunto
+- `docs/8-assistente-rag.md`: documentazione completa dell'assistente RAG lato FitFrame — divisione tra i due repository, flusso di una domanda, file coinvolti, cronologia, rate limiting, widget, configurazione, avvio in locale, test, problemi comuni e limiti noti.
+- Sezione "Assistente RAG (fitframe-rag)" nel README: architettura a due repository, flusso della richiesta, configurazione `RAG_SERVICE_URL`/`RAG_SERVICE_TOKEN`, avvio in locale e comportamento di fallback quando il servizio non è raggiungibile.
+- Riferimento al servizio esterno `fitframe-rag` in "Stack" e all'assistente di aiuto in "Funzionalità".
+
+### Modificato
+- README: indice, note sui test (`Http::fake()`), "Struttura del progetto" (`RagServiceClient`, `ChatMessage`) e "Documentazione" (link a `docs/8-assistente-rag.md` e al piano del chatbot).
+- `docs/plan-chatbot-rag-gestionale.md` spostato in `docs/superpowers/plans/` insieme agli altri piani; link aggiornati.
+
+Lo storico dettagliato, commit per commit, di questa feature è stato consolidato da `CHANGELOG-docs-readme-rag.md` (rimosso dopo il merge in questa entry).
+
 ## [1.1.0] - 2026-09-17
 
 Chatbot di aiuto contestuale nel gestionale, basato su RAG — architettura a due componenti: FitFrame gestisce autenticazione, rate limiting, persistenza della cronologia e widget; un servizio Python separato (`fitframe-rag`, non in questo repository) possiede l'intera pipeline RAG (base di conoscenza, embeddings, ricerca, chiamata a Groq).
