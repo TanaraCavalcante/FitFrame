@@ -16,6 +16,7 @@ toccare codice.
 - [Utenti di test](#utenti-di-test)
 - [Migration e seeder](#migration-e-seeder)
 - [Temi](#temi)
+- [Assistente RAG (fitframe-rag)](#assistente-rag-fitframe-rag)
 - [Test](#test)
 - [Struttura del progetto](#struttura-del-progetto)
 - [Documentazione](#documentazione)
@@ -30,6 +31,9 @@ toccare codice.
 - [`spatie/laravel-medialibrary`](https://spatie.be/docs/laravel-medialibrary) — upload immagini/video (hero, team, galleria)
 - [`lab404/laravel-impersonate`](https://github.com/404labfr/laravel-impersonate) — impersonation (super_admin → gym_admin)
 - Laravel Boost — linee guida/tool MCP per lo sviluppo assistito da AI (non influisce sulla produzione)
+
+**Servizio esterno (opzionale)**
+- [`fitframe-rag`](https://github.com/TanaraCavalcante/fitframe-rag) — progetto Python separato (Flask, FAISS, Groq) che alimenta l'assistente di aiuto contestuale nel gestionale, vedi [Assistente RAG](#assistente-rag-fitframe-rag)
 
 **Frontend**
 - Blade puro — nessuna SPA, nessun framework JS
@@ -53,6 +57,7 @@ toccare codice.
 - CRUD contenuto per sezione: Hero, Corsi, Piani (con caratteristiche e piano "in evidenza"), Team, Testimonianze, Galleria (5 slot), CTA + Contatti
 - Ordina sezioni: riordino e titolo di ognuna delle 6 sezioni configurabili
 - Tema chiaro/scuro persistito, sidebar collassabile, conferme di eliminazione via SweetAlert2
+- Assistente di aiuto (chat flottante): ogni utente autenticato può fare domande in italiano su come usare il gestionale e ricevere una risposta generata da un LLM a partire da documentazione pronta (RAG), con cronologia personale persistita e paginata — vedi [Assistente RAG](#assistente-rag-fitframe-rag)
 
 ## Requisiti
 
@@ -171,6 +176,34 @@ Temi disponibili: `base` (tema principale, nessun genitore — CSS strutturale c
 
 Per aggiungere un tema: crea `resources/views/{slug}/theme.json` con `"extends": "base"`, poi `public/{slug}/css/variables.css` con le variabili da sovrascrivere. Tutto il resto (asset, favicon inclusi) ricade su `base` finché non lo personalizzi.
 
+## Assistente RAG (fitframe-rag)
+
+Il gestionale include un assistente di aiuto contestuale. L'architettura è a **due repository**:
+
+| Repository | Ruolo |
+|---|---|
+| **FitFrame** *(questo)* | Autenticazione, rate limiting (`throttle:chat`, 10 richieste/minuto per utente), persistenza della cronologia (`chat_messages`), widget di chat nel layout admin |
+| [**fitframe-rag**](https://github.com/TanaraCavalcante/fitframe-rag) | Servizio Python stateless: legge la base di conoscenza in Markdown, embeddings locali, indice FAISS, chiamata a Groq (`openai/gpt-oss-120b`) |
+
+FitFrame non contiene logica di chunking, embedding né chiamate dirette a Groq: manda `{ "domanda": "..." }` a `POST /ask` di `fitframe-rag` e riceve `{ "risposta": "..." }`. La comunicazione è autenticata con un token condiviso (`Authorization: Bearer`). Il servizio non accede al database di FitFrame.
+
+**Flusso:** widget (`public/js/backend-chat.js`) → `POST chat` (`ChatController@ask`) → `App\Services\Chat\RagServiceClient` → `fitframe-rag` `/ask` → risposta salvata in `chat_messages` e restituita al widget. `GET chat/history` carica lo storico precedente, 20 messaggi alla volta.
+
+**Configurazione** (`.env`, letta da `config/services.php`):
+
+```
+RAG_SERVICE_URL=http://127.0.0.1:5002
+RAG_SERVICE_TOKEN=lo_stesso_valore_di_API_TOKEN_in_fitframe-rag
+```
+
+**Avvio in locale:** clona e avvia `fitframe-rag` (setup, `GROQ_API_KEY` e `API_TOKEN` sono descritti nel suo README), poi `python api.py` — il servizio ascolta su `http://127.0.0.1:5002`. Non è gestito da `composer dev`: va avviato a mano.
+
+Se il servizio non è in esecuzione, non risponde o rifiuta il token (`401`/`503`), il widget mostra "Assistente temporaneamente non disponibile" (risposta `503` controllata, non un errore 500). Il resto del gestionale funziona normalmente.
+
+I contenuti che l'assistente conosce vivono in `knowledge_base/` dentro `fitframe-rag`, non in questo repository.
+
+Documentazione completa in `docs/8-assistente-rag.md`; decisioni di progetto in `docs/superpowers/plans/plan-chatbot-rag-gestionale.md`.
+
 ## Test
 
 PHPUnit (nessun Pest):
@@ -181,14 +214,17 @@ php artisan test --compact tests/Feature/Backend/NomeDelTest.php
 php artisan test --compact --filter=nomeDelTest
 ```
 
+I test della chat non richiedono `fitframe-rag` in esecuzione: le chiamate HTTP al servizio sono simulate con `Http::fake()`.
+
 ## Struttura del progetto
 
 ```
 app/Http/Controllers/Backend/   Controller del pannello admin
 app/Http/Middleware/ResolveGym.php   Risoluzione struttura/tema per dominio
+app/Services/Chat/RagServiceClient.php   Client HTTP verso il servizio fitframe-rag
 app/Models/                     Gym, Domain, GymSection, Content, Contact,
                                  GymClass, Plan, PlanFeature, Testimonial,
-                                 PersonalTrainer, User
+                                 PersonalTrainer, ChatMessage, User
 resources/views/base/            View pubbliche condivise da tutti i temi
 resources/views/{slug}/          theme.json per tema (pulse, zenflow, iron-house)
 resources/views/backend/         View del pannello admin
@@ -198,4 +234,4 @@ public/{slug}/                   Asset specifici del tema
 
 ## Documentazione
 
-Approfondimenti in `docs/`: stack, architettura del progetto, multi-tenant, ordine delle sezioni, pannello admin, gestione temi.
+Approfondimenti in `docs/`: stack, architettura del progetto, multi-tenant, ordine delle sezioni, pannello admin, gestione temi, assistente RAG (`8-assistente-rag.md`, più il piano in `docs/superpowers/plans/`).
