@@ -4,6 +4,17 @@ Tutte le modifiche rilevanti a questo progetto sono documentate in questo file.
 
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/).
 
+## [1.2.3] - 2026-11-20
+
+Verifica lo stato del TODO sull'ordine di costruzione dei contenuti e documenta la lacuna di Iron House.
+
+### Modificato
+- `docs/7-todo.md`: segna come completate le voci su Zenflow (contents nel seeder) e sulla verifica dei default Pulse per ogni chiave di contenuto usata nelle view.
+- `docs/7-todo.md`: aggiunge una voce "Miglioramenti futuri (performance)" sulla cache della risoluzione del Gym per dominio (`ResolveGym`), da valutare solo con traffico reale in produzione.
+
+### Corretto
+- `docs/7-todo.md`: documenta che **Iron House** non ha ancora contenuto proprio nel seeder (`GymSeeder`) — nessuna riga `contents`, `classes`, `plans`, `team` o `testimonials` — per cui `iron-house.test` mostra oggi quelle sezioni vuote (corsi/piani/team/testimonianze sono tabelle dedicate per `gym_id`, senza eredità dal tema Pulse come invece accade per i testi liberi).
+
 ## [1.2.2] - 2026-11-20
 
 Documenta le convenzioni di scrittura del codice nel README.
