@@ -9,6 +9,7 @@ toccare codice.
 ## Indice
 
 - [Stack](#stack)
+- [Architettura e convenzioni di scrittura](#architettura-e-convenzioni-di-scrittura)
 - [Funzionalità](#funzionalità)
 - [Requisiti](#requisiti)
 - [Installazione](#installazione)
@@ -41,6 +42,35 @@ toccare codice.
 - Bootstrap 5 (via CDN)
 - Font Awesome Free (via CDN)
 - Google Fonts (via CDN, una famiglia per tema)
+
+## Architettura e convenzioni di scrittura
+
+Come il codice è organizzato — utile per orientarsi prima di scrivere nuove feature, non per capire *cosa* fa il sito (quello è nella sezione [Funzionalità](#funzionalità)).
+
+**Multi-tenant per dominio**
+- `App\Http\Middleware\ResolveGym` intercetta la request, legge l'host, cerca il `Domain` corrispondente e risolve il `Gym` attivo, condiviso poi a view/controller (vedi `docs/3-multi-tenant.md`)
+- Non c'è un "tenant ID" esplicito nei controller: tutto parte dal `Gym` risolto dal middleware
+
+**Temi (`igaster/laravel-theme`)**
+- Un tema = `resources/views/{slug}/theme.json` + `public/{slug}/`; `extends: "base"` fa risalire la catena di eredità per qualunque asset mancante (vedi `docs/6-temas.md`)
+- Le view Blade pubbliche sono condivise (`resources/views/base/`) — un nuovo tema di norma non duplica le view, solo CSS/asset
+
+**Contenuto: tabelle dedicate vs key/value**
+- Sezioni con struttura ripetuta e ordinabile (corsi, piani, team, testimonianze) → tabella Eloquent dedicata con colonna `order`
+- Testi liberi legati a una sezione (hero, CTA, contatti) → `Content` (`key`/`value` per `gym_id`), niente migration nuova per ogni campo di testo
+
+**Riordino** — trait `App\Models\Concerns\HasOrderedSiblings`: ogni model riordinabile implementa `siblingScopeColumn()` (es. `gym_id`) e eredita `previousSibling()`/`nextSibling()`; usato da `GymSection`, `GymClass`, `Plan`, `Testimonial`, `PersonalTrainer`
+
+**Autorizzazione**
+- `App\Enums\UserRole` (`super_admin` / `gym_admin`) + Policy per model (`GymPolicy`, `UserPolicy`) — non controlli `if ($user->role === ...)` sparsi nei controller
+- Un `gym_admin` è sempre scoped al proprio `gym_id`; un `super_admin` no
+
+**Form Request per azione, non per model**
+- `app/Http/Requests/Backend/` ha uno Store* e uno Update* per ogni risorsa (es. `StorePlanRequest`/`UpdatePlanRequest`) invece di una regola di validazione condivisa — regole diverse tra creazione e modifica restano esplicite
+
+**Servizi esterni** — pattern "client dedicato": `App\Services\Chat\RagServiceClient` incapsula l'HTTP verso `fitframe-rag` (URL/token da `config/services.php`, fallback controllato se il servizio non risponde). Un nuovo servizio esterno segue lo stesso schema: classe in `app/Services/{Dominio}/`, niente chiamate HTTP dirette dal controller
+
+**Media** — upload gestiti da `spatie/laravel-medialibrary` (collection per sezione: hero, team, galleria), non da colonne `path` manuali
 
 ## Funzionalità
 

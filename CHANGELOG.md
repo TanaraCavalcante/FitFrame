@@ -4,6 +4,13 @@ Tutte le modifiche rilevanti a questo progetto sono documentate in questo file.
 
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/).
 
+## [1.2.2] - 2026-11-20
+
+Documenta le convenzioni di scrittura del codice nel README.
+
+### Aggiunto
+- README: sezione "Architettura e convenzioni di scrittura" — multi-tenant per dominio, eredità dei temi, contenuto (tabella dedicata vs `Content` key/value), riordino (`HasOrderedSiblings`), autorizzazione (`UserRole` + Policy), Form Request per azione, pattern per i servizi esterni, media (Spatie MediaLibrary).
+
 ## [1.2.0] - 2026-09-18
 
 Redesign completo delle tre pagine di autenticazione (login, password dimenticata, reimposta password), prima nel Bootstrap grezzo di default, ora coerenti con il design system del backend.
